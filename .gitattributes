@@ -1,0 +1,8 @@
+# Normalise line endings so generated files are byte-identical across platforms.
+# Text files are stored and checked out as LF (the demo scripts also write LF
+# explicitly). This is what keeps `scripts/build_examples.py` reproducible in CI
+# regardless of the OS it ran on.
+* text=auto eol=lf
+
+# Binary — never touched by line-ending or diff machinery.
+*.png binary

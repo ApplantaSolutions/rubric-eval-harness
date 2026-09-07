@@ -59,8 +59,8 @@ def main() -> None:
     EXAMPLES.mkdir(exist_ok=True)
     for slug, rubric_rel, dataset_rel in FAMILIES:
         html, js = build_one(slug, rubric_rel, dataset_rel)
-        (EXAMPLES / f"report-{slug}.html").write_text(html, encoding="utf-8")
-        (EXAMPLES / f"report-{slug}.json").write_text(js + "\n", encoding="utf-8")
+        (EXAMPLES / f"report-{slug}.html").write_text(html, encoding="utf-8", newline="\n")
+        (EXAMPLES / f"report-{slug}.json").write_text(js + "\n", encoding="utf-8", newline="\n")
         print(f"wrote examples/report-{slug}.html / .json")
 
 

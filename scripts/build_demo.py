@@ -448,7 +448,9 @@ MOCK = {
 def _write_jsonl(name: str, rows: list[dict]) -> None:
     path = DATASETS / name
     path.write_text(
-        "\n".join(json.dumps(r, ensure_ascii=True) for r in rows) + "\n", encoding="utf-8"
+        "\n".join(json.dumps(r, ensure_ascii=True) for r in rows) + "\n",
+        encoding="utf-8",
+        newline="\n",  # deterministic LF on every platform
     )
 
 
@@ -528,7 +530,9 @@ def main() -> None:
     _write_jsonl("support_email.jsonl", SUPPORT_EMAIL)
     _write_jsonl("grounded_qa.jsonl", GROUNDED_QA)
     (DATASETS / "_mock_judgments.json").write_text(
-        json.dumps(MOCK, indent=2, ensure_ascii=True) + "\n", encoding="utf-8"
+        json.dumps(MOCK, indent=2, ensure_ascii=True) + "\n",
+        encoding="utf-8",
+        newline="\n",
     )
     _check()
     print("wrote 3 datasets + _mock_judgments.json; self-checks passed")

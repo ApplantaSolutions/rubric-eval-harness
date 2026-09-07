@@ -279,8 +279,14 @@ def write_report(report: RunReport, out_dir: str | Path) -> tuple[Path, Path]:
     out.mkdir(parents=True, exist_ok=True)
     html_path = out / "report.html"
     json_path = out / "report.json"
-    html_path.write_text(render_html(report), encoding="utf-8")
-    json_path.write_text(report.model_dump_json(indent=2, exclude_none=False), encoding="utf-8")
+    # newline="\n": deterministic LF output on every platform (keeps generated
+    # reports and the committed examples byte-identical across Windows/Linux).
+    html_path.write_text(render_html(report), encoding="utf-8", newline="\n")
+    json_path.write_text(
+        report.model_dump_json(indent=2, exclude_none=False),
+        encoding="utf-8",
+        newline="\n",
+    )
     return html_path, json_path
 
 
