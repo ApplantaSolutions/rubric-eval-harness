@@ -1,0 +1,51 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "rubric-eval-harness"
+version = "0.1.0"
+description = "A small, transparent harness for evaluating LLM responses against explicit rubrics: deterministic checks, reference-grounded judgment, instruction-following gates, and an N-run consistency report."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "Rudolph Miller" }]
+keywords = ["llm", "evaluation", "eval", "rubric", "consistency", "instruction-following"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Intended Audience :: Developers",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = [
+    "pydantic>=2.6,<3",
+    "PyYAML>=6.0,<7",
+    "Jinja2>=3.1,<4",
+    "anthropic>=0.39,<1",
+    "python-dotenv>=1.0,<2",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "ruff>=0.6",
+]
+
+[project.scripts]
+rubric-eval = "rubric_eval.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/rubric_eval"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "W"]
+ignore = ["E501"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

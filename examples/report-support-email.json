@@ -1,0 +1,1207 @@
+{
+  "meta": {
+    "harness_version": "0.1.0",
+    "generated_at": "2026-01-01T00:00:00+00:00",
+    "rubric_id": "support_email_reply",
+    "rubric_title": "Customer support email reply",
+    "rubric_version": 1,
+    "dataset_path": "datasets/support_email.jsonl",
+    "dataset_item_count": 4,
+    "provider": "mock",
+    "judge_model": null,
+    "judge_temperature": 0.0,
+    "runs": 5,
+    "command": "rubric-eval run --rubric rubrics/support_email_reply.yaml --dataset datasets/support_email.jsonl --provider mock --mock-judgments datasets/_mock_judgments.json --out examples/",
+    "git_commit": null
+  },
+  "items": [
+    {
+      "item_id": "se-strong",
+      "task": "Write a reply to the customer below. Ticket #4021. Be warm and specific.\n\nCustomer: my blender arrived with a cracked jug.",
+      "candidate_response": "Hi Dana, thanks for flagging ticket #4021. I'm sorry the blender arrived with a cracked jug. Because you reported it within 30 days, we'll replace it at no cost, and the replacement ships within 3 business days of approval. I've approved it now, so a tracking number should reach you shortly. - Priya, Northwind Support",
+      "scenario": "strong response — accurate to policy, acknowledges the issue, gives a next step",
+      "author_note": null,
+      "dimensions": [
+        {
+          "dimension_id": "instruction_following",
+          "type": "gate",
+          "status": "evaluated",
+          "not_evaluated_reason": null,
+          "checks": [],
+          "deterministic_passed": null,
+          "gate": {
+            "dimension_id": "instruction_following",
+            "instructions": [
+              {
+                "text": "Includes the ticket number (a '#' followed by four or more digits)",
+                "method": "deterministic",
+                "status": "pass",
+                "detail": "required pattern /#\\d{4,}/ matched (matched '#4021')",
+                "check": {
+                  "name": "ticket_number",
+                  "kind": "required_regex",
+                  "expected": "required pattern /#\\d{4,}/ matches",
+                  "observed": "matched (matched '#4021')",
+                  "outcome": "pass",
+                  "explanation": "required pattern /#\\d{4,}/ matched (matched '#4021')"
+                },
+                "evidence": null
+              },
+              {
+                "text": "Acknowledges the customer's specific problem",
+                "method": "judge",
+                "status": "pass",
+                "detail": "Names the cracked jug explicitly.",
+                "check": null,
+                "evidence": null
+              },
+              {
+                "text": "States a concrete next step or timeframe",
+                "method": "judge",
+                "status": "pass",
+                "detail": "States the replacement ships within 3 business days and it is approved.",
+                "check": null,
+                "evidence": null
+              }
+            ],
+            "status": "pass"
+          },
+          "runs": [],
+          "scores": [],
+          "mean": null,
+          "stdev": null,
+          "minimum": null,
+          "maximum": null,
+          "pairwise_disagreement_rate": null,
+          "reliability_label": null,
+          "judge_error_count": 0,
+          "evidence_all_verified": null,
+          "evidence_any_unverified": null
+        },
+        {
+          "dimension_id": "policy_safety",
+          "type": "deterministic",
+          "status": "evaluated",
+          "not_evaluated_reason": null,
+          "checks": [
+            {
+              "name": "no_overpromise",
+              "kind": "forbidden_regex",
+              "expected": "forbidden pattern /(?i)\\b(full refund|100% refund|guarantee(d)?|refund you|refund to your card)\\b/ does not match",
+              "observed": "no match",
+              "outcome": "pass",
+              "explanation": "forbidden pattern /(?i)\\b(full refund|100% refund|guarantee(d)?|refund you|refund to your card)\\b/ did not match"
+            }
+          ],
+          "deterministic_passed": true,
+          "gate": null,
+          "runs": [],
+          "scores": [],
+          "mean": null,
+          "stdev": null,
+          "minimum": null,
+          "maximum": null,
+          "pairwise_disagreement_rate": null,
+          "reliability_label": null,
+          "judge_error_count": 0,
+          "evidence_all_verified": null,
+          "evidence_any_unverified": null
+        },
+        {
+          "dimension_id": "faithfulness",
+          "type": "reference_grounded",
+          "status": "evaluated",
+          "not_evaluated_reason": null,
+          "checks": [],
+          "deterministic_passed": null,
+          "gate": null,
+          "runs": [
+            {
+              "run_index": 0,
+              "score": 5,
+              "rationale": "Every policy statement matches the policy.",
+              "evidence": {
+                "quote": "Defective items reported within 30 days are\nreplaced at no cost",
+                "verified": true,
+                "method": "normalized",
+                "note": "Matched the reference after normalizing whitespace, quote characters, and surrounding punctuation."
+              },
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"Every policy statement matches the policy.\", \"evidence_quote\": \"Defective items reported within 30 days are\\nreplaced at no cost\"}",
+              "error": null
+            },
+            {
+              "run_index": 1,
+              "score": 5,
+              "rationale": "Every policy statement matches the policy.",
+              "evidence": {
+                "quote": "Defective items reported within 30 days are\nreplaced at no cost",
+                "verified": true,
+                "method": "normalized",
+                "note": "Matched the reference after normalizing whitespace, quote characters, and surrounding punctuation."
+              },
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"Every policy statement matches the policy.\", \"evidence_quote\": \"Defective items reported within 30 days are\\nreplaced at no cost\"}",
+              "error": null
+            },
+            {
+              "run_index": 2,
+              "score": 5,
+              "rationale": "Every policy statement matches the policy.",
+              "evidence": {
+                "quote": "Defective items reported within 30 days are\nreplaced at no cost",
+                "verified": true,
+                "method": "normalized",
+                "note": "Matched the reference after normalizing whitespace, quote characters, and surrounding punctuation."
+              },
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"Every policy statement matches the policy.\", \"evidence_quote\": \"Defective items reported within 30 days are\\nreplaced at no cost\"}",
+              "error": null
+            },
+            {
+              "run_index": 3,
+              "score": 5,
+              "rationale": "Every policy statement matches the policy.",
+              "evidence": {
+                "quote": "Defective items reported within 30 days are\nreplaced at no cost",
+                "verified": true,
+                "method": "normalized",
+                "note": "Matched the reference after normalizing whitespace, quote characters, and surrounding punctuation."
+              },
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"Every policy statement matches the policy.\", \"evidence_quote\": \"Defective items reported within 30 days are\\nreplaced at no cost\"}",
+              "error": null
+            },
+            {
+              "run_index": 4,
+              "score": 5,
+              "rationale": "Every policy statement matches the policy.",
+              "evidence": {
+                "quote": "Defective items reported within 30 days are\nreplaced at no cost",
+                "verified": true,
+                "method": "normalized",
+                "note": "Matched the reference after normalizing whitespace, quote characters, and surrounding punctuation."
+              },
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"Every policy statement matches the policy.\", \"evidence_quote\": \"Defective items reported within 30 days are\\nreplaced at no cost\"}",
+              "error": null
+            }
+          ],
+          "scores": [
+            5,
+            5,
+            5,
+            5,
+            5
+          ],
+          "mean": 5.0,
+          "stdev": 0.0,
+          "minimum": 5,
+          "maximum": 5,
+          "pairwise_disagreement_rate": 0.0,
+          "reliability_label": "stable",
+          "judge_error_count": 0,
+          "evidence_all_verified": true,
+          "evidence_any_unverified": false
+        },
+        {
+          "dimension_id": "clarity",
+          "type": "judged",
+          "status": "evaluated",
+          "not_evaluated_reason": null,
+          "checks": [],
+          "deterministic_passed": null,
+          "gate": null,
+          "runs": [
+            {
+              "run_index": 0,
+              "score": 5,
+              "rationale": "Short, warm, actionable.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"Short, warm, actionable.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 1,
+              "score": 5,
+              "rationale": "Short, warm, actionable.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"Short, warm, actionable.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 2,
+              "score": 5,
+              "rationale": "Short, warm, actionable.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"Short, warm, actionable.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 3,
+              "score": 5,
+              "rationale": "Short, warm, actionable.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"Short, warm, actionable.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 4,
+              "score": 5,
+              "rationale": "Short, warm, actionable.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"Short, warm, actionable.\", \"evidence_quote\": \"\"}",
+              "error": null
+            }
+          ],
+          "scores": [
+            5,
+            5,
+            5,
+            5,
+            5
+          ],
+          "mean": 5.0,
+          "stdev": 0.0,
+          "minimum": 5,
+          "maximum": 5,
+          "pairwise_disagreement_rate": 0.0,
+          "reliability_label": "stable",
+          "judge_error_count": 0,
+          "evidence_all_verified": null,
+          "evidence_any_unverified": null
+        }
+      ],
+      "verdict": {
+        "verdict": "Excellent",
+        "gate_status": "pass",
+        "deterministic_all_passed": true,
+        "judged_mean": 5.0,
+        "evaluated_judged_dimensions": [
+          "faithfulness",
+          "clarity"
+        ],
+        "not_evaluated_dimensions": [],
+        "unresolved_dimensions": [],
+        "capped_by": [],
+        "notes": []
+      },
+      "verdict_stability": {
+        "per_run_verdicts": [
+          "Excellent",
+          "Excellent",
+          "Excellent",
+          "Excellent",
+          "Excellent"
+        ],
+        "modal_verdict": "Excellent",
+        "distribution": {
+          "Excellent": 5
+        },
+        "agreement_fraction": 1.0,
+        "note": "Instruction judging runs once; per-run verdict variation reflects only the judged-dimension scores. A run with a judge error on any evaluable judged dimension is counted as 'Unresolved'."
+      },
+      "indicative_score": 5.0,
+      "errors": []
+    },
+    {
+      "item_id": "se-overpromise",
+      "task": "Write a reply to the customer below. Ticket #4055.\n\nCustomer: the kettle stopped working after a week.",
+      "candidate_response": "Hi Marcus, so sorry about ticket #4055 and the trouble with your kettle. Don't worry - I'll refund you the full amount today and you'll see it back on your card within a few days. We guarantee you'll be happy.",
+      "scenario": "policy violation — promises a card refund and a guarantee the policy does not allow",
+      "author_note": "policy_safety is a safety dimension; its failure caps the verdict at Needs work.",
+      "dimensions": [
+        {
+          "dimension_id": "instruction_following",
+          "type": "gate",
+          "status": "evaluated",
+          "not_evaluated_reason": null,
+          "checks": [],
+          "deterministic_passed": null,
+          "gate": {
+            "dimension_id": "instruction_following",
+            "instructions": [
+              {
+                "text": "Includes the ticket number (a '#' followed by four or more digits)",
+                "method": "deterministic",
+                "status": "pass",
+                "detail": "required pattern /#\\d{4,}/ matched (matched '#4055')",
+                "check": {
+                  "name": "ticket_number",
+                  "kind": "required_regex",
+                  "expected": "required pattern /#\\d{4,}/ matches",
+                  "observed": "matched (matched '#4055')",
+                  "outcome": "pass",
+                  "explanation": "required pattern /#\\d{4,}/ matched (matched '#4055')"
+                },
+                "evidence": null
+              },
+              {
+                "text": "Acknowledges the customer's specific problem",
+                "method": "judge",
+                "status": "pass",
+                "detail": "Acknowledges the kettle failure.",
+                "check": null,
+                "evidence": null
+              },
+              {
+                "text": "States a concrete next step or timeframe",
+                "method": "judge",
+                "status": "pass",
+                "detail": "Says the refund happens today.",
+                "check": null,
+                "evidence": null
+              }
+            ],
+            "status": "pass"
+          },
+          "runs": [],
+          "scores": [],
+          "mean": null,
+          "stdev": null,
+          "minimum": null,
+          "maximum": null,
+          "pairwise_disagreement_rate": null,
+          "reliability_label": null,
+          "judge_error_count": 0,
+          "evidence_all_verified": null,
+          "evidence_any_unverified": null
+        },
+        {
+          "dimension_id": "policy_safety",
+          "type": "deterministic",
+          "status": "evaluated",
+          "not_evaluated_reason": null,
+          "checks": [
+            {
+              "name": "no_overpromise",
+              "kind": "forbidden_regex",
+              "expected": "forbidden pattern /(?i)\\b(full refund|100% refund|guarantee(d)?|refund you|refund to your card)\\b/ does not match",
+              "observed": "matched (matched 'refund you')",
+              "outcome": "fail",
+              "explanation": "forbidden pattern /(?i)\\b(full refund|100% refund|guarantee(d)?|refund you|refund to your card)\\b/ matched (matched 'refund you')"
+            }
+          ],
+          "deterministic_passed": false,
+          "gate": null,
+          "runs": [],
+          "scores": [],
+          "mean": null,
+          "stdev": null,
+          "minimum": null,
+          "maximum": null,
+          "pairwise_disagreement_rate": null,
+          "reliability_label": null,
+          "judge_error_count": 0,
+          "evidence_all_verified": null,
+          "evidence_any_unverified": null
+        },
+        {
+          "dimension_id": "faithfulness",
+          "type": "reference_grounded",
+          "status": "evaluated",
+          "not_evaluated_reason": null,
+          "checks": [],
+          "deterministic_passed": null,
+          "gate": null,
+          "runs": [
+            {
+              "run_index": 0,
+              "score": 1,
+              "rationale": "The policy says cash or card refunds are not offered; the reply promises one.",
+              "evidence": {
+                "quote": "Cash or card refunds are not offered",
+                "verified": true,
+                "method": "exact",
+                "note": ""
+              },
+              "attempts": 1,
+              "raw_response": "{\"score\": 1, \"rationale\": \"The policy says cash or card refunds are not offered; the reply promises one.\", \"evidence_quote\": \"Cash or card refunds are not offered\"}",
+              "error": null
+            },
+            {
+              "run_index": 1,
+              "score": 2,
+              "rationale": "Contradicts the no-refund policy.",
+              "evidence": {
+                "quote": "Cash or card refunds are not offered",
+                "verified": true,
+                "method": "exact",
+                "note": ""
+              },
+              "attempts": 1,
+              "raw_response": "{\"score\": 2, \"rationale\": \"Contradicts the no-refund policy.\", \"evidence_quote\": \"Cash or card refunds are not offered\"}",
+              "error": null
+            },
+            {
+              "run_index": 2,
+              "score": 1,
+              "rationale": "Directly contradicts the policy.",
+              "evidence": {
+                "quote": "Cash or card refunds are not offered",
+                "verified": true,
+                "method": "exact",
+                "note": ""
+              },
+              "attempts": 1,
+              "raw_response": "{\"score\": 1, \"rationale\": \"Directly contradicts the policy.\", \"evidence_quote\": \"Cash or card refunds are not offered\"}",
+              "error": null
+            },
+            {
+              "run_index": 3,
+              "score": 2,
+              "rationale": "Contradicts the policy.",
+              "evidence": {
+                "quote": "Cash or card refunds are not offered",
+                "verified": true,
+                "method": "exact",
+                "note": ""
+              },
+              "attempts": 1,
+              "raw_response": "{\"score\": 2, \"rationale\": \"Contradicts the policy.\", \"evidence_quote\": \"Cash or card refunds are not offered\"}",
+              "error": null
+            },
+            {
+              "run_index": 4,
+              "score": 1,
+              "rationale": "Contradicts the policy.",
+              "evidence": {
+                "quote": "Cash or card refunds are not offered",
+                "verified": true,
+                "method": "exact",
+                "note": ""
+              },
+              "attempts": 1,
+              "raw_response": "{\"score\": 1, \"rationale\": \"Contradicts the policy.\", \"evidence_quote\": \"Cash or card refunds are not offered\"}",
+              "error": null
+            }
+          ],
+          "scores": [
+            1,
+            2,
+            1,
+            2,
+            1
+          ],
+          "mean": 1.4,
+          "stdev": 0.4899,
+          "minimum": 1,
+          "maximum": 2,
+          "pairwise_disagreement_rate": 0.0,
+          "reliability_label": "stable",
+          "judge_error_count": 0,
+          "evidence_all_verified": true,
+          "evidence_any_unverified": false
+        },
+        {
+          "dimension_id": "clarity",
+          "type": "judged",
+          "status": "evaluated",
+          "not_evaluated_reason": null,
+          "checks": [],
+          "deterministic_passed": null,
+          "gate": null,
+          "runs": [
+            {
+              "run_index": 0,
+              "score": 4,
+              "rationale": "Clear enough, if wrong.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 4, \"rationale\": \"Clear enough, if wrong.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 1,
+              "score": 4,
+              "rationale": "Clear enough, if wrong.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 4, \"rationale\": \"Clear enough, if wrong.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 2,
+              "score": 4,
+              "rationale": "Clear enough, if wrong.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 4, \"rationale\": \"Clear enough, if wrong.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 3,
+              "score": 4,
+              "rationale": "Clear enough, if wrong.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 4, \"rationale\": \"Clear enough, if wrong.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 4,
+              "score": 4,
+              "rationale": "Clear enough, if wrong.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 4, \"rationale\": \"Clear enough, if wrong.\", \"evidence_quote\": \"\"}",
+              "error": null
+            }
+          ],
+          "scores": [
+            4,
+            4,
+            4,
+            4,
+            4
+          ],
+          "mean": 4.0,
+          "stdev": 0.0,
+          "minimum": 4,
+          "maximum": 4,
+          "pairwise_disagreement_rate": 0.0,
+          "reliability_label": "stable",
+          "judge_error_count": 0,
+          "evidence_all_verified": null,
+          "evidence_any_unverified": null
+        }
+      ],
+      "verdict": {
+        "verdict": "Needs work",
+        "gate_status": "pass",
+        "deterministic_all_passed": false,
+        "judged_mean": 2.7,
+        "evaluated_judged_dimensions": [
+          "faithfulness",
+          "clarity"
+        ],
+        "not_evaluated_dimensions": [],
+        "unresolved_dimensions": [],
+        "capped_by": [
+          "one or more deterministic checks failed",
+          "safety dimension(s) failed: policy_safety",
+          "dimension(s) below the needs-work floor (2.5): faithfulness"
+        ],
+        "notes": []
+      },
+      "verdict_stability": {
+        "per_run_verdicts": [
+          "Needs work",
+          "Needs work",
+          "Needs work",
+          "Needs work",
+          "Needs work"
+        ],
+        "modal_verdict": "Needs work",
+        "distribution": {
+          "Needs work": 5
+        },
+        "agreement_fraction": 1.0,
+        "note": "Instruction judging runs once; per-run verdict variation reflects only the judged-dimension scores. A run with a judge error on any evaluable judged dimension is counted as 'Unresolved'."
+      },
+      "indicative_score": 2.7,
+      "errors": []
+    },
+    {
+      "item_id": "se-retry",
+      "task": "Write a reply to the customer below. Ticket #4102.\n\nCustomer: I'd like to return an unopened mixer.",
+      "candidate_response": "Hi Sofia - thanks for reaching out on ticket #4102. You're within the 14-day window, so I can set up a return for store credit. Once we receive the item, the credit posts to your account. Let me know if you'd like the prepaid label.",
+      "scenario": "the faithfulness judge's first response was malformed on every run; the single retry succeeded",
+      "author_note": null,
+      "dimensions": [
+        {
+          "dimension_id": "instruction_following",
+          "type": "gate",
+          "status": "evaluated",
+          "not_evaluated_reason": null,
+          "checks": [],
+          "deterministic_passed": null,
+          "gate": {
+            "dimension_id": "instruction_following",
+            "instructions": [
+              {
+                "text": "Includes the ticket number (a '#' followed by four or more digits)",
+                "method": "deterministic",
+                "status": "pass",
+                "detail": "required pattern /#\\d{4,}/ matched (matched '#4102')",
+                "check": {
+                  "name": "ticket_number",
+                  "kind": "required_regex",
+                  "expected": "required pattern /#\\d{4,}/ matches",
+                  "observed": "matched (matched '#4102')",
+                  "outcome": "pass",
+                  "explanation": "required pattern /#\\d{4,}/ matched (matched '#4102')"
+                },
+                "evidence": null
+              },
+              {
+                "text": "Acknowledges the customer's specific problem",
+                "method": "judge",
+                "status": "pass",
+                "detail": "Acknowledges the return request.",
+                "check": null,
+                "evidence": null
+              },
+              {
+                "text": "States a concrete next step or timeframe",
+                "method": "judge",
+                "status": "pass",
+                "detail": "Offers to send a prepaid label as the next step.",
+                "check": null,
+                "evidence": null
+              }
+            ],
+            "status": "pass"
+          },
+          "runs": [],
+          "scores": [],
+          "mean": null,
+          "stdev": null,
+          "minimum": null,
+          "maximum": null,
+          "pairwise_disagreement_rate": null,
+          "reliability_label": null,
+          "judge_error_count": 0,
+          "evidence_all_verified": null,
+          "evidence_any_unverified": null
+        },
+        {
+          "dimension_id": "policy_safety",
+          "type": "deterministic",
+          "status": "evaluated",
+          "not_evaluated_reason": null,
+          "checks": [
+            {
+              "name": "no_overpromise",
+              "kind": "forbidden_regex",
+              "expected": "forbidden pattern /(?i)\\b(full refund|100% refund|guarantee(d)?|refund you|refund to your card)\\b/ does not match",
+              "observed": "no match",
+              "outcome": "pass",
+              "explanation": "forbidden pattern /(?i)\\b(full refund|100% refund|guarantee(d)?|refund you|refund to your card)\\b/ did not match"
+            }
+          ],
+          "deterministic_passed": true,
+          "gate": null,
+          "runs": [],
+          "scores": [],
+          "mean": null,
+          "stdev": null,
+          "minimum": null,
+          "maximum": null,
+          "pairwise_disagreement_rate": null,
+          "reliability_label": null,
+          "judge_error_count": 0,
+          "evidence_all_verified": null,
+          "evidence_any_unverified": null
+        },
+        {
+          "dimension_id": "faithfulness",
+          "type": "reference_grounded",
+          "status": "evaluated",
+          "not_evaluated_reason": null,
+          "checks": [],
+          "deterministic_passed": null,
+          "gate": null,
+          "runs": [
+            {
+              "run_index": 0,
+              "score": 5,
+              "rationale": "Matches the 14-day store-credit policy exactly.",
+              "evidence": {
+                "quote": "items may be returned within 14 days of\ndelivery for store credit",
+                "verified": true,
+                "method": "normalized",
+                "note": "Matched the reference after normalizing whitespace, quote characters, and surrounding punctuation."
+              },
+              "attempts": 2,
+              "raw_response": "{\"score\": 5, \"rationale\": \"Matches the 14-day store-credit policy exactly.\", \"evidence_quote\": \"items may be returned within 14 days of\\ndelivery for store credit\"}",
+              "error": null
+            },
+            {
+              "run_index": 1,
+              "score": 5,
+              "rationale": "Matches the 14-day store-credit policy exactly.",
+              "evidence": {
+                "quote": "items may be returned within 14 days of\ndelivery for store credit",
+                "verified": true,
+                "method": "normalized",
+                "note": "Matched the reference after normalizing whitespace, quote characters, and surrounding punctuation."
+              },
+              "attempts": 2,
+              "raw_response": "{\"score\": 5, \"rationale\": \"Matches the 14-day store-credit policy exactly.\", \"evidence_quote\": \"items may be returned within 14 days of\\ndelivery for store credit\"}",
+              "error": null
+            },
+            {
+              "run_index": 2,
+              "score": 5,
+              "rationale": "Matches the 14-day store-credit policy exactly.",
+              "evidence": {
+                "quote": "items may be returned within 14 days of\ndelivery for store credit",
+                "verified": true,
+                "method": "normalized",
+                "note": "Matched the reference after normalizing whitespace, quote characters, and surrounding punctuation."
+              },
+              "attempts": 2,
+              "raw_response": "{\"score\": 5, \"rationale\": \"Matches the 14-day store-credit policy exactly.\", \"evidence_quote\": \"items may be returned within 14 days of\\ndelivery for store credit\"}",
+              "error": null
+            },
+            {
+              "run_index": 3,
+              "score": 5,
+              "rationale": "Matches the 14-day store-credit policy exactly.",
+              "evidence": {
+                "quote": "items may be returned within 14 days of\ndelivery for store credit",
+                "verified": true,
+                "method": "normalized",
+                "note": "Matched the reference after normalizing whitespace, quote characters, and surrounding punctuation."
+              },
+              "attempts": 2,
+              "raw_response": "{\"score\": 5, \"rationale\": \"Matches the 14-day store-credit policy exactly.\", \"evidence_quote\": \"items may be returned within 14 days of\\ndelivery for store credit\"}",
+              "error": null
+            },
+            {
+              "run_index": 4,
+              "score": 5,
+              "rationale": "Matches the 14-day store-credit policy exactly.",
+              "evidence": {
+                "quote": "items may be returned within 14 days of\ndelivery for store credit",
+                "verified": true,
+                "method": "normalized",
+                "note": "Matched the reference after normalizing whitespace, quote characters, and surrounding punctuation."
+              },
+              "attempts": 2,
+              "raw_response": "{\"score\": 5, \"rationale\": \"Matches the 14-day store-credit policy exactly.\", \"evidence_quote\": \"items may be returned within 14 days of\\ndelivery for store credit\"}",
+              "error": null
+            }
+          ],
+          "scores": [
+            5,
+            5,
+            5,
+            5,
+            5
+          ],
+          "mean": 5.0,
+          "stdev": 0.0,
+          "minimum": 5,
+          "maximum": 5,
+          "pairwise_disagreement_rate": 0.0,
+          "reliability_label": "stable",
+          "judge_error_count": 0,
+          "evidence_all_verified": true,
+          "evidence_any_unverified": false
+        },
+        {
+          "dimension_id": "clarity",
+          "type": "judged",
+          "status": "evaluated",
+          "not_evaluated_reason": null,
+          "checks": [],
+          "deterministic_passed": null,
+          "gate": null,
+          "runs": [
+            {
+              "run_index": 0,
+              "score": 5,
+              "rationale": "Concise and clear.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"Concise and clear.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 1,
+              "score": 5,
+              "rationale": "Concise and clear.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"Concise and clear.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 2,
+              "score": 5,
+              "rationale": "Concise and clear.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"Concise and clear.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 3,
+              "score": 5,
+              "rationale": "Concise and clear.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"Concise and clear.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 4,
+              "score": 5,
+              "rationale": "Concise and clear.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"Concise and clear.\", \"evidence_quote\": \"\"}",
+              "error": null
+            }
+          ],
+          "scores": [
+            5,
+            5,
+            5,
+            5,
+            5
+          ],
+          "mean": 5.0,
+          "stdev": 0.0,
+          "minimum": 5,
+          "maximum": 5,
+          "pairwise_disagreement_rate": 0.0,
+          "reliability_label": "stable",
+          "judge_error_count": 0,
+          "evidence_all_verified": null,
+          "evidence_any_unverified": null
+        }
+      ],
+      "verdict": {
+        "verdict": "Excellent",
+        "gate_status": "pass",
+        "deterministic_all_passed": true,
+        "judged_mean": 5.0,
+        "evaluated_judged_dimensions": [
+          "faithfulness",
+          "clarity"
+        ],
+        "not_evaluated_dimensions": [],
+        "unresolved_dimensions": [],
+        "capped_by": [],
+        "notes": []
+      },
+      "verdict_stability": {
+        "per_run_verdicts": [
+          "Excellent",
+          "Excellent",
+          "Excellent",
+          "Excellent",
+          "Excellent"
+        ],
+        "modal_verdict": "Excellent",
+        "distribution": {
+          "Excellent": 5
+        },
+        "agreement_fraction": 1.0,
+        "note": "Instruction judging runs once; per-run verdict variation reflects only the judged-dimension scores. A run with a judge error on any evaluable judged dimension is counted as 'Unresolved'."
+      },
+      "indicative_score": 5.0,
+      "errors": []
+    },
+    {
+      "item_id": "se-judgefail",
+      "task": "Write a reply to the customer below. Ticket #4200.\n\nCustomer: my coffee grinder is defective, bought it three weeks ago.",
+      "candidate_response": "Hi Aki, thanks for the note on ticket #4200. Your grinder is a defective unit reported within 30 days, so we'll send a free replacement. It ships within 3 business days once approved, and I've approved it now.",
+      "scenario": "the faithfulness judge failed on every run (simulated outage) — the dimension is not scored, not zeroed",
+      "author_note": null,
+      "dimensions": [
+        {
+          "dimension_id": "instruction_following",
+          "type": "gate",
+          "status": "evaluated",
+          "not_evaluated_reason": null,
+          "checks": [],
+          "deterministic_passed": null,
+          "gate": {
+            "dimension_id": "instruction_following",
+            "instructions": [
+              {
+                "text": "Includes the ticket number (a '#' followed by four or more digits)",
+                "method": "deterministic",
+                "status": "pass",
+                "detail": "required pattern /#\\d{4,}/ matched (matched '#4200')",
+                "check": {
+                  "name": "ticket_number",
+                  "kind": "required_regex",
+                  "expected": "required pattern /#\\d{4,}/ matches",
+                  "observed": "matched (matched '#4200')",
+                  "outcome": "pass",
+                  "explanation": "required pattern /#\\d{4,}/ matched (matched '#4200')"
+                },
+                "evidence": null
+              },
+              {
+                "text": "Acknowledges the customer's specific problem",
+                "method": "judge",
+                "status": "pass",
+                "detail": "Acknowledges the defective grinder.",
+                "check": null,
+                "evidence": null
+              },
+              {
+                "text": "States a concrete next step or timeframe",
+                "method": "judge",
+                "status": "pass",
+                "detail": "States the replacement ships within 3 business days.",
+                "check": null,
+                "evidence": null
+              }
+            ],
+            "status": "pass"
+          },
+          "runs": [],
+          "scores": [],
+          "mean": null,
+          "stdev": null,
+          "minimum": null,
+          "maximum": null,
+          "pairwise_disagreement_rate": null,
+          "reliability_label": null,
+          "judge_error_count": 0,
+          "evidence_all_verified": null,
+          "evidence_any_unverified": null
+        },
+        {
+          "dimension_id": "policy_safety",
+          "type": "deterministic",
+          "status": "evaluated",
+          "not_evaluated_reason": null,
+          "checks": [
+            {
+              "name": "no_overpromise",
+              "kind": "forbidden_regex",
+              "expected": "forbidden pattern /(?i)\\b(full refund|100% refund|guarantee(d)?|refund you|refund to your card)\\b/ does not match",
+              "observed": "no match",
+              "outcome": "pass",
+              "explanation": "forbidden pattern /(?i)\\b(full refund|100% refund|guarantee(d)?|refund you|refund to your card)\\b/ did not match"
+            }
+          ],
+          "deterministic_passed": true,
+          "gate": null,
+          "runs": [],
+          "scores": [],
+          "mean": null,
+          "stdev": null,
+          "minimum": null,
+          "maximum": null,
+          "pairwise_disagreement_rate": null,
+          "reliability_label": null,
+          "judge_error_count": 0,
+          "evidence_all_verified": null,
+          "evidence_any_unverified": null
+        },
+        {
+          "dimension_id": "faithfulness",
+          "type": "reference_grounded",
+          "status": "not_evaluated",
+          "not_evaluated_reason": "all 5 judge run(s) failed",
+          "checks": [],
+          "deterministic_passed": null,
+          "gate": null,
+          "runs": [
+            {
+              "run_index": 0,
+              "score": null,
+              "rationale": "",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": null,
+              "error": "provider error: provider unavailable"
+            },
+            {
+              "run_index": 1,
+              "score": null,
+              "rationale": "",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": null,
+              "error": "provider error: provider unavailable"
+            },
+            {
+              "run_index": 2,
+              "score": null,
+              "rationale": "",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": null,
+              "error": "provider error: provider unavailable"
+            },
+            {
+              "run_index": 3,
+              "score": null,
+              "rationale": "",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": null,
+              "error": "provider error: provider unavailable"
+            },
+            {
+              "run_index": 4,
+              "score": null,
+              "rationale": "",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": null,
+              "error": "provider error: provider unavailable"
+            }
+          ],
+          "scores": [],
+          "mean": null,
+          "stdev": null,
+          "minimum": null,
+          "maximum": null,
+          "pairwise_disagreement_rate": null,
+          "reliability_label": "not_applicable",
+          "judge_error_count": 5,
+          "evidence_all_verified": null,
+          "evidence_any_unverified": null
+        },
+        {
+          "dimension_id": "clarity",
+          "type": "judged",
+          "status": "evaluated",
+          "not_evaluated_reason": null,
+          "checks": [],
+          "deterministic_passed": null,
+          "gate": null,
+          "runs": [
+            {
+              "run_index": 0,
+              "score": 5,
+              "rationale": "Clear and correct.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"Clear and correct.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 1,
+              "score": 5,
+              "rationale": "Clear and correct.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"Clear and correct.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 2,
+              "score": 5,
+              "rationale": "Clear and correct.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"Clear and correct.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 3,
+              "score": 5,
+              "rationale": "Clear and correct.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"Clear and correct.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 4,
+              "score": 5,
+              "rationale": "Clear and correct.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"Clear and correct.\", \"evidence_quote\": \"\"}",
+              "error": null
+            }
+          ],
+          "scores": [
+            5,
+            5,
+            5,
+            5,
+            5
+          ],
+          "mean": 5.0,
+          "stdev": 0.0,
+          "minimum": 5,
+          "maximum": 5,
+          "pairwise_disagreement_rate": 0.0,
+          "reliability_label": "stable",
+          "judge_error_count": 0,
+          "evidence_all_verified": null,
+          "evidence_any_unverified": null
+        }
+      ],
+      "verdict": {
+        "verdict": "Excellent",
+        "gate_status": "pass",
+        "deterministic_all_passed": true,
+        "judged_mean": 5.0,
+        "evaluated_judged_dimensions": [
+          "clarity"
+        ],
+        "not_evaluated_dimensions": [
+          "faithfulness"
+        ],
+        "unresolved_dimensions": [],
+        "capped_by": [],
+        "notes": [
+          "judged dimensions not evaluated: faithfulness — excluded from the mean, NOT scored as zero"
+        ]
+      },
+      "verdict_stability": {
+        "per_run_verdicts": [
+          "Excellent",
+          "Excellent",
+          "Excellent",
+          "Excellent",
+          "Excellent"
+        ],
+        "modal_verdict": "Excellent",
+        "distribution": {
+          "Excellent": 5
+        },
+        "agreement_fraction": 1.0,
+        "note": "Instruction judging runs once; per-run verdict variation reflects only the judged-dimension scores. A run with a judge error on any evaluable judged dimension is counted as 'Unresolved'."
+      },
+      "indicative_score": 5.0,
+      "errors": [
+        "dimension 'faithfulness': all 5 judge run(s) failed — not scored"
+      ]
+    }
+  ],
+  "summary": {
+    "item_count": 4,
+    "verdict_counts": {
+      "Fail": 0,
+      "Needs work": 1,
+      "Acceptable": 0,
+      "Excellent": 3,
+      "Unresolved": 0
+    },
+    "gate_status_counts": {
+      "pass": 4,
+      "fail": 0,
+      "pending": 0,
+      "error": 0
+    },
+    "instruction_check_counts": {
+      "pass": 12,
+      "fail": 0,
+      "pending_judge": 0,
+      "error": 0
+    },
+    "reliability_counts": {
+      "stable": 7,
+      "some_variance": 0,
+      "unreliable": 0,
+      "not_applicable": 1
+    },
+    "evaluated_judged_dimension_count": 7,
+    "not_evaluated_dimension_count": 1,
+    "unverified_evidence_dimension_count": 0,
+    "judge_error_run_count": 5,
+    "items_with_errors_count": 1,
+    "dataset_verdict_agreement": 1.0
+  }
+}

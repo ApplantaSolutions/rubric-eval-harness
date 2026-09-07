@@ -1,0 +1,1363 @@
+{
+  "meta": {
+    "harness_version": "0.1.0",
+    "generated_at": "2026-01-01T00:00:00+00:00",
+    "rubric_id": "summarization_quality",
+    "rubric_title": "Summarization quality (reference-grounded)",
+    "rubric_version": 1,
+    "dataset_path": "datasets/summarization.jsonl",
+    "dataset_item_count": 4,
+    "provider": "mock",
+    "judge_model": null,
+    "judge_temperature": 0.0,
+    "runs": 5,
+    "command": "rubric-eval run --rubric rubrics/summarization_quality.yaml --dataset datasets/summarization.jsonl --provider mock --mock-judgments datasets/_mock_judgments.json --out examples/",
+    "git_commit": null
+  },
+  "items": [
+    {
+      "item_id": "sum-strong",
+      "task": "Summarise the passage below in three sentences or fewer. Neutral tone.\n\nThe Aldergrove Regional Transit board approved a pilot that adds two express bus routes on the north corridor beginning in March. Staff modelling projects a ten percent ridership increase in the first year and an operating break-even by year three. The board asked staff to report back on wheelchair-accessible boarding at the two new terminals.",
+      "candidate_response": "The Aldergrove Regional Transit board approved a pilot adding two express bus routes on the north corridor from March. Modelling projects a ten percent ridership increase in the first year and operating break-even by year three. The board also requested a follow-up on accessible boarding at the new terminals.",
+      "scenario": "strong response — faithful, within limits, covers the required points",
+      "author_note": null,
+      "dimensions": [
+        {
+          "dimension_id": "instruction_following",
+          "type": "gate",
+          "status": "evaluated",
+          "not_evaluated_reason": null,
+          "checks": [],
+          "deterministic_passed": null,
+          "gate": {
+            "dimension_id": "instruction_following",
+            "instructions": [
+              {
+                "text": "Contains no first-person opinion or editorialising",
+                "method": "judge",
+                "status": "pass",
+                "detail": "Neutral throughout; no first-person opinion.",
+                "check": null,
+                "evidence": null
+              },
+              {
+                "text": "Uses at most 60 words",
+                "method": "deterministic",
+                "status": "pass",
+                "detail": "response has 49 words (within the 60-word limit)",
+                "check": {
+                  "name": "max_words",
+                  "kind": "max_word_count",
+                  "expected": "at most 60 words",
+                  "observed": "49 words",
+                  "outcome": "pass",
+                  "explanation": "response has 49 words (within the 60-word limit)"
+                },
+                "evidence": null
+              },
+              {
+                "text": "Is three sentences or fewer",
+                "method": "deterministic",
+                "status": "pass",
+                "detail": "response has ~3 sentences; limit is 3",
+                "check": {
+                  "name": "max_sentences",
+                  "kind": "max_sentences",
+                  "expected": "at most 3 sentences",
+                  "observed": "3 sentences",
+                  "outcome": "pass",
+                  "explanation": "response has ~3 sentences; limit is 3"
+                },
+                "evidence": null
+              },
+              {
+                "text": "Plain prose — no markdown headings or bullet lists",
+                "method": "deterministic",
+                "status": "pass",
+                "detail": "forbidden pattern /(?m)^\\s*(#|[-*]\\s)/ did not match",
+                "check": {
+                  "name": "no_markdown",
+                  "kind": "forbidden_regex",
+                  "expected": "forbidden pattern /(?m)^\\s*(#|[-*]\\s)/ does not match",
+                  "observed": "no match",
+                  "outcome": "pass",
+                  "explanation": "forbidden pattern /(?m)^\\s*(#|[-*]\\s)/ did not match"
+                },
+                "evidence": null
+              }
+            ],
+            "status": "pass"
+          },
+          "runs": [],
+          "scores": [],
+          "mean": null,
+          "stdev": null,
+          "minimum": null,
+          "maximum": null,
+          "pairwise_disagreement_rate": null,
+          "reliability_label": null,
+          "judge_error_count": 0,
+          "evidence_all_verified": null,
+          "evidence_any_unverified": null
+        },
+        {
+          "dimension_id": "faithfulness",
+          "type": "reference_grounded",
+          "status": "evaluated",
+          "not_evaluated_reason": null,
+          "checks": [],
+          "deterministic_passed": null,
+          "gate": null,
+          "runs": [
+            {
+              "run_index": 0,
+              "score": 5,
+              "rationale": "Every claim maps to the passage.",
+              "evidence": {
+                "quote": "two express bus routes on the north corridor",
+                "verified": true,
+                "method": "exact",
+                "note": ""
+              },
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"Every claim maps to the passage.\", \"evidence_quote\": \"two express bus routes on the north corridor\"}",
+              "error": null
+            },
+            {
+              "run_index": 1,
+              "score": 5,
+              "rationale": "Fully supported.",
+              "evidence": {
+                "quote": "a ten percent ridership increase in the first year",
+                "verified": true,
+                "method": "exact",
+                "note": ""
+              },
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"Fully supported.\", \"evidence_quote\": \"a ten percent ridership increase in the first year\"}",
+              "error": null
+            },
+            {
+              "run_index": 2,
+              "score": 5,
+              "rationale": "Fully supported.",
+              "evidence": {
+                "quote": "two express bus routes on the north corridor",
+                "verified": true,
+                "method": "exact",
+                "note": ""
+              },
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"Fully supported.\", \"evidence_quote\": \"two express bus routes on the north corridor\"}",
+              "error": null
+            },
+            {
+              "run_index": 3,
+              "score": 5,
+              "rationale": "Fully supported.",
+              "evidence": {
+                "quote": "an operating break-even\nby year three",
+                "verified": true,
+                "method": "normalized",
+                "note": "Matched the reference after normalizing whitespace, quote characters, and surrounding punctuation."
+              },
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"Fully supported.\", \"evidence_quote\": \"an operating break-even\\nby year three\"}",
+              "error": null
+            },
+            {
+              "run_index": 4,
+              "score": 5,
+              "rationale": "Fully supported.",
+              "evidence": {
+                "quote": "two express bus routes on the north corridor",
+                "verified": true,
+                "method": "exact",
+                "note": ""
+              },
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"Fully supported.\", \"evidence_quote\": \"two express bus routes on the north corridor\"}",
+              "error": null
+            }
+          ],
+          "scores": [
+            5,
+            5,
+            5,
+            5,
+            5
+          ],
+          "mean": 5.0,
+          "stdev": 0.0,
+          "minimum": 5,
+          "maximum": 5,
+          "pairwise_disagreement_rate": 0.0,
+          "reliability_label": "stable",
+          "judge_error_count": 0,
+          "evidence_all_verified": true,
+          "evidence_any_unverified": false
+        },
+        {
+          "dimension_id": "completeness",
+          "type": "spec_grounded",
+          "status": "evaluated",
+          "not_evaluated_reason": null,
+          "checks": [],
+          "deterministic_passed": null,
+          "gate": null,
+          "runs": [
+            {
+              "run_index": 0,
+              "score": 5,
+              "rationale": "Covers both required points.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"Covers both required points.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 1,
+              "score": 5,
+              "rationale": "Covers both required points.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"Covers both required points.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 2,
+              "score": 5,
+              "rationale": "Covers both required points.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"Covers both required points.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 3,
+              "score": 5,
+              "rationale": "Covers both required points.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"Covers both required points.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 4,
+              "score": 5,
+              "rationale": "Covers both required points.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"Covers both required points.\", \"evidence_quote\": \"\"}",
+              "error": null
+            }
+          ],
+          "scores": [
+            5,
+            5,
+            5,
+            5,
+            5
+          ],
+          "mean": 5.0,
+          "stdev": 0.0,
+          "minimum": 5,
+          "maximum": 5,
+          "pairwise_disagreement_rate": 0.0,
+          "reliability_label": "stable",
+          "judge_error_count": 0,
+          "evidence_all_verified": null,
+          "evidence_any_unverified": null
+        },
+        {
+          "dimension_id": "clarity",
+          "type": "judged",
+          "status": "evaluated",
+          "not_evaluated_reason": null,
+          "checks": [],
+          "deterministic_passed": null,
+          "gate": null,
+          "runs": [
+            {
+              "run_index": 0,
+              "score": 5,
+              "rationale": "Well ordered and plain.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"Well ordered and plain.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 1,
+              "score": 5,
+              "rationale": "Well ordered and plain.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"Well ordered and plain.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 2,
+              "score": 5,
+              "rationale": "Well ordered and plain.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"Well ordered and plain.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 3,
+              "score": 5,
+              "rationale": "Well ordered and plain.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"Well ordered and plain.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 4,
+              "score": 5,
+              "rationale": "Well ordered and plain.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"Well ordered and plain.\", \"evidence_quote\": \"\"}",
+              "error": null
+            }
+          ],
+          "scores": [
+            5,
+            5,
+            5,
+            5,
+            5
+          ],
+          "mean": 5.0,
+          "stdev": 0.0,
+          "minimum": 5,
+          "maximum": 5,
+          "pairwise_disagreement_rate": 0.0,
+          "reliability_label": "stable",
+          "judge_error_count": 0,
+          "evidence_all_verified": null,
+          "evidence_any_unverified": null
+        }
+      ],
+      "verdict": {
+        "verdict": "Excellent",
+        "gate_status": "pass",
+        "deterministic_all_passed": true,
+        "judged_mean": 5.0,
+        "evaluated_judged_dimensions": [
+          "faithfulness",
+          "completeness",
+          "clarity"
+        ],
+        "not_evaluated_dimensions": [],
+        "unresolved_dimensions": [],
+        "capped_by": [],
+        "notes": []
+      },
+      "verdict_stability": {
+        "per_run_verdicts": [
+          "Excellent",
+          "Excellent",
+          "Excellent",
+          "Excellent",
+          "Excellent"
+        ],
+        "modal_verdict": "Excellent",
+        "distribution": {
+          "Excellent": 5
+        },
+        "agreement_fraction": 1.0,
+        "note": "Instruction judging runs once; per-run verdict variation reflects only the judged-dimension scores. A run with a judge error on any evaluable judged dimension is counted as 'Unresolved'."
+      },
+      "indicative_score": 5.0,
+      "errors": []
+    },
+    {
+      "item_id": "sum-wordy",
+      "task": "Summarise the passage below in three sentences or fewer. Neutral tone.\n\nThe Aldergrove Regional Transit board approved a pilot that adds two express bus routes on the north corridor beginning in March. Staff modelling projects a ten percent ridership increase in the first year and an operating break-even by year three. The board asked staff to report back on wheelchair-accessible boarding at the two new terminals.",
+      "candidate_response": "The Aldergrove Regional Transit board has approved a new pilot programme that will add two additional express bus routes running along the north corridor of the city, with service scheduled to begin at some point in March of next year, and the internal modelling work that staff carried out projects that there will be roughly a ten percent increase in overall ridership during the first full year of operation, with the new routes reaching an operating break-even point by the third year of the programme.",
+      "scenario": "deterministic instruction failure — exceeds the 60-word limit",
+      "author_note": "Faithful and clear, but fails a hard length rule; verdict should be Fail.",
+      "dimensions": [
+        {
+          "dimension_id": "instruction_following",
+          "type": "gate",
+          "status": "evaluated",
+          "not_evaluated_reason": null,
+          "checks": [],
+          "deterministic_passed": null,
+          "gate": {
+            "dimension_id": "instruction_following",
+            "instructions": [
+              {
+                "text": "Contains no first-person opinion or editorialising",
+                "method": "judge",
+                "status": "pass",
+                "detail": "No opinion, though very long.",
+                "check": null,
+                "evidence": null
+              },
+              {
+                "text": "Uses at most 60 words",
+                "method": "deterministic",
+                "status": "fail",
+                "detail": "response has 85 words; limit is 60",
+                "check": {
+                  "name": "max_words",
+                  "kind": "max_word_count",
+                  "expected": "at most 60 words",
+                  "observed": "85 words",
+                  "outcome": "fail",
+                  "explanation": "response has 85 words; limit is 60"
+                },
+                "evidence": null
+              },
+              {
+                "text": "Is three sentences or fewer",
+                "method": "deterministic",
+                "status": "pass",
+                "detail": "response has ~1 sentences; limit is 3",
+                "check": {
+                  "name": "max_sentences",
+                  "kind": "max_sentences",
+                  "expected": "at most 3 sentences",
+                  "observed": "1 sentences",
+                  "outcome": "pass",
+                  "explanation": "response has ~1 sentences; limit is 3"
+                },
+                "evidence": null
+              },
+              {
+                "text": "Plain prose — no markdown headings or bullet lists",
+                "method": "deterministic",
+                "status": "pass",
+                "detail": "forbidden pattern /(?m)^\\s*(#|[-*]\\s)/ did not match",
+                "check": {
+                  "name": "no_markdown",
+                  "kind": "forbidden_regex",
+                  "expected": "forbidden pattern /(?m)^\\s*(#|[-*]\\s)/ does not match",
+                  "observed": "no match",
+                  "outcome": "pass",
+                  "explanation": "forbidden pattern /(?m)^\\s*(#|[-*]\\s)/ did not match"
+                },
+                "evidence": null
+              }
+            ],
+            "status": "fail"
+          },
+          "runs": [],
+          "scores": [],
+          "mean": null,
+          "stdev": null,
+          "minimum": null,
+          "maximum": null,
+          "pairwise_disagreement_rate": null,
+          "reliability_label": null,
+          "judge_error_count": 0,
+          "evidence_all_verified": null,
+          "evidence_any_unverified": null
+        },
+        {
+          "dimension_id": "faithfulness",
+          "type": "reference_grounded",
+          "status": "evaluated",
+          "not_evaluated_reason": null,
+          "checks": [],
+          "deterministic_passed": null,
+          "gate": null,
+          "runs": [
+            {
+              "run_index": 0,
+              "score": 5,
+              "rationale": "Faithful to the passage.",
+              "evidence": {
+                "quote": "two express bus routes on the north corridor",
+                "verified": true,
+                "method": "exact",
+                "note": ""
+              },
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"Faithful to the passage.\", \"evidence_quote\": \"two express bus routes on the north corridor\"}",
+              "error": null
+            },
+            {
+              "run_index": 1,
+              "score": 5,
+              "rationale": "Faithful to the passage.",
+              "evidence": {
+                "quote": "two express bus routes on the north corridor",
+                "verified": true,
+                "method": "exact",
+                "note": ""
+              },
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"Faithful to the passage.\", \"evidence_quote\": \"two express bus routes on the north corridor\"}",
+              "error": null
+            },
+            {
+              "run_index": 2,
+              "score": 5,
+              "rationale": "Faithful to the passage.",
+              "evidence": {
+                "quote": "two express bus routes on the north corridor",
+                "verified": true,
+                "method": "exact",
+                "note": ""
+              },
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"Faithful to the passage.\", \"evidence_quote\": \"two express bus routes on the north corridor\"}",
+              "error": null
+            },
+            {
+              "run_index": 3,
+              "score": 5,
+              "rationale": "Faithful to the passage.",
+              "evidence": {
+                "quote": "two express bus routes on the north corridor",
+                "verified": true,
+                "method": "exact",
+                "note": ""
+              },
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"Faithful to the passage.\", \"evidence_quote\": \"two express bus routes on the north corridor\"}",
+              "error": null
+            },
+            {
+              "run_index": 4,
+              "score": 5,
+              "rationale": "Faithful to the passage.",
+              "evidence": {
+                "quote": "two express bus routes on the north corridor",
+                "verified": true,
+                "method": "exact",
+                "note": ""
+              },
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"Faithful to the passage.\", \"evidence_quote\": \"two express bus routes on the north corridor\"}",
+              "error": null
+            }
+          ],
+          "scores": [
+            5,
+            5,
+            5,
+            5,
+            5
+          ],
+          "mean": 5.0,
+          "stdev": 0.0,
+          "minimum": 5,
+          "maximum": 5,
+          "pairwise_disagreement_rate": 0.0,
+          "reliability_label": "stable",
+          "judge_error_count": 0,
+          "evidence_all_verified": true,
+          "evidence_any_unverified": false
+        },
+        {
+          "dimension_id": "completeness",
+          "type": "spec_grounded",
+          "status": "evaluated",
+          "not_evaluated_reason": null,
+          "checks": [],
+          "deterministic_passed": null,
+          "gate": null,
+          "runs": [
+            {
+              "run_index": 0,
+              "score": 5,
+              "rationale": "Covers both required points.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"Covers both required points.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 1,
+              "score": 5,
+              "rationale": "Covers both required points.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"Covers both required points.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 2,
+              "score": 5,
+              "rationale": "Covers both required points.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"Covers both required points.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 3,
+              "score": 5,
+              "rationale": "Covers both required points.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"Covers both required points.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 4,
+              "score": 5,
+              "rationale": "Covers both required points.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"Covers both required points.\", \"evidence_quote\": \"\"}",
+              "error": null
+            }
+          ],
+          "scores": [
+            5,
+            5,
+            5,
+            5,
+            5
+          ],
+          "mean": 5.0,
+          "stdev": 0.0,
+          "minimum": 5,
+          "maximum": 5,
+          "pairwise_disagreement_rate": 0.0,
+          "reliability_label": "stable",
+          "judge_error_count": 0,
+          "evidence_all_verified": null,
+          "evidence_any_unverified": null
+        },
+        {
+          "dimension_id": "clarity",
+          "type": "judged",
+          "status": "evaluated",
+          "not_evaluated_reason": null,
+          "checks": [],
+          "deterministic_passed": null,
+          "gate": null,
+          "runs": [
+            {
+              "run_index": 0,
+              "score": 3,
+              "rationale": "One 78-word run-on sentence; hard to scan.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 3, \"rationale\": \"One 78-word run-on sentence; hard to scan.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 1,
+              "score": 3,
+              "rationale": "One 78-word run-on sentence; hard to scan.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 3, \"rationale\": \"One 78-word run-on sentence; hard to scan.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 2,
+              "score": 3,
+              "rationale": "One 78-word run-on sentence; hard to scan.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 3, \"rationale\": \"One 78-word run-on sentence; hard to scan.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 3,
+              "score": 3,
+              "rationale": "One 78-word run-on sentence; hard to scan.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 3, \"rationale\": \"One 78-word run-on sentence; hard to scan.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 4,
+              "score": 3,
+              "rationale": "One 78-word run-on sentence; hard to scan.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 3, \"rationale\": \"One 78-word run-on sentence; hard to scan.\", \"evidence_quote\": \"\"}",
+              "error": null
+            }
+          ],
+          "scores": [
+            3,
+            3,
+            3,
+            3,
+            3
+          ],
+          "mean": 3.0,
+          "stdev": 0.0,
+          "minimum": 3,
+          "maximum": 3,
+          "pairwise_disagreement_rate": 0.0,
+          "reliability_label": "stable",
+          "judge_error_count": 0,
+          "evidence_all_verified": null,
+          "evidence_any_unverified": null
+        }
+      ],
+      "verdict": {
+        "verdict": "Fail",
+        "gate_status": "fail",
+        "deterministic_all_passed": true,
+        "judged_mean": null,
+        "evaluated_judged_dimensions": [],
+        "not_evaluated_dimensions": [],
+        "unresolved_dimensions": [],
+        "capped_by": [
+          "instruction-following gate failed"
+        ],
+        "notes": []
+      },
+      "verdict_stability": {
+        "per_run_verdicts": [
+          "Fail",
+          "Fail",
+          "Fail",
+          "Fail",
+          "Fail"
+        ],
+        "modal_verdict": "Fail",
+        "distribution": {
+          "Fail": 5
+        },
+        "agreement_fraction": 1.0,
+        "note": "Instruction judging runs once; per-run verdict variation reflects only the judged-dimension scores. A run with a judge error on any evaluable judged dimension is counted as 'Unresolved'."
+      },
+      "indicative_score": 4.33,
+      "errors": []
+    },
+    {
+      "item_id": "sum-opinion-drift",
+      "task": "Summarise the passage below in three sentences or fewer. Neutral tone.\n\nThe Ferndale School District's 2027 budget raises per-pupil spending by four percent and funds a new after-school tutoring programme at all eight elementary schools. The board deferred a decision on replacing the district's aging bus fleet to the spring session.",
+      "candidate_response": "The Ferndale School District's 2027 budget raises per-pupil spending by four percent and funds after-school tutoring at all eight elementary schools. Frankly this is a long-overdue and welcome investment in students. The board put off replacing the old bus fleet until spring.",
+      "scenario": "judged instruction failure (editorialising) + judge disagreement on faithfulness",
+      "author_note": null,
+      "dimensions": [
+        {
+          "dimension_id": "instruction_following",
+          "type": "gate",
+          "status": "evaluated",
+          "not_evaluated_reason": null,
+          "checks": [],
+          "deterministic_passed": null,
+          "gate": {
+            "dimension_id": "instruction_following",
+            "instructions": [
+              {
+                "text": "Contains no first-person opinion or editorialising",
+                "method": "judge",
+                "status": "fail",
+                "detail": "'Frankly this is a long-overdue and welcome investment' is the writer's opinion.",
+                "check": null,
+                "evidence": null
+              },
+              {
+                "text": "Uses at most 60 words",
+                "method": "deterministic",
+                "status": "pass",
+                "detail": "response has 42 words (within the 60-word limit)",
+                "check": {
+                  "name": "max_words",
+                  "kind": "max_word_count",
+                  "expected": "at most 60 words",
+                  "observed": "42 words",
+                  "outcome": "pass",
+                  "explanation": "response has 42 words (within the 60-word limit)"
+                },
+                "evidence": null
+              },
+              {
+                "text": "Is three sentences or fewer",
+                "method": "deterministic",
+                "status": "pass",
+                "detail": "response has ~3 sentences; limit is 3",
+                "check": {
+                  "name": "max_sentences",
+                  "kind": "max_sentences",
+                  "expected": "at most 3 sentences",
+                  "observed": "3 sentences",
+                  "outcome": "pass",
+                  "explanation": "response has ~3 sentences; limit is 3"
+                },
+                "evidence": null
+              },
+              {
+                "text": "Plain prose — no markdown headings or bullet lists",
+                "method": "deterministic",
+                "status": "pass",
+                "detail": "forbidden pattern /(?m)^\\s*(#|[-*]\\s)/ did not match",
+                "check": {
+                  "name": "no_markdown",
+                  "kind": "forbidden_regex",
+                  "expected": "forbidden pattern /(?m)^\\s*(#|[-*]\\s)/ does not match",
+                  "observed": "no match",
+                  "outcome": "pass",
+                  "explanation": "forbidden pattern /(?m)^\\s*(#|[-*]\\s)/ did not match"
+                },
+                "evidence": null
+              }
+            ],
+            "status": "fail"
+          },
+          "runs": [],
+          "scores": [],
+          "mean": null,
+          "stdev": null,
+          "minimum": null,
+          "maximum": null,
+          "pairwise_disagreement_rate": null,
+          "reliability_label": null,
+          "judge_error_count": 0,
+          "evidence_all_verified": null,
+          "evidence_any_unverified": null
+        },
+        {
+          "dimension_id": "faithfulness",
+          "type": "reference_grounded",
+          "status": "evaluated",
+          "not_evaluated_reason": null,
+          "checks": [],
+          "deterministic_passed": null,
+          "gate": null,
+          "runs": [
+            {
+              "run_index": 0,
+              "score": 4,
+              "rationale": "Facts match; the opinion sentence adds nothing unsupported.",
+              "evidence": {
+                "quote": "raises per-pupil spending by four\npercent",
+                "verified": true,
+                "method": "normalized",
+                "note": "Matched the reference after normalizing whitespace, quote characters, and surrounding punctuation."
+              },
+              "attempts": 1,
+              "raw_response": "{\"score\": 4, \"rationale\": \"Facts match; the opinion sentence adds nothing unsupported.\", \"evidence_quote\": \"raises per-pupil spending by four\\npercent\"}",
+              "error": null
+            },
+            {
+              "run_index": 1,
+              "score": 3,
+              "rationale": "The 'long-overdue' framing reads as an unsupported evaluative claim.",
+              "evidence": {
+                "quote": "raises per-pupil spending by four\npercent",
+                "verified": true,
+                "method": "normalized",
+                "note": "Matched the reference after normalizing whitespace, quote characters, and surrounding punctuation."
+              },
+              "attempts": 1,
+              "raw_response": "{\"score\": 3, \"rationale\": \"The 'long-overdue' framing reads as an unsupported evaluative claim.\", \"evidence_quote\": \"raises per-pupil spending by four\\npercent\"}",
+              "error": null
+            },
+            {
+              "run_index": 2,
+              "score": 4,
+              "rationale": "Core facts supported.",
+              "evidence": {
+                "quote": "funds a new after-school tutoring programme at all eight elementary\nschools",
+                "verified": true,
+                "method": "normalized",
+                "note": "Matched the reference after normalizing whitespace, quote characters, and surrounding punctuation."
+              },
+              "attempts": 1,
+              "raw_response": "{\"score\": 4, \"rationale\": \"Core facts supported.\", \"evidence_quote\": \"funds a new after-school tutoring programme at all eight elementary\\nschools\"}",
+              "error": null
+            },
+            {
+              "run_index": 3,
+              "score": 2,
+              "rationale": "Editorial claim treated as an unsupported assertion about the budget.",
+              "evidence": {
+                "quote": "",
+                "verified": false,
+                "method": "empty",
+                "note": "The judge returned no supporting quotation."
+              },
+              "attempts": 1,
+              "raw_response": "{\"score\": 2, \"rationale\": \"Editorial claim treated as an unsupported assertion about the budget.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 4,
+              "score": 4,
+              "rationale": "Facts supported.",
+              "evidence": {
+                "quote": "raises per-pupil spending by four\npercent",
+                "verified": true,
+                "method": "normalized",
+                "note": "Matched the reference after normalizing whitespace, quote characters, and surrounding punctuation."
+              },
+              "attempts": 1,
+              "raw_response": "{\"score\": 4, \"rationale\": \"Facts supported.\", \"evidence_quote\": \"raises per-pupil spending by four\\npercent\"}",
+              "error": null
+            }
+          ],
+          "scores": [
+            4,
+            3,
+            4,
+            2,
+            4
+          ],
+          "mean": 3.4,
+          "stdev": 0.8,
+          "minimum": 2,
+          "maximum": 4,
+          "pairwise_disagreement_rate": 0.3,
+          "reliability_label": "some_variance",
+          "judge_error_count": 0,
+          "evidence_all_verified": false,
+          "evidence_any_unverified": false
+        },
+        {
+          "dimension_id": "completeness",
+          "type": "spec_grounded",
+          "status": "evaluated",
+          "not_evaluated_reason": null,
+          "checks": [],
+          "deterministic_passed": null,
+          "gate": null,
+          "runs": [
+            {
+              "run_index": 0,
+              "score": 5,
+              "rationale": "Both required points covered.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"Both required points covered.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 1,
+              "score": 5,
+              "rationale": "Both required points covered.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"Both required points covered.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 2,
+              "score": 5,
+              "rationale": "Both required points covered.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"Both required points covered.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 3,
+              "score": 5,
+              "rationale": "Both required points covered.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"Both required points covered.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 4,
+              "score": 5,
+              "rationale": "Both required points covered.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"Both required points covered.\", \"evidence_quote\": \"\"}",
+              "error": null
+            }
+          ],
+          "scores": [
+            5,
+            5,
+            5,
+            5,
+            5
+          ],
+          "mean": 5.0,
+          "stdev": 0.0,
+          "minimum": 5,
+          "maximum": 5,
+          "pairwise_disagreement_rate": 0.0,
+          "reliability_label": "stable",
+          "judge_error_count": 0,
+          "evidence_all_verified": null,
+          "evidence_any_unverified": null
+        },
+        {
+          "dimension_id": "clarity",
+          "type": "judged",
+          "status": "evaluated",
+          "not_evaluated_reason": null,
+          "checks": [],
+          "deterministic_passed": null,
+          "gate": null,
+          "runs": [
+            {
+              "run_index": 0,
+              "score": 4,
+              "rationale": "Readable.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 4, \"rationale\": \"Readable.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 1,
+              "score": 4,
+              "rationale": "Readable.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 4, \"rationale\": \"Readable.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 2,
+              "score": 3,
+              "rationale": "The opinion sentence interrupts the flow.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 3, \"rationale\": \"The opinion sentence interrupts the flow.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 3,
+              "score": 4,
+              "rationale": "Readable.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 4, \"rationale\": \"Readable.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 4,
+              "score": 4,
+              "rationale": "Readable.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 4, \"rationale\": \"Readable.\", \"evidence_quote\": \"\"}",
+              "error": null
+            }
+          ],
+          "scores": [
+            4,
+            4,
+            3,
+            4,
+            4
+          ],
+          "mean": 3.8,
+          "stdev": 0.4,
+          "minimum": 3,
+          "maximum": 4,
+          "pairwise_disagreement_rate": 0.0,
+          "reliability_label": "stable",
+          "judge_error_count": 0,
+          "evidence_all_verified": null,
+          "evidence_any_unverified": null
+        }
+      ],
+      "verdict": {
+        "verdict": "Fail",
+        "gate_status": "fail",
+        "deterministic_all_passed": true,
+        "judged_mean": null,
+        "evaluated_judged_dimensions": [],
+        "not_evaluated_dimensions": [],
+        "unresolved_dimensions": [],
+        "capped_by": [
+          "instruction-following gate failed"
+        ],
+        "notes": []
+      },
+      "verdict_stability": {
+        "per_run_verdicts": [
+          "Fail",
+          "Fail",
+          "Fail",
+          "Fail",
+          "Fail"
+        ],
+        "modal_verdict": "Fail",
+        "distribution": {
+          "Fail": 5
+        },
+        "agreement_fraction": 1.0,
+        "note": "Instruction judging runs once; per-run verdict variation reflects only the judged-dimension scores. A run with a judge error on any evaluable judged dimension is counted as 'Unresolved'."
+      },
+      "indicative_score": 4.07,
+      "errors": []
+    },
+    {
+      "item_id": "sum-noref",
+      "task": "Summarise the customer's message below in three sentences or fewer. Neutral tone.\n\n(customer message omitted from this record)",
+      "candidate_response": "The customer says their delivery arrived two days late and one box was damaged. They want a partial credit and confirmation that the replacement has shipped. They also ask to be moved to a later delivery window from now on.",
+      "scenario": "no reference or required points supplied — faithfulness and completeness cannot be scored",
+      "author_note": "Demonstrates NOT_EVALUATED: two judged dimensions are excluded, not zeroed.",
+      "dimensions": [
+        {
+          "dimension_id": "instruction_following",
+          "type": "gate",
+          "status": "evaluated",
+          "not_evaluated_reason": null,
+          "checks": [],
+          "deterministic_passed": null,
+          "gate": {
+            "dimension_id": "instruction_following",
+            "instructions": [
+              {
+                "text": "Contains no first-person opinion or editorialising",
+                "method": "judge",
+                "status": "pass",
+                "detail": "Neutral tone.",
+                "check": null,
+                "evidence": null
+              },
+              {
+                "text": "Uses at most 60 words",
+                "method": "deterministic",
+                "status": "pass",
+                "detail": "response has 40 words (within the 60-word limit)",
+                "check": {
+                  "name": "max_words",
+                  "kind": "max_word_count",
+                  "expected": "at most 60 words",
+                  "observed": "40 words",
+                  "outcome": "pass",
+                  "explanation": "response has 40 words (within the 60-word limit)"
+                },
+                "evidence": null
+              },
+              {
+                "text": "Is three sentences or fewer",
+                "method": "deterministic",
+                "status": "pass",
+                "detail": "response has ~3 sentences; limit is 3",
+                "check": {
+                  "name": "max_sentences",
+                  "kind": "max_sentences",
+                  "expected": "at most 3 sentences",
+                  "observed": "3 sentences",
+                  "outcome": "pass",
+                  "explanation": "response has ~3 sentences; limit is 3"
+                },
+                "evidence": null
+              },
+              {
+                "text": "Plain prose — no markdown headings or bullet lists",
+                "method": "deterministic",
+                "status": "pass",
+                "detail": "forbidden pattern /(?m)^\\s*(#|[-*]\\s)/ did not match",
+                "check": {
+                  "name": "no_markdown",
+                  "kind": "forbidden_regex",
+                  "expected": "forbidden pattern /(?m)^\\s*(#|[-*]\\s)/ does not match",
+                  "observed": "no match",
+                  "outcome": "pass",
+                  "explanation": "forbidden pattern /(?m)^\\s*(#|[-*]\\s)/ did not match"
+                },
+                "evidence": null
+              }
+            ],
+            "status": "pass"
+          },
+          "runs": [],
+          "scores": [],
+          "mean": null,
+          "stdev": null,
+          "minimum": null,
+          "maximum": null,
+          "pairwise_disagreement_rate": null,
+          "reliability_label": null,
+          "judge_error_count": 0,
+          "evidence_all_verified": null,
+          "evidence_any_unverified": null
+        },
+        {
+          "dimension_id": "faithfulness",
+          "type": "reference_grounded",
+          "status": "not_evaluated",
+          "not_evaluated_reason": "dimension 'faithfulness' requires a reference passage, but this item supplies none",
+          "checks": [],
+          "deterministic_passed": null,
+          "gate": null,
+          "runs": [],
+          "scores": [],
+          "mean": null,
+          "stdev": null,
+          "minimum": null,
+          "maximum": null,
+          "pairwise_disagreement_rate": null,
+          "reliability_label": null,
+          "judge_error_count": 0,
+          "evidence_all_verified": null,
+          "evidence_any_unverified": null
+        },
+        {
+          "dimension_id": "completeness",
+          "type": "spec_grounded",
+          "status": "not_evaluated",
+          "not_evaluated_reason": "dimension 'completeness' requires a reference passage or a required_points list, but this item supplies neither",
+          "checks": [],
+          "deterministic_passed": null,
+          "gate": null,
+          "runs": [],
+          "scores": [],
+          "mean": null,
+          "stdev": null,
+          "minimum": null,
+          "maximum": null,
+          "pairwise_disagreement_rate": null,
+          "reliability_label": null,
+          "judge_error_count": 0,
+          "evidence_all_verified": null,
+          "evidence_any_unverified": null
+        },
+        {
+          "dimension_id": "clarity",
+          "type": "judged",
+          "status": "evaluated",
+          "not_evaluated_reason": null,
+          "checks": [],
+          "deterministic_passed": null,
+          "gate": null,
+          "runs": [
+            {
+              "run_index": 0,
+              "score": 3,
+              "rationale": "Understandable; slightly list-like.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 3, \"rationale\": \"Understandable; slightly list-like.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 1,
+              "score": 3,
+              "rationale": "Understandable; slightly list-like.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 3, \"rationale\": \"Understandable; slightly list-like.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 2,
+              "score": 3,
+              "rationale": "Understandable; slightly list-like.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 3, \"rationale\": \"Understandable; slightly list-like.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 3,
+              "score": 3,
+              "rationale": "Understandable; slightly list-like.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 3, \"rationale\": \"Understandable; slightly list-like.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 4,
+              "score": 3,
+              "rationale": "Understandable; slightly list-like.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 3, \"rationale\": \"Understandable; slightly list-like.\", \"evidence_quote\": \"\"}",
+              "error": null
+            }
+          ],
+          "scores": [
+            3,
+            3,
+            3,
+            3,
+            3
+          ],
+          "mean": 3.0,
+          "stdev": 0.0,
+          "minimum": 3,
+          "maximum": 3,
+          "pairwise_disagreement_rate": 0.0,
+          "reliability_label": "stable",
+          "judge_error_count": 0,
+          "evidence_all_verified": null,
+          "evidence_any_unverified": null
+        }
+      ],
+      "verdict": {
+        "verdict": "Acceptable",
+        "gate_status": "pass",
+        "deterministic_all_passed": true,
+        "judged_mean": 3.0,
+        "evaluated_judged_dimensions": [
+          "clarity"
+        ],
+        "not_evaluated_dimensions": [
+          "faithfulness",
+          "completeness"
+        ],
+        "unresolved_dimensions": [],
+        "capped_by": [],
+        "notes": [
+          "judged dimensions not evaluated: faithfulness, completeness — excluded from the mean, NOT scored as zero"
+        ]
+      },
+      "verdict_stability": {
+        "per_run_verdicts": [
+          "Acceptable",
+          "Acceptable",
+          "Acceptable",
+          "Acceptable",
+          "Acceptable"
+        ],
+        "modal_verdict": "Acceptable",
+        "distribution": {
+          "Acceptable": 5
+        },
+        "agreement_fraction": 1.0,
+        "note": "Instruction judging runs once; per-run verdict variation reflects only the judged-dimension scores. A run with a judge error on any evaluable judged dimension is counted as 'Unresolved'."
+      },
+      "indicative_score": 3.0,
+      "errors": []
+    }
+  ],
+  "summary": {
+    "item_count": 4,
+    "verdict_counts": {
+      "Fail": 2,
+      "Needs work": 0,
+      "Acceptable": 1,
+      "Excellent": 1,
+      "Unresolved": 0
+    },
+    "gate_status_counts": {
+      "pass": 2,
+      "fail": 2,
+      "pending": 0,
+      "error": 0
+    },
+    "instruction_check_counts": {
+      "pass": 14,
+      "fail": 2,
+      "pending_judge": 0,
+      "error": 0
+    },
+    "reliability_counts": {
+      "stable": 9,
+      "some_variance": 1,
+      "unreliable": 0,
+      "not_applicable": 0
+    },
+    "evaluated_judged_dimension_count": 10,
+    "not_evaluated_dimension_count": 2,
+    "unverified_evidence_dimension_count": 0,
+    "judge_error_run_count": 0,
+    "items_with_errors_count": 0,
+    "dataset_verdict_agreement": 1.0
+  }
+}

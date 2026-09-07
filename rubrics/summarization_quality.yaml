@@ -1,0 +1,56 @@
+id: summarization_quality
+version: 1
+title: "Summarization quality (reference-grounded)"
+description: >
+  For tasks that ask for a short, faithful summary of a supplied passage.
+  Length and format are enforced deterministically; faithfulness is judged only
+  against the passage; completeness is judged against required points.
+
+scale: { min: 1, max: 5 }
+
+reliability:
+  runs_default: 5
+  disagreement_threshold: 2
+
+dimensions:
+  - id: instruction_following
+    type: gate
+    include_item_instructions: false
+    global_checks:
+      - text: "Contains no first-person opinion or editorialising"
+        method: judge
+      - text: "Uses at most 60 words"
+        method: deterministic
+        rule: { name: max_words, kind: max_word_count, value: 60 }
+      - text: "Is three sentences or fewer"
+        method: deterministic
+        rule: { name: max_sentences, kind: max_sentences, value: 3 }
+      - text: "Plain prose — no markdown headings or bullet lists"
+        method: deterministic
+        rule: { name: no_markdown, kind: forbidden_regex, pattern: '(?m)^\s*(#|[-*]\s)' }
+
+  - id: faithfulness
+    type: reference_grounded
+    description: "Every claim in the summary is supported by the passage."
+    anchors:
+      5: "Every claim is directly supported by the passage."
+      4: "Supported overall; at most one trivial paraphrase drift."
+      3: "Mostly supported; one minor detail is not in the passage."
+      2: "A material claim is unsupported or overstated."
+      1: "Contains a claim that contradicts the passage or is largely unsupported."
+
+  - id: completeness
+    type: spec_grounded
+    description: "The summary covers the passage's required points."
+    anchors:
+      5: "Covers every required point."
+      3: "Covers the main point but misses a secondary required point."
+      1: "Misses the primary point of the passage."
+
+  - id: clarity
+    type: judged
+    description: "The summary is unambiguous and well-ordered."
+    anchors:
+      5: "Unambiguous, well-ordered, plain language."
+      3: "Understandable but awkward or slightly disorganised."
+      1: "Hard to follow or ambiguous."

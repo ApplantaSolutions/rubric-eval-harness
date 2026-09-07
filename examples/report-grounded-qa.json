@@ -1,0 +1,1378 @@
+{
+  "meta": {
+    "harness_version": "0.1.0",
+    "generated_at": "2026-01-01T00:00:00+00:00",
+    "rubric_id": "grounded_qa",
+    "rubric_title": "Grounded question answering",
+    "rubric_version": 1,
+    "dataset_path": "datasets/grounded_qa.jsonl",
+    "dataset_item_count": 4,
+    "provider": "mock",
+    "judge_model": null,
+    "judge_temperature": 0.0,
+    "runs": 5,
+    "command": "rubric-eval run --rubric rubrics/grounded_qa.yaml --dataset datasets/grounded_qa.jsonl --provider mock --mock-judgments datasets/_mock_judgments.json --out examples/",
+    "git_commit": null
+  },
+  "items": [
+    {
+      "item_id": "gqa-strong",
+      "task": "Which Aurora Nutrition warehouse has automated cold storage? Answer in one sentence.\n\nContext: Aurora Nutrition Co. lists three warehouse sites: Cedar Falls (opened 2019), Marlow (opened 2022), and Pinehurst (opened 2024). The Marlow site is the only one with automated cold storage.",
+      "candidate_response": "The Marlow site is the only Aurora Nutrition warehouse with automated cold storage.",
+      "scenario": "strong response — answers exactly what the context supports, one sentence",
+      "author_note": null,
+      "dimensions": [
+        {
+          "dimension_id": "instruction_following",
+          "type": "gate",
+          "status": "evaluated",
+          "not_evaluated_reason": null,
+          "checks": [],
+          "deterministic_passed": null,
+          "gate": {
+            "dimension_id": "instruction_following",
+            "instructions": [
+              {
+                "text": "Answers in three sentences or fewer",
+                "method": "deterministic",
+                "status": "pass",
+                "detail": "response has ~1 sentences; limit is 3",
+                "check": {
+                  "name": "brief",
+                  "kind": "max_sentences",
+                  "expected": "at most 3 sentences",
+                  "observed": "1 sentences",
+                  "outcome": "pass",
+                  "explanation": "response has ~1 sentences; limit is 3"
+                },
+                "evidence": null
+              },
+              {
+                "text": "Directly addresses the question that was asked",
+                "method": "judge",
+                "status": "pass",
+                "detail": "Answers the warehouse question directly.",
+                "check": null,
+                "evidence": null
+              }
+            ],
+            "status": "pass"
+          },
+          "runs": [],
+          "scores": [],
+          "mean": null,
+          "stdev": null,
+          "minimum": null,
+          "maximum": null,
+          "pairwise_disagreement_rate": null,
+          "reliability_label": null,
+          "judge_error_count": 0,
+          "evidence_all_verified": null,
+          "evidence_any_unverified": null
+        },
+        {
+          "dimension_id": "faithfulness",
+          "type": "reference_grounded",
+          "status": "evaluated",
+          "not_evaluated_reason": null,
+          "checks": [],
+          "deterministic_passed": null,
+          "gate": null,
+          "runs": [
+            {
+              "run_index": 0,
+              "score": 5,
+              "rationale": "Exactly what the context states.",
+              "evidence": {
+                "quote": "The Marlow site is the\nonly one with automated cold storage",
+                "verified": true,
+                "method": "normalized",
+                "note": "Matched the reference after normalizing whitespace, quote characters, and surrounding punctuation."
+              },
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"Exactly what the context states.\", \"evidence_quote\": \"The Marlow site is the\\nonly one with automated cold storage\"}",
+              "error": null
+            },
+            {
+              "run_index": 1,
+              "score": 5,
+              "rationale": "Exactly what the context states.",
+              "evidence": {
+                "quote": "The Marlow site is the\nonly one with automated cold storage",
+                "verified": true,
+                "method": "normalized",
+                "note": "Matched the reference after normalizing whitespace, quote characters, and surrounding punctuation."
+              },
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"Exactly what the context states.\", \"evidence_quote\": \"The Marlow site is the\\nonly one with automated cold storage\"}",
+              "error": null
+            },
+            {
+              "run_index": 2,
+              "score": 5,
+              "rationale": "Exactly what the context states.",
+              "evidence": {
+                "quote": "The Marlow site is the\nonly one with automated cold storage",
+                "verified": true,
+                "method": "normalized",
+                "note": "Matched the reference after normalizing whitespace, quote characters, and surrounding punctuation."
+              },
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"Exactly what the context states.\", \"evidence_quote\": \"The Marlow site is the\\nonly one with automated cold storage\"}",
+              "error": null
+            },
+            {
+              "run_index": 3,
+              "score": 5,
+              "rationale": "Exactly what the context states.",
+              "evidence": {
+                "quote": "The Marlow site is the\nonly one with automated cold storage",
+                "verified": true,
+                "method": "normalized",
+                "note": "Matched the reference after normalizing whitespace, quote characters, and surrounding punctuation."
+              },
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"Exactly what the context states.\", \"evidence_quote\": \"The Marlow site is the\\nonly one with automated cold storage\"}",
+              "error": null
+            },
+            {
+              "run_index": 4,
+              "score": 5,
+              "rationale": "Exactly what the context states.",
+              "evidence": {
+                "quote": "The Marlow site is the\nonly one with automated cold storage",
+                "verified": true,
+                "method": "normalized",
+                "note": "Matched the reference after normalizing whitespace, quote characters, and surrounding punctuation."
+              },
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"Exactly what the context states.\", \"evidence_quote\": \"The Marlow site is the\\nonly one with automated cold storage\"}",
+              "error": null
+            }
+          ],
+          "scores": [
+            5,
+            5,
+            5,
+            5,
+            5
+          ],
+          "mean": 5.0,
+          "stdev": 0.0,
+          "minimum": 5,
+          "maximum": 5,
+          "pairwise_disagreement_rate": 0.0,
+          "reliability_label": "stable",
+          "judge_error_count": 0,
+          "evidence_all_verified": true,
+          "evidence_any_unverified": false
+        },
+        {
+          "dimension_id": "completeness",
+          "type": "spec_grounded",
+          "status": "evaluated",
+          "not_evaluated_reason": null,
+          "checks": [],
+          "deterministic_passed": null,
+          "gate": null,
+          "runs": [
+            {
+              "run_index": 0,
+              "score": 5,
+              "rationale": "Single-part question fully answered.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"Single-part question fully answered.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 1,
+              "score": 5,
+              "rationale": "Single-part question fully answered.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"Single-part question fully answered.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 2,
+              "score": 5,
+              "rationale": "Single-part question fully answered.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"Single-part question fully answered.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 3,
+              "score": 5,
+              "rationale": "Single-part question fully answered.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"Single-part question fully answered.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 4,
+              "score": 5,
+              "rationale": "Single-part question fully answered.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"Single-part question fully answered.\", \"evidence_quote\": \"\"}",
+              "error": null
+            }
+          ],
+          "scores": [
+            5,
+            5,
+            5,
+            5,
+            5
+          ],
+          "mean": 5.0,
+          "stdev": 0.0,
+          "minimum": 5,
+          "maximum": 5,
+          "pairwise_disagreement_rate": 0.0,
+          "reliability_label": "stable",
+          "judge_error_count": 0,
+          "evidence_all_verified": null,
+          "evidence_any_unverified": null
+        },
+        {
+          "dimension_id": "relevance",
+          "type": "judged",
+          "status": "evaluated",
+          "not_evaluated_reason": null,
+          "checks": [],
+          "deterministic_passed": null,
+          "gate": null,
+          "runs": [
+            {
+              "run_index": 0,
+              "score": 5,
+              "rationale": "On point.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"On point.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 1,
+              "score": 5,
+              "rationale": "On point.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"On point.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 2,
+              "score": 5,
+              "rationale": "On point.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"On point.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 3,
+              "score": 5,
+              "rationale": "On point.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"On point.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 4,
+              "score": 5,
+              "rationale": "On point.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"On point.\", \"evidence_quote\": \"\"}",
+              "error": null
+            }
+          ],
+          "scores": [
+            5,
+            5,
+            5,
+            5,
+            5
+          ],
+          "mean": 5.0,
+          "stdev": 0.0,
+          "minimum": 5,
+          "maximum": 5,
+          "pairwise_disagreement_rate": 0.0,
+          "reliability_label": "stable",
+          "judge_error_count": 0,
+          "evidence_all_verified": null,
+          "evidence_any_unverified": null
+        }
+      ],
+      "verdict": {
+        "verdict": "Excellent",
+        "gate_status": "pass",
+        "deterministic_all_passed": true,
+        "judged_mean": 5.0,
+        "evaluated_judged_dimensions": [
+          "faithfulness",
+          "completeness",
+          "relevance"
+        ],
+        "not_evaluated_dimensions": [],
+        "unresolved_dimensions": [],
+        "capped_by": [],
+        "notes": []
+      },
+      "verdict_stability": {
+        "per_run_verdicts": [
+          "Excellent",
+          "Excellent",
+          "Excellent",
+          "Excellent",
+          "Excellent"
+        ],
+        "modal_verdict": "Excellent",
+        "distribution": {
+          "Excellent": 5
+        },
+        "agreement_fraction": 1.0,
+        "note": "Instruction judging runs once; per-run verdict variation reflects only the judged-dimension scores. A run with a judge error on any evaluable judged dimension is counted as 'Unresolved'."
+      },
+      "indicative_score": 5.0,
+      "errors": []
+    },
+    {
+      "item_id": "gqa-unstable",
+      "task": "How many crossings did the Brightline Ferry run in 2026, and what did the operator credit for the on-time improvement? Answer in two sentences or fewer.\n\nContext: The Brightline Ferry ran 1,240 crossings in 2026, up from 1,090 in 2025. On-time performance was 91 percent in 2026. The operator attributed the improvement to a new scheduling system installed in January 2026.",
+      "candidate_response": "The Brightline Ferry ran 1,240 crossings in 2026. The operator credited a new scheduling system installed that January for the better on-time performance.",
+      "scenario": "verdict instability — the faithfulness judge's score swings run to run, flipping the item verdict",
+      "author_note": null,
+      "dimensions": [
+        {
+          "dimension_id": "instruction_following",
+          "type": "gate",
+          "status": "evaluated",
+          "not_evaluated_reason": null,
+          "checks": [],
+          "deterministic_passed": null,
+          "gate": {
+            "dimension_id": "instruction_following",
+            "instructions": [
+              {
+                "text": "Answers in three sentences or fewer",
+                "method": "deterministic",
+                "status": "pass",
+                "detail": "response has ~2 sentences; limit is 3",
+                "check": {
+                  "name": "brief",
+                  "kind": "max_sentences",
+                  "expected": "at most 3 sentences",
+                  "observed": "2 sentences",
+                  "outcome": "pass",
+                  "explanation": "response has ~2 sentences; limit is 3"
+                },
+                "evidence": null
+              },
+              {
+                "text": "Directly addresses the question that was asked",
+                "method": "judge",
+                "status": "pass",
+                "detail": "Answers both parts of the question.",
+                "check": null,
+                "evidence": null
+              }
+            ],
+            "status": "pass"
+          },
+          "runs": [],
+          "scores": [],
+          "mean": null,
+          "stdev": null,
+          "minimum": null,
+          "maximum": null,
+          "pairwise_disagreement_rate": null,
+          "reliability_label": null,
+          "judge_error_count": 0,
+          "evidence_all_verified": null,
+          "evidence_any_unverified": null
+        },
+        {
+          "dimension_id": "faithfulness",
+          "type": "reference_grounded",
+          "status": "evaluated",
+          "not_evaluated_reason": null,
+          "checks": [],
+          "deterministic_passed": null,
+          "gate": null,
+          "runs": [
+            {
+              "run_index": 0,
+              "score": 5,
+              "rationale": "Both figures are in the context.",
+              "evidence": {
+                "quote": "ran 1,240 crossings in 2026",
+                "verified": true,
+                "method": "exact",
+                "note": ""
+              },
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"Both figures are in the context.\", \"evidence_quote\": \"ran 1,240 crossings in 2026\"}",
+              "error": null
+            },
+            {
+              "run_index": 1,
+              "score": 3,
+              "rationale": "Crossing count is exact; 'that January' is a slight paraphrase of the install date.",
+              "evidence": {
+                "quote": "ran 1,240 crossings in 2026",
+                "verified": true,
+                "method": "exact",
+                "note": ""
+              },
+              "attempts": 1,
+              "raw_response": "{\"score\": 3, \"rationale\": \"Crossing count is exact; 'that January' is a slight paraphrase of the install date.\", \"evidence_quote\": \"ran 1,240 crossings in 2026\"}",
+              "error": null
+            },
+            {
+              "run_index": 2,
+              "score": 5,
+              "rationale": "Supported.",
+              "evidence": {
+                "quote": "a new scheduling system installed in January 2026",
+                "verified": true,
+                "method": "exact",
+                "note": ""
+              },
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"Supported.\", \"evidence_quote\": \"a new scheduling system installed in January 2026\"}",
+              "error": null
+            },
+            {
+              "run_index": 3,
+              "score": 2,
+              "rationale": "Marked down for the paraphrase of the install timing.",
+              "evidence": {
+                "quote": "",
+                "verified": false,
+                "method": "empty",
+                "note": "The judge returned no supporting quotation."
+              },
+              "attempts": 1,
+              "raw_response": "{\"score\": 2, \"rationale\": \"Marked down for the paraphrase of the install timing.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 4,
+              "score": 5,
+              "rationale": "Supported.",
+              "evidence": {
+                "quote": "ran 1,240 crossings in 2026",
+                "verified": true,
+                "method": "exact",
+                "note": ""
+              },
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"Supported.\", \"evidence_quote\": \"ran 1,240 crossings in 2026\"}",
+              "error": null
+            }
+          ],
+          "scores": [
+            5,
+            3,
+            5,
+            2,
+            5
+          ],
+          "mean": 4.0,
+          "stdev": 1.2649,
+          "minimum": 2,
+          "maximum": 5,
+          "pairwise_disagreement_rate": 0.6,
+          "reliability_label": "unreliable",
+          "judge_error_count": 0,
+          "evidence_all_verified": false,
+          "evidence_any_unverified": false
+        },
+        {
+          "dimension_id": "completeness",
+          "type": "spec_grounded",
+          "status": "evaluated",
+          "not_evaluated_reason": null,
+          "checks": [],
+          "deterministic_passed": null,
+          "gate": null,
+          "runs": [
+            {
+              "run_index": 0,
+              "score": 5,
+              "rationale": "Both parts answered.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"Both parts answered.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 1,
+              "score": 5,
+              "rationale": "Both parts answered.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"Both parts answered.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 2,
+              "score": 5,
+              "rationale": "Both parts answered.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"Both parts answered.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 3,
+              "score": 5,
+              "rationale": "Both parts answered.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"Both parts answered.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 4,
+              "score": 5,
+              "rationale": "Both parts answered.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"Both parts answered.\", \"evidence_quote\": \"\"}",
+              "error": null
+            }
+          ],
+          "scores": [
+            5,
+            5,
+            5,
+            5,
+            5
+          ],
+          "mean": 5.0,
+          "stdev": 0.0,
+          "minimum": 5,
+          "maximum": 5,
+          "pairwise_disagreement_rate": 0.0,
+          "reliability_label": "stable",
+          "judge_error_count": 0,
+          "evidence_all_verified": null,
+          "evidence_any_unverified": null
+        },
+        {
+          "dimension_id": "relevance",
+          "type": "judged",
+          "status": "evaluated",
+          "not_evaluated_reason": null,
+          "checks": [],
+          "deterministic_passed": null,
+          "gate": null,
+          "runs": [
+            {
+              "run_index": 0,
+              "score": 4,
+              "rationale": "On topic.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 4, \"rationale\": \"On topic.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 1,
+              "score": 4,
+              "rationale": "On topic.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 4, \"rationale\": \"On topic.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 2,
+              "score": 4,
+              "rationale": "On topic.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 4, \"rationale\": \"On topic.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 3,
+              "score": 4,
+              "rationale": "On topic.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 4, \"rationale\": \"On topic.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 4,
+              "score": 4,
+              "rationale": "On topic.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 4, \"rationale\": \"On topic.\", \"evidence_quote\": \"\"}",
+              "error": null
+            }
+          ],
+          "scores": [
+            4,
+            4,
+            4,
+            4,
+            4
+          ],
+          "mean": 4.0,
+          "stdev": 0.0,
+          "minimum": 4,
+          "maximum": 4,
+          "pairwise_disagreement_rate": 0.0,
+          "reliability_label": "stable",
+          "judge_error_count": 0,
+          "evidence_all_verified": null,
+          "evidence_any_unverified": null
+        }
+      ],
+      "verdict": {
+        "verdict": "Excellent",
+        "gate_status": "pass",
+        "deterministic_all_passed": true,
+        "judged_mean": 4.333333333333333,
+        "evaluated_judged_dimensions": [
+          "faithfulness",
+          "completeness",
+          "relevance"
+        ],
+        "not_evaluated_dimensions": [],
+        "unresolved_dimensions": [],
+        "capped_by": [],
+        "notes": []
+      },
+      "verdict_stability": {
+        "per_run_verdicts": [
+          "Excellent",
+          "Excellent",
+          "Excellent",
+          "Needs work",
+          "Excellent"
+        ],
+        "modal_verdict": "Excellent",
+        "distribution": {
+          "Excellent": 4,
+          "Needs work": 1
+        },
+        "agreement_fraction": 0.8,
+        "note": "Instruction judging runs once; per-run verdict variation reflects only the judged-dimension scores. A run with a judge error on any evaluable judged dimension is counted as 'Unresolved'."
+      },
+      "indicative_score": 4.33,
+      "errors": []
+    },
+    {
+      "item_id": "gqa-omission",
+      "task": "By how much did Greenline cut fuel spend in 2026, and what share of last-mile deliveries went electric? Answer in two sentences or fewer.\n\nContext: Greenline Logistics reduced its fleet emissions by 18 percent in 2026 and cut fuel spend by 620,000 dollars. The company also switched 40 percent of last-mile deliveries to electric cargo bikes.",
+      "candidate_response": "Greenline Logistics cut its fuel spend by about 620,000 dollars in 2026.",
+      "scenario": "omits required information — answers only the first half of a two-part question",
+      "author_note": null,
+      "dimensions": [
+        {
+          "dimension_id": "instruction_following",
+          "type": "gate",
+          "status": "evaluated",
+          "not_evaluated_reason": null,
+          "checks": [],
+          "deterministic_passed": null,
+          "gate": {
+            "dimension_id": "instruction_following",
+            "instructions": [
+              {
+                "text": "Answers in three sentences or fewer",
+                "method": "deterministic",
+                "status": "pass",
+                "detail": "response has ~1 sentences; limit is 3",
+                "check": {
+                  "name": "brief",
+                  "kind": "max_sentences",
+                  "expected": "at most 3 sentences",
+                  "observed": "1 sentences",
+                  "outcome": "pass",
+                  "explanation": "response has ~1 sentences; limit is 3"
+                },
+                "evidence": null
+              },
+              {
+                "text": "Directly addresses the question that was asked",
+                "method": "judge",
+                "status": "pass",
+                "detail": "Addresses the fuel-spend part of the question.",
+                "check": null,
+                "evidence": null
+              }
+            ],
+            "status": "pass"
+          },
+          "runs": [],
+          "scores": [],
+          "mean": null,
+          "stdev": null,
+          "minimum": null,
+          "maximum": null,
+          "pairwise_disagreement_rate": null,
+          "reliability_label": null,
+          "judge_error_count": 0,
+          "evidence_all_verified": null,
+          "evidence_any_unverified": null
+        },
+        {
+          "dimension_id": "faithfulness",
+          "type": "reference_grounded",
+          "status": "evaluated",
+          "not_evaluated_reason": null,
+          "checks": [],
+          "deterministic_passed": null,
+          "gate": null,
+          "runs": [
+            {
+              "run_index": 0,
+              "score": 5,
+              "rationale": "The fuel-spend figure matches the context.",
+              "evidence": {
+                "quote": "cut fuel spend by 620,000 dollars",
+                "verified": true,
+                "method": "exact",
+                "note": ""
+              },
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"The fuel-spend figure matches the context.\", \"evidence_quote\": \"cut fuel spend by 620,000 dollars\"}",
+              "error": null
+            },
+            {
+              "run_index": 1,
+              "score": 5,
+              "rationale": "The fuel-spend figure matches the context.",
+              "evidence": {
+                "quote": "cut fuel spend by 620,000 dollars",
+                "verified": true,
+                "method": "exact",
+                "note": ""
+              },
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"The fuel-spend figure matches the context.\", \"evidence_quote\": \"cut fuel spend by 620,000 dollars\"}",
+              "error": null
+            },
+            {
+              "run_index": 2,
+              "score": 5,
+              "rationale": "The fuel-spend figure matches the context.",
+              "evidence": {
+                "quote": "cut fuel spend by 620,000 dollars",
+                "verified": true,
+                "method": "exact",
+                "note": ""
+              },
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"The fuel-spend figure matches the context.\", \"evidence_quote\": \"cut fuel spend by 620,000 dollars\"}",
+              "error": null
+            },
+            {
+              "run_index": 3,
+              "score": 5,
+              "rationale": "The fuel-spend figure matches the context.",
+              "evidence": {
+                "quote": "cut fuel spend by 620,000 dollars",
+                "verified": true,
+                "method": "exact",
+                "note": ""
+              },
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"The fuel-spend figure matches the context.\", \"evidence_quote\": \"cut fuel spend by 620,000 dollars\"}",
+              "error": null
+            },
+            {
+              "run_index": 4,
+              "score": 5,
+              "rationale": "The fuel-spend figure matches the context.",
+              "evidence": {
+                "quote": "cut fuel spend by 620,000 dollars",
+                "verified": true,
+                "method": "exact",
+                "note": ""
+              },
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"The fuel-spend figure matches the context.\", \"evidence_quote\": \"cut fuel spend by 620,000 dollars\"}",
+              "error": null
+            }
+          ],
+          "scores": [
+            5,
+            5,
+            5,
+            5,
+            5
+          ],
+          "mean": 5.0,
+          "stdev": 0.0,
+          "minimum": 5,
+          "maximum": 5,
+          "pairwise_disagreement_rate": 0.0,
+          "reliability_label": "stable",
+          "judge_error_count": 0,
+          "evidence_all_verified": true,
+          "evidence_any_unverified": false
+        },
+        {
+          "dimension_id": "completeness",
+          "type": "spec_grounded",
+          "status": "evaluated",
+          "not_evaluated_reason": null,
+          "checks": [],
+          "deterministic_passed": null,
+          "gate": null,
+          "runs": [
+            {
+              "run_index": 0,
+              "score": 2,
+              "rationale": "Answers the fuel-spend part; the electric last-mile share is missing.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 2, \"rationale\": \"Answers the fuel-spend part; the electric last-mile share is missing.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 1,
+              "score": 2,
+              "rationale": "Only one of two parts answered.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 2, \"rationale\": \"Only one of two parts answered.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 2,
+              "score": 2,
+              "rationale": "Misses the electric last-mile figure.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 2, \"rationale\": \"Misses the electric last-mile figure.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 3,
+              "score": 2,
+              "rationale": "Half the question is unanswered.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 2, \"rationale\": \"Half the question is unanswered.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 4,
+              "score": 2,
+              "rationale": "Second part not addressed.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 2, \"rationale\": \"Second part not addressed.\", \"evidence_quote\": \"\"}",
+              "error": null
+            }
+          ],
+          "scores": [
+            2,
+            2,
+            2,
+            2,
+            2
+          ],
+          "mean": 2.0,
+          "stdev": 0.0,
+          "minimum": 2,
+          "maximum": 2,
+          "pairwise_disagreement_rate": 0.0,
+          "reliability_label": "stable",
+          "judge_error_count": 0,
+          "evidence_all_verified": null,
+          "evidence_any_unverified": null
+        },
+        {
+          "dimension_id": "relevance",
+          "type": "judged",
+          "status": "evaluated",
+          "not_evaluated_reason": null,
+          "checks": [],
+          "deterministic_passed": null,
+          "gate": null,
+          "runs": [
+            {
+              "run_index": 0,
+              "score": 5,
+              "rationale": "On topic, just incomplete.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"On topic, just incomplete.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 1,
+              "score": 5,
+              "rationale": "On topic, just incomplete.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"On topic, just incomplete.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 2,
+              "score": 5,
+              "rationale": "On topic, just incomplete.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"On topic, just incomplete.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 3,
+              "score": 5,
+              "rationale": "On topic, just incomplete.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"On topic, just incomplete.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 4,
+              "score": 5,
+              "rationale": "On topic, just incomplete.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 5, \"rationale\": \"On topic, just incomplete.\", \"evidence_quote\": \"\"}",
+              "error": null
+            }
+          ],
+          "scores": [
+            5,
+            5,
+            5,
+            5,
+            5
+          ],
+          "mean": 5.0,
+          "stdev": 0.0,
+          "minimum": 5,
+          "maximum": 5,
+          "pairwise_disagreement_rate": 0.0,
+          "reliability_label": "stable",
+          "judge_error_count": 0,
+          "evidence_all_verified": null,
+          "evidence_any_unverified": null
+        }
+      ],
+      "verdict": {
+        "verdict": "Needs work",
+        "gate_status": "pass",
+        "deterministic_all_passed": true,
+        "judged_mean": 4.0,
+        "evaluated_judged_dimensions": [
+          "faithfulness",
+          "completeness",
+          "relevance"
+        ],
+        "not_evaluated_dimensions": [],
+        "unresolved_dimensions": [],
+        "capped_by": [
+          "dimension(s) below the needs-work floor (2.5): completeness"
+        ],
+        "notes": []
+      },
+      "verdict_stability": {
+        "per_run_verdicts": [
+          "Needs work",
+          "Needs work",
+          "Needs work",
+          "Needs work",
+          "Needs work"
+        ],
+        "modal_verdict": "Needs work",
+        "distribution": {
+          "Needs work": 5
+        },
+        "agreement_fraction": 1.0,
+        "note": "Instruction judging runs once; per-run verdict variation reflects only the judged-dimension scores. A run with a judge error on any evaluable judged dimension is counted as 'Unresolved'."
+      },
+      "indicative_score": 4.0,
+      "errors": []
+    },
+    {
+      "item_id": "gqa-hallucinated",
+      "task": "What was Tidewater Coffee's annual revenue in 2026? Answer in one sentence.\n\nContext: Tidewater Coffee opened its first roastery in Bellhaven in 2021. It now supplies 30 cafes across the region. The company has not disclosed its annual revenue.",
+      "candidate_response": "Tidewater Coffee reported approximately 4.2 million dollars in annual revenue for 2026.",
+      "scenario": "hallucination — the context does not contain the answer, and the judge also returns a fabricated supporting quote",
+      "author_note": "The judge is confidently wrong AND cites a quote that is not in the context. The harness surfaces the fabricated quote and keeps the judge's score visible rather than silently zeroing it.",
+      "dimensions": [
+        {
+          "dimension_id": "instruction_following",
+          "type": "gate",
+          "status": "evaluated",
+          "not_evaluated_reason": null,
+          "checks": [],
+          "deterministic_passed": null,
+          "gate": {
+            "dimension_id": "instruction_following",
+            "instructions": [
+              {
+                "text": "Answers in three sentences or fewer",
+                "method": "deterministic",
+                "status": "pass",
+                "detail": "response has ~1 sentences; limit is 3",
+                "check": {
+                  "name": "brief",
+                  "kind": "max_sentences",
+                  "expected": "at most 3 sentences",
+                  "observed": "1 sentences",
+                  "outcome": "pass",
+                  "explanation": "response has ~1 sentences; limit is 3"
+                },
+                "evidence": null
+              },
+              {
+                "text": "Directly addresses the question that was asked",
+                "method": "judge",
+                "status": "pass",
+                "detail": "It does give a revenue figure in response to the question.",
+                "check": null,
+                "evidence": null
+              }
+            ],
+            "status": "pass"
+          },
+          "runs": [],
+          "scores": [],
+          "mean": null,
+          "stdev": null,
+          "minimum": null,
+          "maximum": null,
+          "pairwise_disagreement_rate": null,
+          "reliability_label": null,
+          "judge_error_count": 0,
+          "evidence_all_verified": null,
+          "evidence_any_unverified": null
+        },
+        {
+          "dimension_id": "faithfulness",
+          "type": "reference_grounded",
+          "status": "evaluated",
+          "not_evaluated_reason": null,
+          "checks": [],
+          "deterministic_passed": null,
+          "gate": null,
+          "runs": [
+            {
+              "run_index": 0,
+              "score": 4,
+              "rationale": "Reads as well-supported.",
+              "evidence": {
+                "quote": "annual revenue for 2026 was 4.2 million dollars",
+                "verified": false,
+                "method": "not_found",
+                "note": "The quoted span does not occur in the supplied reference. Treat it as unverified and possibly fabricated by the judge model."
+              },
+              "attempts": 1,
+              "raw_response": "{\"score\": 4, \"rationale\": \"Reads as well-supported.\", \"evidence_quote\": \"annual revenue for 2026 was 4.2 million dollars\"}",
+              "error": null
+            },
+            {
+              "run_index": 1,
+              "score": 4,
+              "rationale": "Looks supported.",
+              "evidence": {
+                "quote": "annual revenue for 2026 was 4.2 million dollars",
+                "verified": false,
+                "method": "not_found",
+                "note": "The quoted span does not occur in the supplied reference. Treat it as unverified and possibly fabricated by the judge model."
+              },
+              "attempts": 1,
+              "raw_response": "{\"score\": 4, \"rationale\": \"Looks supported.\", \"evidence_quote\": \"annual revenue for 2026 was 4.2 million dollars\"}",
+              "error": null
+            },
+            {
+              "run_index": 2,
+              "score": 3,
+              "rationale": "Mostly fine.",
+              "evidence": {
+                "quote": "reported approximately 4.2 million dollars in annual revenue",
+                "verified": false,
+                "method": "not_found",
+                "note": "The quoted span does not occur in the supplied reference. Treat it as unverified and possibly fabricated by the judge model."
+              },
+              "attempts": 1,
+              "raw_response": "{\"score\": 3, \"rationale\": \"Mostly fine.\", \"evidence_quote\": \"reported approximately 4.2 million dollars in annual revenue\"}",
+              "error": null
+            },
+            {
+              "run_index": 3,
+              "score": 4,
+              "rationale": "Supported.",
+              "evidence": {
+                "quote": "annual revenue for 2026 was 4.2 million dollars",
+                "verified": false,
+                "method": "not_found",
+                "note": "The quoted span does not occur in the supplied reference. Treat it as unverified and possibly fabricated by the judge model."
+              },
+              "attempts": 1,
+              "raw_response": "{\"score\": 4, \"rationale\": \"Supported.\", \"evidence_quote\": \"annual revenue for 2026 was 4.2 million dollars\"}",
+              "error": null
+            },
+            {
+              "run_index": 4,
+              "score": 4,
+              "rationale": "Supported.",
+              "evidence": {
+                "quote": "annual revenue for 2026 was 4.2 million dollars",
+                "verified": false,
+                "method": "not_found",
+                "note": "The quoted span does not occur in the supplied reference. Treat it as unverified and possibly fabricated by the judge model."
+              },
+              "attempts": 1,
+              "raw_response": "{\"score\": 4, \"rationale\": \"Supported.\", \"evidence_quote\": \"annual revenue for 2026 was 4.2 million dollars\"}",
+              "error": null
+            }
+          ],
+          "scores": [
+            4,
+            4,
+            3,
+            4,
+            4
+          ],
+          "mean": 3.8,
+          "stdev": 0.4,
+          "minimum": 3,
+          "maximum": 4,
+          "pairwise_disagreement_rate": 0.0,
+          "reliability_label": "stable",
+          "judge_error_count": 0,
+          "evidence_all_verified": false,
+          "evidence_any_unverified": true
+        },
+        {
+          "dimension_id": "completeness",
+          "type": "spec_grounded",
+          "status": "evaluated",
+          "not_evaluated_reason": null,
+          "checks": [],
+          "deterministic_passed": null,
+          "gate": null,
+          "runs": [
+            {
+              "run_index": 0,
+              "score": 1,
+              "rationale": "Does not acknowledge that the context withholds the revenue figure.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 1, \"rationale\": \"Does not acknowledge that the context withholds the revenue figure.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 1,
+              "score": 1,
+              "rationale": "Does not acknowledge that the context withholds the revenue figure.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 1, \"rationale\": \"Does not acknowledge that the context withholds the revenue figure.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 2,
+              "score": 1,
+              "rationale": "Does not acknowledge that the context withholds the revenue figure.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 1, \"rationale\": \"Does not acknowledge that the context withholds the revenue figure.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 3,
+              "score": 1,
+              "rationale": "Does not acknowledge that the context withholds the revenue figure.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 1, \"rationale\": \"Does not acknowledge that the context withholds the revenue figure.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 4,
+              "score": 1,
+              "rationale": "Does not acknowledge that the context withholds the revenue figure.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 1, \"rationale\": \"Does not acknowledge that the context withholds the revenue figure.\", \"evidence_quote\": \"\"}",
+              "error": null
+            }
+          ],
+          "scores": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "mean": 1.0,
+          "stdev": 0.0,
+          "minimum": 1,
+          "maximum": 1,
+          "pairwise_disagreement_rate": 0.0,
+          "reliability_label": "stable",
+          "judge_error_count": 0,
+          "evidence_all_verified": null,
+          "evidence_any_unverified": null
+        },
+        {
+          "dimension_id": "relevance",
+          "type": "judged",
+          "status": "evaluated",
+          "not_evaluated_reason": null,
+          "checks": [],
+          "deterministic_passed": null,
+          "gate": null,
+          "runs": [
+            {
+              "run_index": 0,
+              "score": 3,
+              "rationale": "On topic but fabricated.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 3, \"rationale\": \"On topic but fabricated.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 1,
+              "score": 3,
+              "rationale": "On topic but fabricated.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 3, \"rationale\": \"On topic but fabricated.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 2,
+              "score": 3,
+              "rationale": "On topic but fabricated.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 3, \"rationale\": \"On topic but fabricated.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 3,
+              "score": 3,
+              "rationale": "On topic but fabricated.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 3, \"rationale\": \"On topic but fabricated.\", \"evidence_quote\": \"\"}",
+              "error": null
+            },
+            {
+              "run_index": 4,
+              "score": 3,
+              "rationale": "On topic but fabricated.",
+              "evidence": null,
+              "attempts": 1,
+              "raw_response": "{\"score\": 3, \"rationale\": \"On topic but fabricated.\", \"evidence_quote\": \"\"}",
+              "error": null
+            }
+          ],
+          "scores": [
+            3,
+            3,
+            3,
+            3,
+            3
+          ],
+          "mean": 3.0,
+          "stdev": 0.0,
+          "minimum": 3,
+          "maximum": 3,
+          "pairwise_disagreement_rate": 0.0,
+          "reliability_label": "stable",
+          "judge_error_count": 0,
+          "evidence_all_verified": null,
+          "evidence_any_unverified": null
+        }
+      ],
+      "verdict": {
+        "verdict": "Needs work",
+        "gate_status": "pass",
+        "deterministic_all_passed": true,
+        "judged_mean": 2.6,
+        "evaluated_judged_dimensions": [
+          "faithfulness",
+          "completeness",
+          "relevance"
+        ],
+        "not_evaluated_dimensions": [],
+        "unresolved_dimensions": [],
+        "capped_by": [
+          "dimension(s) below the needs-work floor (2.5): completeness"
+        ],
+        "notes": []
+      },
+      "verdict_stability": {
+        "per_run_verdicts": [
+          "Needs work",
+          "Needs work",
+          "Needs work",
+          "Needs work",
+          "Needs work"
+        ],
+        "modal_verdict": "Needs work",
+        "distribution": {
+          "Needs work": 5
+        },
+        "agreement_fraction": 1.0,
+        "note": "Instruction judging runs once; per-run verdict variation reflects only the judged-dimension scores. A run with a judge error on any evaluable judged dimension is counted as 'Unresolved'."
+      },
+      "indicative_score": 2.6,
+      "errors": []
+    }
+  ],
+  "summary": {
+    "item_count": 4,
+    "verdict_counts": {
+      "Fail": 0,
+      "Needs work": 2,
+      "Acceptable": 0,
+      "Excellent": 2,
+      "Unresolved": 0
+    },
+    "gate_status_counts": {
+      "pass": 4,
+      "fail": 0,
+      "pending": 0,
+      "error": 0
+    },
+    "instruction_check_counts": {
+      "pass": 8,
+      "fail": 0,
+      "pending_judge": 0,
+      "error": 0
+    },
+    "reliability_counts": {
+      "stable": 11,
+      "some_variance": 0,
+      "unreliable": 1,
+      "not_applicable": 0
+    },
+    "evaluated_judged_dimension_count": 12,
+    "not_evaluated_dimension_count": 0,
+    "unverified_evidence_dimension_count": 1,
+    "judge_error_run_count": 0,
+    "items_with_errors_count": 0,
+    "dataset_verdict_agreement": 0.95
+  }
+}

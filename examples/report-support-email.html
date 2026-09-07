@@ -1,0 +1,1107 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rubric evaluation report — Customer support email reply</title>
+<style>
+  :root {
+    --ground: #fbfaf8; --panel: #ffffff; --ink: #1b1b1a; --muted: #6b6b66;
+    --hair: #e4ded3; --accent: #33475b;
+    --fail-fg: #b3261e; --fail-bg: #fbe9e7;
+    --needs-fg: #8a5a00; --needs-bg: #fdf3e0;
+    --ok-fg: #1f6f5c; --ok-bg: #e6f4ef;
+    --exc-fg: #166534; --exc-bg: #e3f2e6;
+    --unres-fg: #5b4b8a; --unres-bg: #eeeafa;
+    --mono: ui-monospace, "SF Mono", "Cascadia Code", Consolas, "Liberation Mono", monospace;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--ground); color: var(--ink);
+    font: 15px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 40px 24px 96px; }
+  h1 { font-size: 1.5rem; margin: 0 0 4px; letter-spacing: -0.01em; }
+  h2 {
+    font-size: 1.05rem; margin: 44px 0 12px; padding-bottom: 6px;
+    border-bottom: 2px solid var(--accent); letter-spacing: 0.02em; text-transform: uppercase;
+  }
+  h3 { font-size: 0.98rem; margin: 22px 0 8px; }
+  p { margin: 8px 0; }
+  a { color: var(--accent); }
+  code, pre, .mono { font-family: var(--mono); }
+  .sub { color: var(--muted); font-size: 0.9rem; }
+  .lede { font-size: 1.02rem; }
+
+  .meta-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 2px 28px; margin: 16px 0; font-size: 0.9rem;
+  }
+  .meta-grid div { padding: 4px 0; border-bottom: 1px solid var(--hair); word-break: break-word; }
+  .meta-grid b { color: var(--muted); font-weight: 600; margin-right: 8px; }
+
+  .cards { display: flex; flex-wrap: wrap; gap: 12px; margin: 14px 0; }
+  .card {
+    background: var(--panel); border: 1px solid var(--hair); border-radius: 8px;
+    padding: 12px 16px; min-width: 150px;
+  }
+  .card .n { font-size: 1.5rem; font-weight: 700; }
+  .card .k { color: var(--muted); font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.03em; }
+
+  .bar { display: flex; height: 26px; border-radius: 6px; overflow: hidden; border: 1px solid var(--hair); }
+  .bar span { display: flex; align-items: center; justify-content: center; font-size: 0.78rem; color: #fff; min-width: 0; }
+  .bar .b-excellent { background: #2f8f5b; }
+  .bar .b-acceptable { background: #3f8f7f; }
+  .bar .b-needs-work { background: #b98324; }
+  .bar .b-fail       { background: #c14a41; }
+  .bar .b-unresolved { background: #7b6bb0; }
+  .legend { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; font-size: 0.85rem; }
+  .legend i { width: 11px; height: 11px; border-radius: 2px; display: inline-block; margin-right: 5px; vertical-align: middle; }
+
+  .badge {
+    display: inline-block; padding: 1px 8px; border-radius: 999px; font-size: 0.8rem;
+    font-weight: 600; border: 1px solid transparent; white-space: nowrap;
+  }
+  .v-excellent  { background: var(--exc-bg);  color: var(--exc-fg);  border-color: #b7ddc0; }
+  .v-acceptable { background: var(--ok-bg);   color: var(--ok-fg);   border-color: #b6ddd1; }
+  .v-needs-work { background: var(--needs-bg); color: var(--needs-fg); border-color: #ecd6a6; }
+  .v-fail       { background: var(--fail-bg); color: var(--fail-fg); border-color: #edc3bd; }
+  .v-unresolved { background: var(--unres-bg); color: var(--unres-fg); border-color: #cfc4ec; }
+
+  .rl-stable        { background: var(--exc-bg); color: var(--exc-fg); }
+  .rl-some_variance { background: var(--needs-bg); color: var(--needs-fg); }
+  .rl-unreliable    { background: var(--fail-bg); color: var(--fail-fg); font-weight: 700; }
+  .rl-not_applicable { background: #eee; color: var(--muted); }
+
+  .ev-ok   { color: var(--ok-fg); }
+  .ev-bad  { color: var(--fail-fg); font-weight: 700; background: var(--fail-bg); padding: 1px 6px; border-radius: 4px; }
+  .ev-none { color: var(--muted); }
+
+  table { border-collapse: collapse; width: 100%; font-size: 0.88rem; margin: 8px 0; }
+  .scroll { overflow-x: auto; }
+  th, td { text-align: left; padding: 6px 10px; border-bottom: 1px solid var(--hair); vertical-align: top; }
+  th { color: var(--muted); font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.02em; }
+  td.num, th.num { text-align: right; font-family: var(--mono); }
+  .pass { color: var(--ok-fg); font-weight: 600; }
+  .miss { color: var(--fail-fg); font-weight: 700; }
+  .pend { color: var(--needs-fg); }
+
+  pre.resp {
+    background: var(--panel); border: 1px solid var(--hair); border-left: 3px solid var(--accent);
+    border-radius: 6px; padding: 12px 14px; white-space: pre-wrap; word-break: break-word;
+    font-size: 0.88rem; margin: 6px 0;
+  }
+  blockquote.quote {
+    margin: 4px 0; padding: 4px 12px; border-left: 3px solid var(--hair);
+    font-family: var(--mono); font-size: 0.84rem; color: var(--ink); white-space: pre-wrap;
+  }
+
+  .failbox { background: var(--fail-bg); border: 1px solid #edc3bd; border-radius: 8px; padding: 12px 16px; }
+  .failbox ul { margin: 6px 0 0; padding-left: 18px; }
+  .failbox li { margin: 3px 0; }
+  .okbox { background: var(--ok-bg); border: 1px solid #b6ddd1; border-radius: 8px; padding: 12px 16px; }
+
+  details.item {
+    background: var(--panel); border: 1px solid var(--hair); border-radius: 8px;
+    margin: 10px 0; padding: 0 16px;
+  }
+  details.item[open] { border-color: var(--accent); }
+  details.item.flagged { border-left: 3px solid var(--fail-fg); }
+  summary { cursor: pointer; padding: 12px 0; font-weight: 600; list-style-position: inside; }
+  summary .badge { margin-left: 8px; }
+  .dim { border-top: 1px solid var(--hair); padding: 12px 0; }
+  .dim:first-of-type { border-top: none; }
+  .notlist { margin: 4px 0; padding-left: 18px; font-size: 0.88rem; }
+  .kv { font-size: 0.88rem; }
+  .kv b { color: var(--muted); font-weight: 600; }
+  .chip {
+    display: inline-block; padding: 1px 7px; margin: 2px 3px 2px 0; border-radius: 4px;
+    font-size: 0.78rem; font-family: var(--mono); border: 1px solid var(--hair);
+  }
+  .repro { background: #1b1b1a; color: #f2efe9; border-radius: 8px; padding: 12px 14px; overflow-x: auto; }
+  .repro code { color: #f2efe9; }
+  footer { margin-top: 60px; padding-top: 16px; border-top: 1px solid var(--hair); color: var(--muted); font-size: 0.85rem; }
+  @media print { details.item { break-inside: avoid; } summary { list-style: none; } }
+</style>
+</head>
+<body>
+<div class="wrap"><h1>Rubric evaluation report</h1>
+<p class="sub">Customer support email reply · rubric <span class="mono">support_email_reply</span> v1</p>
+
+<div class="meta-grid">
+  <div><b>Generated</b>2026-01-01T00:00:00+00:00</div>
+  <div><b>Harness</b>rubric-eval 0.1.0</div>
+  <div><b>Provider</b>mock</div>
+  <div><b>Judge model</b>—</div>
+  <div><b>Judge runs (N)</b>5</div>
+  <div><b>Judge temperature</b>0.0</div>
+  <div><b>Dataset</b><span class="mono">datasets/support_email.jsonl</span></div>
+  <div><b>Items</b>4</div>
+  <div><b>Git commit</b>—</div>
+</div><h2>Executive summary</h2>
+<p class="lede">
+  4 response(s) evaluated against 4
+  rubric dimension(s). Instruction-following is a pass/fail gate; judged dimensions were scored
+  5&times; each and reported with their spread.
+</p>
+<p class="sub">
+  This report evaluates supplied responses against an explicit rubric. It is <b>not a model benchmark</b>
+  and produces no leaderboard. Reliability labels are configurable heuristics — the raw per-run numbers below are the source of truth.
+</p>
+
+<div class="cards">
+  <div class="card"><div class="n">4</div><div class="k">Items</div></div>
+  <div class="card">
+    <div class="n">12/12</div>
+    <div class="k">Instruction checks passed</div>
+  </div>
+  <div class="card"><div class="n">0</div><div class="k">Unreliable judged dims</div></div>
+  <div class="card"><div class="n">1</div><div class="k">Not-evaluated dims</div></div>
+  <div class="card"><div class="n">0</div><div class="k">Dims w/ unverified evidence</div></div>
+  <div class="card"><div class="n">5</div><div class="k">Failed judge runs</div></div>
+  <div class="card">
+    <div class="n">100%</div>
+    <div class="k">Mean verdict agreement</div>
+  </div>
+</div><h2>Verdict distribution</h2>
+<div class="bar">
+      <span class="b-excellent" style="flex: 3 0 0;">3</span>
+      <span class="b-needs-work" style="flex: 1 0 0;">1</span>
+</div>
+<div class="legend">
+    <span><i class="b-excellent" style="background:#2f8f5b"></i>Excellent: 3</span>
+    <span><i class="b-acceptable" style="background:#3f8f7f"></i>Acceptable: 0</span>
+    <span><i class="b-needs-work" style="background:#b98324"></i>Needs work: 1</span>
+    <span><i class="b-fail" style="background:#c14a41"></i>Fail: 0</span>
+    <span><i class="b-unresolved" style="background:#7b6bb0"></i>Unresolved: 0</span>
+</div><h2>Instruction-following results</h2>
+<p class="sub">Across every gate check on every item (deterministic + judged). A single deterministic or judged FAIL fails that item's gate.</p>
+<div class="scroll"><table>
+  <tr><th>Gate outcome (per item)</th><th class="num">count</th><th>Instruction check</th><th class="num">count</th></tr>
+  <tr><td class="pass">pass</td><td class="num">4</td><td class="pass">pass</td><td class="num">12</td></tr>
+  <tr><td class="miss">fail</td><td class="num">0</td><td class="miss">fail</td><td class="num">0</td></tr>
+  <tr><td class="pend">pending</td><td class="num">0</td><td class="pend">pending_judge</td><td class="num">0</td></tr>
+  <tr><td class="miss">error</td><td class="num">0</td><td class="miss">error</td><td class="num">0</td></tr>
+</table></div><h2>Reliability / consistency summary</h2>
+<p class="sub">
+  Labels below are <b>configurable operational heuristics</b>, not statistical boundaries. Every judged
+  dimension's raw statistics appear in the per-item detail and in the raw-statistics table.
+</p>
+<div class="cards">
+    <div class="card"><div class="n">7</div><div class="k"><span class="badge rl-stable">stable</span></div></div>
+    <div class="card"><div class="n">0</div><div class="k"><span class="badge rl-some_variance">some variance</span></div></div>
+    <div class="card"><div class="n">0</div><div class="k"><span class="badge rl-unreliable">unreliable</span></div></div>
+    <div class="card"><div class="n">1</div><div class="k"><span class="badge rl-not_applicable">not applicable</span></div></div>
+</div><h2>Verdict-stability summary</h2>
+<p class="sub">
+  Re-computing the verdict from each single judged run. Instruction judging runs once, so variation
+  here reflects only judged-dimension scores. A run with a judge error counts as "Unresolved".
+  Mean per-item agreement: <b>1.0</b>.
+</p>
+<div class="scroll"><table>
+  <tr><th>Item</th><th>Modal verdict</th><th class="num">Agreement</th><th>Distribution</th></tr>
+      <tr>
+        <td><a href="#item-se-strong" class="mono">se-strong</a></td>
+        <td><span class="badge v-excellent">Excellent</span></td>
+        <td class="num">1.0</td>
+        <td class="mono">{&#39;Excellent&#39;: 5}</td>
+      </tr>
+      <tr>
+        <td><a href="#item-se-overpromise" class="mono">se-overpromise</a></td>
+        <td><span class="badge v-needs-work">Needs work</span></td>
+        <td class="num">1.0</td>
+        <td class="mono">{&#39;Needs work&#39;: 5}</td>
+      </tr>
+      <tr>
+        <td><a href="#item-se-retry" class="mono">se-retry</a></td>
+        <td><span class="badge v-excellent">Excellent</span></td>
+        <td class="num">1.0</td>
+        <td class="mono">{&#39;Excellent&#39;: 5}</td>
+      </tr>
+      <tr>
+        <td><a href="#item-se-judgefail" class="mono">se-judgefail</a></td>
+        <td><span class="badge v-excellent">Excellent</span></td>
+        <td class="num">1.0</td>
+        <td class="mono">{&#39;Excellent&#39;: 5}</td>
+      </tr>
+</table></div><h2>Failures first</h2>
+  <div class="failbox">
+    <p><b>2 of 4 item(s)</b> have a failed verdict, gate failure/error, failed deterministic check, not-evaluated dimension, unverified judge evidence, judge error, or an unstable verdict:</p>
+      <p style="margin-top:12px">
+        <a href="#item-se-overpromise" class="mono">se-overpromise</a>
+        <span class="badge v-needs-work">Needs work</span>
+<span class="sub">— policy violation — promises a card refund and a guarantee the policy does not allow</span>      </p>
+      <ul>
+<li>verdict: Needs work</li><li>deterministic check(s) failed in &#39;policy_safety&#39;: no_overpromise</li>      </ul>
+      <p style="margin-top:12px">
+        <a href="#item-se-judgefail" class="mono">se-judgefail</a>
+        <span class="badge v-excellent">Excellent</span>
+<span class="sub">— the faithfulness judge failed on every run (simulated outage) — the dimension is not scored, not zeroed</span>      </p>
+      <ul>
+<li>&#39;faithfulness&#39; NOT evaluated: all 5 judge run(s) failed</li><li>&#39;faithfulness&#39;: 5 judge run(s) failed</li>      </ul>
+  </div>
+<h2>Per-item detail</h2>
+  <details class="item " id="item-se-strong" >
+    <summary>
+      <span class="mono">se-strong</span>
+      <span class="badge v-excellent">Excellent</span>
+<span class="sub">indicative 5.0</span><span class="sub">· strong response — accurate to policy, acknowledges the issue, gives a next step</span>    </summary>
+
+
+    <h3>Task</h3>
+    <pre class="resp">Write a reply to the customer below. Ticket #4021. Be warm and specific.
+
+Customer: my blender arrived with a cracked jug.</pre>
+
+    <h3>Candidate response</h3>
+    <pre class="resp">Hi Dana, thanks for flagging ticket #4021. I&#39;m sorry the blender arrived with a cracked jug. Because you reported it within 30 days, we&#39;ll replace it at no cost, and the replacement ships within 3 business days of approval. I&#39;ve approved it now, so a tracking number should reach you shortly. - Priya, Northwind Support</pre>
+
+    <h3>Verdict</h3>
+    <p><span class="badge v-excellent">Excellent</span>
+<span class="sub">judged mean 5</span>    </p>
+
+      <h3>Verdict stability</h3>
+      <p>
+<span class="chip">Excellent</span><span class="chip">Excellent</span><span class="chip">Excellent</span><span class="chip">Excellent</span><span class="chip">Excellent</span>      </p>
+      <p class="kv"><b>Modal:</b> Excellent ·
+        <b>Agreement:</b> 1.0 ·
+        <b>Distribution:</b> <span class="mono">{&#39;Excellent&#39;: 5}</span></p>
+      <p class="sub">Instruction judging runs once; per-run verdict variation reflects only the judged-dimension scores. A run with a judge error on any evaluable judged dimension is counted as &#39;Unresolved&#39;.</p>
+
+        <div class="dim">
+          <h3>Instruction-following gate —
+            <span class="badge v-acceptable">pass</span>
+          </h3>
+          <div class="scroll"><table>
+            <tr><th>Instruction</th><th>Method</th><th>Status</th><th>Detail</th><th>Evidence (from response)</th></tr>
+              <tr>
+                <td>Includes the ticket number (a &#39;#&#39; followed by four or more digits)</td>
+                <td class="mono">deterministic</td>
+                <td class="pass">pass</td>
+                <td class="sub">required pattern /#\d{4,}/ matched (matched &#39;#4021&#39;)</td>
+                <td>
+<span class="ev-none">—</span>                </td>
+              </tr>
+              <tr>
+                <td>Acknowledges the customer&#39;s specific problem</td>
+                <td class="mono">judge</td>
+                <td class="pass">pass</td>
+                <td class="sub">Names the cracked jug explicitly.</td>
+                <td>
+<span class="ev-none">—</span>                </td>
+              </tr>
+              <tr>
+                <td>States a concrete next step or timeframe</td>
+                <td class="mono">judge</td>
+                <td class="pass">pass</td>
+                <td class="sub">States the replacement ships within 3 business days and it is approved.</td>
+                <td>
+<span class="ev-none">—</span>                </td>
+              </tr>
+          </table></div>
+        </div>
+
+        <div class="dim">
+          <h3>Deterministic: <span class="mono">policy_safety</span>
+            <span class="badge v-acceptable">pass</span>
+          </h3>
+          <div class="scroll"><table>
+            <tr><th>Check</th><th>Kind</th><th>Expected</th><th>Observed</th><th>Outcome</th></tr>
+              <tr>
+                <td>no_overpromise</td><td class="mono">forbidden_regex</td>
+                <td class="sub">forbidden pattern /(?i)\b(full refund|100% refund|guarantee(d)?|refund you|refund to your card)\b/ does not match</td><td class="sub">no match</td>
+                <td class="pass">pass</td>
+              </tr>
+          </table></div>
+        </div>
+
+        <div class="dim">
+          <h3>Judged: <span class="mono">faithfulness</span>
+            <span class="sub">(reference_grounded)</span>
+<span class="badge rl-stable">stable</span>          </h3>
+
+            <p class="kv">
+              <b>mean</b> 5 ·
+              <b>stdev</b> 0 ·
+              <b>min–max</b> 5–5 ·
+              <b>pairwise disagreement</b> 0 ·
+              <b>valid runs</b> 5/5
+            </p>
+            <div class="scroll"><table>
+              <tr><th class="num">run</th><th class="num">score</th><th>rationale</th><th>evidence quote</th><th>evidence check</th></tr>
+                <tr>
+                  <td class="num">0</td>
+                  <td class="num">5</td>
+                  <td class="sub">Every policy statement matches the policy.</td>
+                  <td><blockquote class="quote">Defective items reported within 30 days are
+replaced at no cost</blockquote></td>
+                  <td>
+<span class="ev-ok">✔ verified (normalized)</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="num">1</td>
+                  <td class="num">5</td>
+                  <td class="sub">Every policy statement matches the policy.</td>
+                  <td><blockquote class="quote">Defective items reported within 30 days are
+replaced at no cost</blockquote></td>
+                  <td>
+<span class="ev-ok">✔ verified (normalized)</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="num">2</td>
+                  <td class="num">5</td>
+                  <td class="sub">Every policy statement matches the policy.</td>
+                  <td><blockquote class="quote">Defective items reported within 30 days are
+replaced at no cost</blockquote></td>
+                  <td>
+<span class="ev-ok">✔ verified (normalized)</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="num">3</td>
+                  <td class="num">5</td>
+                  <td class="sub">Every policy statement matches the policy.</td>
+                  <td><blockquote class="quote">Defective items reported within 30 days are
+replaced at no cost</blockquote></td>
+                  <td>
+<span class="ev-ok">✔ verified (normalized)</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="num">4</td>
+                  <td class="num">5</td>
+                  <td class="sub">Every policy statement matches the policy.</td>
+                  <td><blockquote class="quote">Defective items reported within 30 days are
+replaced at no cost</blockquote></td>
+                  <td>
+<span class="ev-ok">✔ verified (normalized)</span>
+                  </td>
+                </tr>
+            </table></div>
+        </div>
+        <div class="dim">
+          <h3>Judged: <span class="mono">clarity</span>
+            <span class="sub">(judged)</span>
+<span class="badge rl-stable">stable</span>          </h3>
+
+            <p class="kv">
+              <b>mean</b> 5 ·
+              <b>stdev</b> 0 ·
+              <b>min–max</b> 5–5 ·
+              <b>pairwise disagreement</b> 0 ·
+              <b>valid runs</b> 5/5
+            </p>
+            <div class="scroll"><table>
+              <tr><th class="num">run</th><th class="num">score</th><th>rationale</th><th>evidence quote</th><th>evidence check</th></tr>
+                <tr>
+                  <td class="num">0</td>
+                  <td class="num">5</td>
+                  <td class="sub">Short, warm, actionable.</td>
+                  <td><span class="ev-none">—</span></td>
+                  <td>
+<span class="ev-none">—</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="num">1</td>
+                  <td class="num">5</td>
+                  <td class="sub">Short, warm, actionable.</td>
+                  <td><span class="ev-none">—</span></td>
+                  <td>
+<span class="ev-none">—</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="num">2</td>
+                  <td class="num">5</td>
+                  <td class="sub">Short, warm, actionable.</td>
+                  <td><span class="ev-none">—</span></td>
+                  <td>
+<span class="ev-none">—</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="num">3</td>
+                  <td class="num">5</td>
+                  <td class="sub">Short, warm, actionable.</td>
+                  <td><span class="ev-none">—</span></td>
+                  <td>
+<span class="ev-none">—</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="num">4</td>
+                  <td class="num">5</td>
+                  <td class="sub">Short, warm, actionable.</td>
+                  <td><span class="ev-none">—</span></td>
+                  <td>
+<span class="ev-none">—</span>
+                  </td>
+                </tr>
+            </table></div>
+        </div>
+  </details>
+  <details class="item flagged" id="item-se-overpromise" open>
+    <summary>
+      <span class="mono">se-overpromise</span>
+      <span class="badge v-needs-work">Needs work</span>
+<span class="sub">indicative 2.7</span><span class="sub">· policy violation — promises a card refund and a guarantee the policy does not allow</span>    </summary>
+
+<p class="sub"><b>Author note:</b> policy_safety is a safety dimension; its failure caps the verdict at Needs work.</p>
+    <h3>Task</h3>
+    <pre class="resp">Write a reply to the customer below. Ticket #4055.
+
+Customer: the kettle stopped working after a week.</pre>
+
+    <h3>Candidate response</h3>
+    <pre class="resp">Hi Marcus, so sorry about ticket #4055 and the trouble with your kettle. Don&#39;t worry - I&#39;ll refund you the full amount today and you&#39;ll see it back on your card within a few days. We guarantee you&#39;ll be happy.</pre>
+
+    <h3>Verdict</h3>
+    <p><span class="badge v-needs-work">Needs work</span>
+<span class="sub">judged mean 2.7</span>    </p>
+<p class="kv"><b>Capped by:</b> one or more deterministic checks failed; safety dimension(s) failed: policy_safety; dimension(s) below the needs-work floor (2.5): faithfulness</p>
+      <h3>Verdict stability</h3>
+      <p>
+<span class="chip">Needs work</span><span class="chip">Needs work</span><span class="chip">Needs work</span><span class="chip">Needs work</span><span class="chip">Needs work</span>      </p>
+      <p class="kv"><b>Modal:</b> Needs work ·
+        <b>Agreement:</b> 1.0 ·
+        <b>Distribution:</b> <span class="mono">{&#39;Needs work&#39;: 5}</span></p>
+      <p class="sub">Instruction judging runs once; per-run verdict variation reflects only the judged-dimension scores. A run with a judge error on any evaluable judged dimension is counted as &#39;Unresolved&#39;.</p>
+
+        <div class="dim">
+          <h3>Instruction-following gate —
+            <span class="badge v-acceptable">pass</span>
+          </h3>
+          <div class="scroll"><table>
+            <tr><th>Instruction</th><th>Method</th><th>Status</th><th>Detail</th><th>Evidence (from response)</th></tr>
+              <tr>
+                <td>Includes the ticket number (a &#39;#&#39; followed by four or more digits)</td>
+                <td class="mono">deterministic</td>
+                <td class="pass">pass</td>
+                <td class="sub">required pattern /#\d{4,}/ matched (matched &#39;#4055&#39;)</td>
+                <td>
+<span class="ev-none">—</span>                </td>
+              </tr>
+              <tr>
+                <td>Acknowledges the customer&#39;s specific problem</td>
+                <td class="mono">judge</td>
+                <td class="pass">pass</td>
+                <td class="sub">Acknowledges the kettle failure.</td>
+                <td>
+<span class="ev-none">—</span>                </td>
+              </tr>
+              <tr>
+                <td>States a concrete next step or timeframe</td>
+                <td class="mono">judge</td>
+                <td class="pass">pass</td>
+                <td class="sub">Says the refund happens today.</td>
+                <td>
+<span class="ev-none">—</span>                </td>
+              </tr>
+          </table></div>
+        </div>
+
+        <div class="dim">
+          <h3>Deterministic: <span class="mono">policy_safety</span>
+            <span class="badge v-fail">fail</span>
+          </h3>
+          <div class="scroll"><table>
+            <tr><th>Check</th><th>Kind</th><th>Expected</th><th>Observed</th><th>Outcome</th></tr>
+              <tr>
+                <td>no_overpromise</td><td class="mono">forbidden_regex</td>
+                <td class="sub">forbidden pattern /(?i)\b(full refund|100% refund|guarantee(d)?|refund you|refund to your card)\b/ does not match</td><td class="sub">matched (matched &#39;refund you&#39;)</td>
+                <td class="miss">fail</td>
+              </tr>
+          </table></div>
+        </div>
+
+        <div class="dim">
+          <h3>Judged: <span class="mono">faithfulness</span>
+            <span class="sub">(reference_grounded)</span>
+<span class="badge rl-stable">stable</span>          </h3>
+
+            <p class="kv">
+              <b>mean</b> 1.4 ·
+              <b>stdev</b> 0.4899 ·
+              <b>min–max</b> 1–2 ·
+              <b>pairwise disagreement</b> 0 ·
+              <b>valid runs</b> 5/5
+            </p>
+            <div class="scroll"><table>
+              <tr><th class="num">run</th><th class="num">score</th><th>rationale</th><th>evidence quote</th><th>evidence check</th></tr>
+                <tr>
+                  <td class="num">0</td>
+                  <td class="num">1</td>
+                  <td class="sub">The policy says cash or card refunds are not offered; the reply promises one.</td>
+                  <td><blockquote class="quote">Cash or card refunds are not offered</blockquote></td>
+                  <td>
+<span class="ev-ok">✔ verified (exact)</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="num">1</td>
+                  <td class="num">2</td>
+                  <td class="sub">Contradicts the no-refund policy.</td>
+                  <td><blockquote class="quote">Cash or card refunds are not offered</blockquote></td>
+                  <td>
+<span class="ev-ok">✔ verified (exact)</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="num">2</td>
+                  <td class="num">1</td>
+                  <td class="sub">Directly contradicts the policy.</td>
+                  <td><blockquote class="quote">Cash or card refunds are not offered</blockquote></td>
+                  <td>
+<span class="ev-ok">✔ verified (exact)</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="num">3</td>
+                  <td class="num">2</td>
+                  <td class="sub">Contradicts the policy.</td>
+                  <td><blockquote class="quote">Cash or card refunds are not offered</blockquote></td>
+                  <td>
+<span class="ev-ok">✔ verified (exact)</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="num">4</td>
+                  <td class="num">1</td>
+                  <td class="sub">Contradicts the policy.</td>
+                  <td><blockquote class="quote">Cash or card refunds are not offered</blockquote></td>
+                  <td>
+<span class="ev-ok">✔ verified (exact)</span>
+                  </td>
+                </tr>
+            </table></div>
+        </div>
+        <div class="dim">
+          <h3>Judged: <span class="mono">clarity</span>
+            <span class="sub">(judged)</span>
+<span class="badge rl-stable">stable</span>          </h3>
+
+            <p class="kv">
+              <b>mean</b> 4 ·
+              <b>stdev</b> 0 ·
+              <b>min–max</b> 4–4 ·
+              <b>pairwise disagreement</b> 0 ·
+              <b>valid runs</b> 5/5
+            </p>
+            <div class="scroll"><table>
+              <tr><th class="num">run</th><th class="num">score</th><th>rationale</th><th>evidence quote</th><th>evidence check</th></tr>
+                <tr>
+                  <td class="num">0</td>
+                  <td class="num">4</td>
+                  <td class="sub">Clear enough, if wrong.</td>
+                  <td><span class="ev-none">—</span></td>
+                  <td>
+<span class="ev-none">—</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="num">1</td>
+                  <td class="num">4</td>
+                  <td class="sub">Clear enough, if wrong.</td>
+                  <td><span class="ev-none">—</span></td>
+                  <td>
+<span class="ev-none">—</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="num">2</td>
+                  <td class="num">4</td>
+                  <td class="sub">Clear enough, if wrong.</td>
+                  <td><span class="ev-none">—</span></td>
+                  <td>
+<span class="ev-none">—</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="num">3</td>
+                  <td class="num">4</td>
+                  <td class="sub">Clear enough, if wrong.</td>
+                  <td><span class="ev-none">—</span></td>
+                  <td>
+<span class="ev-none">—</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="num">4</td>
+                  <td class="num">4</td>
+                  <td class="sub">Clear enough, if wrong.</td>
+                  <td><span class="ev-none">—</span></td>
+                  <td>
+<span class="ev-none">—</span>
+                  </td>
+                </tr>
+            </table></div>
+        </div>
+  </details>
+  <details class="item " id="item-se-retry" >
+    <summary>
+      <span class="mono">se-retry</span>
+      <span class="badge v-excellent">Excellent</span>
+<span class="sub">indicative 5.0</span><span class="sub">· the faithfulness judge&#39;s first response was malformed on every run; the single retry succeeded</span>    </summary>
+
+
+    <h3>Task</h3>
+    <pre class="resp">Write a reply to the customer below. Ticket #4102.
+
+Customer: I&#39;d like to return an unopened mixer.</pre>
+
+    <h3>Candidate response</h3>
+    <pre class="resp">Hi Sofia - thanks for reaching out on ticket #4102. You&#39;re within the 14-day window, so I can set up a return for store credit. Once we receive the item, the credit posts to your account. Let me know if you&#39;d like the prepaid label.</pre>
+
+    <h3>Verdict</h3>
+    <p><span class="badge v-excellent">Excellent</span>
+<span class="sub">judged mean 5</span>    </p>
+
+      <h3>Verdict stability</h3>
+      <p>
+<span class="chip">Excellent</span><span class="chip">Excellent</span><span class="chip">Excellent</span><span class="chip">Excellent</span><span class="chip">Excellent</span>      </p>
+      <p class="kv"><b>Modal:</b> Excellent ·
+        <b>Agreement:</b> 1.0 ·
+        <b>Distribution:</b> <span class="mono">{&#39;Excellent&#39;: 5}</span></p>
+      <p class="sub">Instruction judging runs once; per-run verdict variation reflects only the judged-dimension scores. A run with a judge error on any evaluable judged dimension is counted as &#39;Unresolved&#39;.</p>
+
+        <div class="dim">
+          <h3>Instruction-following gate —
+            <span class="badge v-acceptable">pass</span>
+          </h3>
+          <div class="scroll"><table>
+            <tr><th>Instruction</th><th>Method</th><th>Status</th><th>Detail</th><th>Evidence (from response)</th></tr>
+              <tr>
+                <td>Includes the ticket number (a &#39;#&#39; followed by four or more digits)</td>
+                <td class="mono">deterministic</td>
+                <td class="pass">pass</td>
+                <td class="sub">required pattern /#\d{4,}/ matched (matched &#39;#4102&#39;)</td>
+                <td>
+<span class="ev-none">—</span>                </td>
+              </tr>
+              <tr>
+                <td>Acknowledges the customer&#39;s specific problem</td>
+                <td class="mono">judge</td>
+                <td class="pass">pass</td>
+                <td class="sub">Acknowledges the return request.</td>
+                <td>
+<span class="ev-none">—</span>                </td>
+              </tr>
+              <tr>
+                <td>States a concrete next step or timeframe</td>
+                <td class="mono">judge</td>
+                <td class="pass">pass</td>
+                <td class="sub">Offers to send a prepaid label as the next step.</td>
+                <td>
+<span class="ev-none">—</span>                </td>
+              </tr>
+          </table></div>
+        </div>
+
+        <div class="dim">
+          <h3>Deterministic: <span class="mono">policy_safety</span>
+            <span class="badge v-acceptable">pass</span>
+          </h3>
+          <div class="scroll"><table>
+            <tr><th>Check</th><th>Kind</th><th>Expected</th><th>Observed</th><th>Outcome</th></tr>
+              <tr>
+                <td>no_overpromise</td><td class="mono">forbidden_regex</td>
+                <td class="sub">forbidden pattern /(?i)\b(full refund|100% refund|guarantee(d)?|refund you|refund to your card)\b/ does not match</td><td class="sub">no match</td>
+                <td class="pass">pass</td>
+              </tr>
+          </table></div>
+        </div>
+
+        <div class="dim">
+          <h3>Judged: <span class="mono">faithfulness</span>
+            <span class="sub">(reference_grounded)</span>
+<span class="badge rl-stable">stable</span>          </h3>
+
+            <p class="kv">
+              <b>mean</b> 5 ·
+              <b>stdev</b> 0 ·
+              <b>min–max</b> 5–5 ·
+              <b>pairwise disagreement</b> 0 ·
+              <b>valid runs</b> 5/5
+            </p>
+            <div class="scroll"><table>
+              <tr><th class="num">run</th><th class="num">score</th><th>rationale</th><th>evidence quote</th><th>evidence check</th></tr>
+                <tr>
+                  <td class="num">0<span class="sub"> (retry)</span></td>
+                  <td class="num">5</td>
+                  <td class="sub">Matches the 14-day store-credit policy exactly.</td>
+                  <td><blockquote class="quote">items may be returned within 14 days of
+delivery for store credit</blockquote></td>
+                  <td>
+<span class="ev-ok">✔ verified (normalized)</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="num">1<span class="sub"> (retry)</span></td>
+                  <td class="num">5</td>
+                  <td class="sub">Matches the 14-day store-credit policy exactly.</td>
+                  <td><blockquote class="quote">items may be returned within 14 days of
+delivery for store credit</blockquote></td>
+                  <td>
+<span class="ev-ok">✔ verified (normalized)</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="num">2<span class="sub"> (retry)</span></td>
+                  <td class="num">5</td>
+                  <td class="sub">Matches the 14-day store-credit policy exactly.</td>
+                  <td><blockquote class="quote">items may be returned within 14 days of
+delivery for store credit</blockquote></td>
+                  <td>
+<span class="ev-ok">✔ verified (normalized)</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="num">3<span class="sub"> (retry)</span></td>
+                  <td class="num">5</td>
+                  <td class="sub">Matches the 14-day store-credit policy exactly.</td>
+                  <td><blockquote class="quote">items may be returned within 14 days of
+delivery for store credit</blockquote></td>
+                  <td>
+<span class="ev-ok">✔ verified (normalized)</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="num">4<span class="sub"> (retry)</span></td>
+                  <td class="num">5</td>
+                  <td class="sub">Matches the 14-day store-credit policy exactly.</td>
+                  <td><blockquote class="quote">items may be returned within 14 days of
+delivery for store credit</blockquote></td>
+                  <td>
+<span class="ev-ok">✔ verified (normalized)</span>
+                  </td>
+                </tr>
+            </table></div>
+        </div>
+        <div class="dim">
+          <h3>Judged: <span class="mono">clarity</span>
+            <span class="sub">(judged)</span>
+<span class="badge rl-stable">stable</span>          </h3>
+
+            <p class="kv">
+              <b>mean</b> 5 ·
+              <b>stdev</b> 0 ·
+              <b>min–max</b> 5–5 ·
+              <b>pairwise disagreement</b> 0 ·
+              <b>valid runs</b> 5/5
+            </p>
+            <div class="scroll"><table>
+              <tr><th class="num">run</th><th class="num">score</th><th>rationale</th><th>evidence quote</th><th>evidence check</th></tr>
+                <tr>
+                  <td class="num">0</td>
+                  <td class="num">5</td>
+                  <td class="sub">Concise and clear.</td>
+                  <td><span class="ev-none">—</span></td>
+                  <td>
+<span class="ev-none">—</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="num">1</td>
+                  <td class="num">5</td>
+                  <td class="sub">Concise and clear.</td>
+                  <td><span class="ev-none">—</span></td>
+                  <td>
+<span class="ev-none">—</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="num">2</td>
+                  <td class="num">5</td>
+                  <td class="sub">Concise and clear.</td>
+                  <td><span class="ev-none">—</span></td>
+                  <td>
+<span class="ev-none">—</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="num">3</td>
+                  <td class="num">5</td>
+                  <td class="sub">Concise and clear.</td>
+                  <td><span class="ev-none">—</span></td>
+                  <td>
+<span class="ev-none">—</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="num">4</td>
+                  <td class="num">5</td>
+                  <td class="sub">Concise and clear.</td>
+                  <td><span class="ev-none">—</span></td>
+                  <td>
+<span class="ev-none">—</span>
+                  </td>
+                </tr>
+            </table></div>
+        </div>
+  </details>
+  <details class="item flagged" id="item-se-judgefail" open>
+    <summary>
+      <span class="mono">se-judgefail</span>
+      <span class="badge v-excellent">Excellent</span>
+<span class="sub">indicative 5.0</span><span class="sub">· the faithfulness judge failed on every run (simulated outage) — the dimension is not scored, not zeroed</span>    </summary>
+
+
+    <h3>Task</h3>
+    <pre class="resp">Write a reply to the customer below. Ticket #4200.
+
+Customer: my coffee grinder is defective, bought it three weeks ago.</pre>
+
+    <h3>Candidate response</h3>
+    <pre class="resp">Hi Aki, thanks for the note on ticket #4200. Your grinder is a defective unit reported within 30 days, so we&#39;ll send a free replacement. It ships within 3 business days once approved, and I&#39;ve approved it now.</pre>
+
+    <h3>Verdict</h3>
+    <p><span class="badge v-excellent">Excellent</span>
+<span class="sub">judged mean 5</span>    </p>
+<p class="kv"><b>Not evaluated (excluded, not zeroed):</b> faithfulness</p><ul class="notlist"><li>judged dimensions not evaluated: faithfulness — excluded from the mean, NOT scored as zero</li></ul>
+      <h3>Verdict stability</h3>
+      <p>
+<span class="chip">Excellent</span><span class="chip">Excellent</span><span class="chip">Excellent</span><span class="chip">Excellent</span><span class="chip">Excellent</span>      </p>
+      <p class="kv"><b>Modal:</b> Excellent ·
+        <b>Agreement:</b> 1.0 ·
+        <b>Distribution:</b> <span class="mono">{&#39;Excellent&#39;: 5}</span></p>
+      <p class="sub">Instruction judging runs once; per-run verdict variation reflects only the judged-dimension scores. A run with a judge error on any evaluable judged dimension is counted as &#39;Unresolved&#39;.</p>
+
+      <h3>Errors recorded for this item</h3>
+      <ul class="notlist"><li class="miss">dimension &#39;faithfulness&#39;: all 5 judge run(s) failed — not scored</li></ul>
+        <div class="dim">
+          <h3>Instruction-following gate —
+            <span class="badge v-acceptable">pass</span>
+          </h3>
+          <div class="scroll"><table>
+            <tr><th>Instruction</th><th>Method</th><th>Status</th><th>Detail</th><th>Evidence (from response)</th></tr>
+              <tr>
+                <td>Includes the ticket number (a &#39;#&#39; followed by four or more digits)</td>
+                <td class="mono">deterministic</td>
+                <td class="pass">pass</td>
+                <td class="sub">required pattern /#\d{4,}/ matched (matched &#39;#4200&#39;)</td>
+                <td>
+<span class="ev-none">—</span>                </td>
+              </tr>
+              <tr>
+                <td>Acknowledges the customer&#39;s specific problem</td>
+                <td class="mono">judge</td>
+                <td class="pass">pass</td>
+                <td class="sub">Acknowledges the defective grinder.</td>
+                <td>
+<span class="ev-none">—</span>                </td>
+              </tr>
+              <tr>
+                <td>States a concrete next step or timeframe</td>
+                <td class="mono">judge</td>
+                <td class="pass">pass</td>
+                <td class="sub">States the replacement ships within 3 business days.</td>
+                <td>
+<span class="ev-none">—</span>                </td>
+              </tr>
+          </table></div>
+        </div>
+
+        <div class="dim">
+          <h3>Deterministic: <span class="mono">policy_safety</span>
+            <span class="badge v-acceptable">pass</span>
+          </h3>
+          <div class="scroll"><table>
+            <tr><th>Check</th><th>Kind</th><th>Expected</th><th>Observed</th><th>Outcome</th></tr>
+              <tr>
+                <td>no_overpromise</td><td class="mono">forbidden_regex</td>
+                <td class="sub">forbidden pattern /(?i)\b(full refund|100% refund|guarantee(d)?|refund you|refund to your card)\b/ does not match</td><td class="sub">no match</td>
+                <td class="pass">pass</td>
+              </tr>
+          </table></div>
+        </div>
+
+        <div class="dim">
+          <h3>Judged: <span class="mono">faithfulness</span>
+            <span class="sub">(reference_grounded)</span>
+              <span class="badge v-unresolved">NOT EVALUATED</span>
+          </h3>
+
+            <p class="kv"><b>Not evaluated:</b> all 5 judge run(s) failed
+              — <span class="sub">this dimension was excluded from the mean and the verdict. It was NOT scored zero.</span></p>
+<p class="kv"><b>Judge errors:</b> 5</p>        </div>
+        <div class="dim">
+          <h3>Judged: <span class="mono">clarity</span>
+            <span class="sub">(judged)</span>
+<span class="badge rl-stable">stable</span>          </h3>
+
+            <p class="kv">
+              <b>mean</b> 5 ·
+              <b>stdev</b> 0 ·
+              <b>min–max</b> 5–5 ·
+              <b>pairwise disagreement</b> 0 ·
+              <b>valid runs</b> 5/5
+            </p>
+            <div class="scroll"><table>
+              <tr><th class="num">run</th><th class="num">score</th><th>rationale</th><th>evidence quote</th><th>evidence check</th></tr>
+                <tr>
+                  <td class="num">0</td>
+                  <td class="num">5</td>
+                  <td class="sub">Clear and correct.</td>
+                  <td><span class="ev-none">—</span></td>
+                  <td>
+<span class="ev-none">—</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="num">1</td>
+                  <td class="num">5</td>
+                  <td class="sub">Clear and correct.</td>
+                  <td><span class="ev-none">—</span></td>
+                  <td>
+<span class="ev-none">—</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="num">2</td>
+                  <td class="num">5</td>
+                  <td class="sub">Clear and correct.</td>
+                  <td><span class="ev-none">—</span></td>
+                  <td>
+<span class="ev-none">—</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="num">3</td>
+                  <td class="num">5</td>
+                  <td class="sub">Clear and correct.</td>
+                  <td><span class="ev-none">—</span></td>
+                  <td>
+<span class="ev-none">—</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="num">4</td>
+                  <td class="num">5</td>
+                  <td class="sub">Clear and correct.</td>
+                  <td><span class="ev-none">—</span></td>
+                  <td>
+<span class="ev-none">—</span>
+                  </td>
+                </tr>
+            </table></div>
+        </div>
+  </details>
+<h2>Raw statistics</h2>
+<p class="sub">Every judged dimension's underlying numbers. This is the source of truth; the labels above are derived from it.</p>
+<div class="scroll"><table>
+  <tr><th>Item</th><th>Dimension</th><th class="num">N valid</th><th>Scores</th><th class="num">mean</th><th class="num">stdev</th><th class="num">min</th><th class="num">max</th><th class="num">disagree</th><th class="num">judge err</th><th>label</th></tr>
+        <tr>
+          <td class="mono">se-strong</td>
+          <td class="mono">faithfulness</td>
+            <td class="num">5/5</td>
+            <td class="mono">[5, 5, 5, 5, 5]</td>
+            <td class="num">5</td>
+            <td class="num">0</td>
+            <td class="num">5</td>
+            <td class="num">5</td>
+            <td class="num">0</td>
+            <td class="num">0</td>
+            <td><span class="badge rl-stable">stable</span></td>
+        </tr>
+        <tr>
+          <td class="mono">se-strong</td>
+          <td class="mono">clarity</td>
+            <td class="num">5/5</td>
+            <td class="mono">[5, 5, 5, 5, 5]</td>
+            <td class="num">5</td>
+            <td class="num">0</td>
+            <td class="num">5</td>
+            <td class="num">5</td>
+            <td class="num">0</td>
+            <td class="num">0</td>
+            <td><span class="badge rl-stable">stable</span></td>
+        </tr>
+        <tr>
+          <td class="mono">se-overpromise</td>
+          <td class="mono">faithfulness</td>
+            <td class="num">5/5</td>
+            <td class="mono">[1, 2, 1, 2, 1]</td>
+            <td class="num">1.4</td>
+            <td class="num">0.4899</td>
+            <td class="num">1</td>
+            <td class="num">2</td>
+            <td class="num">0</td>
+            <td class="num">0</td>
+            <td><span class="badge rl-stable">stable</span></td>
+        </tr>
+        <tr>
+          <td class="mono">se-overpromise</td>
+          <td class="mono">clarity</td>
+            <td class="num">5/5</td>
+            <td class="mono">[4, 4, 4, 4, 4]</td>
+            <td class="num">4</td>
+            <td class="num">0</td>
+            <td class="num">4</td>
+            <td class="num">4</td>
+            <td class="num">0</td>
+            <td class="num">0</td>
+            <td><span class="badge rl-stable">stable</span></td>
+        </tr>
+        <tr>
+          <td class="mono">se-retry</td>
+          <td class="mono">faithfulness</td>
+            <td class="num">5/5</td>
+            <td class="mono">[5, 5, 5, 5, 5]</td>
+            <td class="num">5</td>
+            <td class="num">0</td>
+            <td class="num">5</td>
+            <td class="num">5</td>
+            <td class="num">0</td>
+            <td class="num">0</td>
+            <td><span class="badge rl-stable">stable</span></td>
+        </tr>
+        <tr>
+          <td class="mono">se-retry</td>
+          <td class="mono">clarity</td>
+            <td class="num">5/5</td>
+            <td class="mono">[5, 5, 5, 5, 5]</td>
+            <td class="num">5</td>
+            <td class="num">0</td>
+            <td class="num">5</td>
+            <td class="num">5</td>
+            <td class="num">0</td>
+            <td class="num">0</td>
+            <td><span class="badge rl-stable">stable</span></td>
+        </tr>
+        <tr>
+          <td class="mono">se-judgefail</td>
+          <td class="mono">faithfulness</td>
+            <td class="num">0/5</td>
+            <td colspan="7" class="sub">all 5 judge run(s) failed</td>
+            <td class="num">5</td>
+            <td><span class="badge v-unresolved">not evaluated</span></td>
+        </tr>
+        <tr>
+          <td class="mono">se-judgefail</td>
+          <td class="mono">clarity</td>
+            <td class="num">5/5</td>
+            <td class="mono">[5, 5, 5, 5, 5]</td>
+            <td class="num">5</td>
+            <td class="num">0</td>
+            <td class="num">5</td>
+            <td class="num">5</td>
+            <td class="num">0</td>
+            <td class="num">0</td>
+            <td><span class="badge rl-stable">stable</span></td>
+        </tr>
+</table></div><h2>Methodology &amp; limitations</h2>
+<ul class="notlist">
+<li>Reliability thresholds (STABLE / SOME_VARIANCE / UNRELIABLE) are configurable operational heuristics, not statistically validated boundaries. The raw per-run scores, mean, population standard deviation, min/max and pairwise disagreement rate are the source of truth and are shown alongside every label.</li><li>LLM judges can be biased, inconsistent, or simply wrong. Treat a single score as an estimate, not ground truth.</li><li>Evidence verification checks only whether the quoted span actually occurs in the supplied reference. It does NOT independently prove the underlying claim is true.</li><li>When a judge returns an evidence quote that is not in the reference, the harness surfaces it as UNVERIFIED and possibly fabricated — it does not zero the score or hide the condition.</li><li>Repeated judging measures judge-output consistency under THIS configuration (model, temperature, prompt, run count). It is not a formal statistical confidence interval.</li><li>Instruction-following is judged once per item; judged rubric dimensions receive N runs. Per-run verdict variation therefore reflects only the judged-dimension scores.</li><li>The dataset included with this project is entirely synthetic — invented organisations, people, facts, and scenarios — written to demonstrate evaluator behaviour.</li><li>This project is NOT a model benchmark and produces no leaderboard. It evaluates supplied responses against an explicit rubric and reports how it did so.</li></ul><h2>Reproduce this report</h2>
+  <div class="repro"><code>rubric-eval run --rubric rubrics/support_email_reply.yaml --dataset datasets/support_email.jsonl --provider mock --mock-judgments datasets/_mock_judgments.json --out examples/</code></div>
+
+<footer>
+  rubric-eval 0.1.0 · generated 2026-01-01T00:00:00+00:00 ·
+  not a model benchmark · dataset is synthetic
+</footer>
+
+</div>
+</body>
+</html>

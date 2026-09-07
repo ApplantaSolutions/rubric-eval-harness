@@ -1,0 +1,51 @@
+id: grounded_qa
+version: 1
+title: "Grounded question answering"
+description: >
+  For tasks that ask a question answerable (or not) from a supplied context.
+  Faithfulness is judged only against the context; if the context does not
+  contain the answer, a good response says so. Completeness covers every part
+  of a multi-part question.
+
+scale: { min: 1, max: 5 }
+
+reliability:
+  runs_default: 5
+  disagreement_threshold: 2
+
+dimensions:
+  - id: instruction_following
+    type: gate
+    include_item_instructions: false
+    global_checks:
+      - text: "Answers in three sentences or fewer"
+        method: deterministic
+        rule: { name: brief, kind: max_sentences, value: 3 }
+      - text: "Directly addresses the question that was asked"
+        method: judge
+
+  - id: faithfulness
+    type: reference_grounded
+    description: >
+      The answer is supported by the context; if the context does not contain
+      the answer, the response says so rather than guessing.
+    anchors:
+      5: "Fully supported by the context, or correctly states the context does not answer it."
+      3: "Mostly supported; minor overreach beyond the context."
+      1: "Asserts something the context does not support."
+
+  - id: completeness
+    type: spec_grounded
+    description: "Answers every part of the question."
+    anchors:
+      5: "Answers every part of the question."
+      3: "Answers the main part but misses a secondary part."
+      1: "Answers only one part of a multi-part question."
+
+  - id: relevance
+    type: judged
+    description: "Stays on the question without digression."
+    anchors:
+      5: "Entirely on-topic; no digression."
+      3: "On-topic with some filler."
+      1: "Substantially off-topic."

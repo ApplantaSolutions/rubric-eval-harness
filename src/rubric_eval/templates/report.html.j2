@@ -1,0 +1,461 @@
+{#- Self-contained: inline CSS only, no JavaScript, no external fonts, no CDN. -#}
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rubric evaluation report — {{ report.meta.rubric_title }}</title>
+<style>
+  :root {
+    --ground: #fbfaf8; --panel: #ffffff; --ink: #1b1b1a; --muted: #6b6b66;
+    --hair: #e4ded3; --accent: #33475b;
+    --fail-fg: #b3261e; --fail-bg: #fbe9e7;
+    --needs-fg: #8a5a00; --needs-bg: #fdf3e0;
+    --ok-fg: #1f6f5c; --ok-bg: #e6f4ef;
+    --exc-fg: #166534; --exc-bg: #e3f2e6;
+    --unres-fg: #5b4b8a; --unres-bg: #eeeafa;
+    --mono: ui-monospace, "SF Mono", "Cascadia Code", Consolas, "Liberation Mono", monospace;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--ground); color: var(--ink);
+    font: 15px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 40px 24px 96px; }
+  h1 { font-size: 1.5rem; margin: 0 0 4px; letter-spacing: -0.01em; }
+  h2 {
+    font-size: 1.05rem; margin: 44px 0 12px; padding-bottom: 6px;
+    border-bottom: 2px solid var(--accent); letter-spacing: 0.02em; text-transform: uppercase;
+  }
+  h3 { font-size: 0.98rem; margin: 22px 0 8px; }
+  p { margin: 8px 0; }
+  a { color: var(--accent); }
+  code, pre, .mono { font-family: var(--mono); }
+  .sub { color: var(--muted); font-size: 0.9rem; }
+  .lede { font-size: 1.02rem; }
+
+  .meta-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 2px 28px; margin: 16px 0; font-size: 0.9rem;
+  }
+  .meta-grid div { padding: 4px 0; border-bottom: 1px solid var(--hair); word-break: break-word; }
+  .meta-grid b { color: var(--muted); font-weight: 600; margin-right: 8px; }
+
+  .cards { display: flex; flex-wrap: wrap; gap: 12px; margin: 14px 0; }
+  .card {
+    background: var(--panel); border: 1px solid var(--hair); border-radius: 8px;
+    padding: 12px 16px; min-width: 150px;
+  }
+  .card .n { font-size: 1.5rem; font-weight: 700; }
+  .card .k { color: var(--muted); font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.03em; }
+
+  .bar { display: flex; height: 26px; border-radius: 6px; overflow: hidden; border: 1px solid var(--hair); }
+  .bar span { display: flex; align-items: center; justify-content: center; font-size: 0.78rem; color: #fff; min-width: 0; }
+  .bar .b-excellent { background: #2f8f5b; }
+  .bar .b-acceptable { background: #3f8f7f; }
+  .bar .b-needs-work { background: #b98324; }
+  .bar .b-fail       { background: #c14a41; }
+  .bar .b-unresolved { background: #7b6bb0; }
+  .legend { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; font-size: 0.85rem; }
+  .legend i { width: 11px; height: 11px; border-radius: 2px; display: inline-block; margin-right: 5px; vertical-align: middle; }
+
+  .badge {
+    display: inline-block; padding: 1px 8px; border-radius: 999px; font-size: 0.8rem;
+    font-weight: 600; border: 1px solid transparent; white-space: nowrap;
+  }
+  .v-excellent  { background: var(--exc-bg);  color: var(--exc-fg);  border-color: #b7ddc0; }
+  .v-acceptable { background: var(--ok-bg);   color: var(--ok-fg);   border-color: #b6ddd1; }
+  .v-needs-work { background: var(--needs-bg); color: var(--needs-fg); border-color: #ecd6a6; }
+  .v-fail       { background: var(--fail-bg); color: var(--fail-fg); border-color: #edc3bd; }
+  .v-unresolved { background: var(--unres-bg); color: var(--unres-fg); border-color: #cfc4ec; }
+
+  .rl-stable        { background: var(--exc-bg); color: var(--exc-fg); }
+  .rl-some_variance { background: var(--needs-bg); color: var(--needs-fg); }
+  .rl-unreliable    { background: var(--fail-bg); color: var(--fail-fg); font-weight: 700; }
+  .rl-not_applicable { background: #eee; color: var(--muted); }
+
+  .ev-ok   { color: var(--ok-fg); }
+  .ev-bad  { color: var(--fail-fg); font-weight: 700; background: var(--fail-bg); padding: 1px 6px; border-radius: 4px; }
+  .ev-none { color: var(--muted); }
+
+  table { border-collapse: collapse; width: 100%; font-size: 0.88rem; margin: 8px 0; }
+  .scroll { overflow-x: auto; }
+  th, td { text-align: left; padding: 6px 10px; border-bottom: 1px solid var(--hair); vertical-align: top; }
+  th { color: var(--muted); font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.02em; }
+  td.num, th.num { text-align: right; font-family: var(--mono); }
+  .pass { color: var(--ok-fg); font-weight: 600; }
+  .miss { color: var(--fail-fg); font-weight: 700; }
+  .pend { color: var(--needs-fg); }
+
+  pre.resp {
+    background: var(--panel); border: 1px solid var(--hair); border-left: 3px solid var(--accent);
+    border-radius: 6px; padding: 12px 14px; white-space: pre-wrap; word-break: break-word;
+    font-size: 0.88rem; margin: 6px 0;
+  }
+  blockquote.quote {
+    margin: 4px 0; padding: 4px 12px; border-left: 3px solid var(--hair);
+    font-family: var(--mono); font-size: 0.84rem; color: var(--ink); white-space: pre-wrap;
+  }
+
+  .failbox { background: var(--fail-bg); border: 1px solid #edc3bd; border-radius: 8px; padding: 12px 16px; }
+  .failbox ul { margin: 6px 0 0; padding-left: 18px; }
+  .failbox li { margin: 3px 0; }
+  .okbox { background: var(--ok-bg); border: 1px solid #b6ddd1; border-radius: 8px; padding: 12px 16px; }
+
+  details.item {
+    background: var(--panel); border: 1px solid var(--hair); border-radius: 8px;
+    margin: 10px 0; padding: 0 16px;
+  }
+  details.item[open] { border-color: var(--accent); }
+  details.item.flagged { border-left: 3px solid var(--fail-fg); }
+  summary { cursor: pointer; padding: 12px 0; font-weight: 600; list-style-position: inside; }
+  summary .badge { margin-left: 8px; }
+  .dim { border-top: 1px solid var(--hair); padding: 12px 0; }
+  .dim:first-of-type { border-top: none; }
+  .notlist { margin: 4px 0; padding-left: 18px; font-size: 0.88rem; }
+  .kv { font-size: 0.88rem; }
+  .kv b { color: var(--muted); font-weight: 600; }
+  .chip {
+    display: inline-block; padding: 1px 7px; margin: 2px 3px 2px 0; border-radius: 4px;
+    font-size: 0.78rem; font-family: var(--mono); border: 1px solid var(--hair);
+  }
+  .repro { background: #1b1b1a; color: #f2efe9; border-radius: 8px; padding: 12px 14px; overflow-x: auto; }
+  .repro code { color: #f2efe9; }
+  footer { margin-top: 60px; padding-top: 16px; border-top: 1px solid var(--hair); color: var(--muted); font-size: 0.85rem; }
+  @media print { details.item { break-inside: avoid; } summary { list-style: none; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+{#- ============================== A. HEADER ============================== -#}
+<h1>Rubric evaluation report</h1>
+<p class="sub">{{ report.meta.rubric_title }} · rubric <span class="mono">{{ report.meta.rubric_id }}</span> v{{ report.meta.rubric_version }}</p>
+
+<div class="meta-grid">
+  <div><b>Generated</b>{{ report.meta.generated_at }}</div>
+  <div><b>Harness</b>rubric-eval {{ report.meta.harness_version }}</div>
+  <div><b>Provider</b>{{ report.meta.provider }}</div>
+  <div><b>Judge model</b>{{ report.meta.judge_model or "—" }}</div>
+  <div><b>Judge runs (N)</b>{{ report.meta.runs }}</div>
+  <div><b>Judge temperature</b>{{ report.meta.judge_temperature if report.meta.judge_temperature is not none else "—" }}</div>
+  <div><b>Dataset</b><span class="mono">{{ report.meta.dataset_path }}</span></div>
+  <div><b>Items</b>{{ report.meta.dataset_item_count }}</div>
+  <div><b>Git commit</b>{{ report.meta.git_commit or "—" }}</div>
+</div>
+
+{#- ========================= B. EXECUTIVE SUMMARY ======================= -#}
+<h2>Executive summary</h2>
+<p class="lede">
+  {{ report.summary.item_count }} response(s) evaluated against {{ report.items[0].dimensions | length if report.items else 0 }}
+  rubric dimension(s). Instruction-following is a pass/fail gate; judged dimensions were scored
+  {{ report.meta.runs }}&times; each and reported with their spread.
+</p>
+<p class="sub">
+  This report evaluates supplied responses against an explicit rubric. It is <b>not a model benchmark</b>
+  and produces no leaderboard. Reliability labels are configurable heuristics — the raw per-run numbers below are the source of truth.
+</p>
+
+<div class="cards">
+  <div class="card"><div class="n">{{ report.summary.item_count }}</div><div class="k">Items</div></div>
+  <div class="card">
+    <div class="n">{{ report.summary.instruction_check_counts.get("pass", 0) }}/{{
+      report.summary.instruction_check_counts.get("pass",0) + report.summary.instruction_check_counts.get("fail",0) + report.summary.instruction_check_counts.get("error",0) }}</div>
+    <div class="k">Instruction checks passed</div>
+  </div>
+  <div class="card"><div class="n">{{ report.summary.reliability_counts.get("unreliable", 0) }}</div><div class="k">Unreliable judged dims</div></div>
+  <div class="card"><div class="n">{{ report.summary.not_evaluated_dimension_count }}</div><div class="k">Not-evaluated dims</div></div>
+  <div class="card"><div class="n">{{ report.summary.unverified_evidence_dimension_count }}</div><div class="k">Dims w/ unverified evidence</div></div>
+  <div class="card"><div class="n">{{ report.summary.judge_error_run_count }}</div><div class="k">Failed judge runs</div></div>
+  <div class="card">
+    <div class="n">{{ (report.summary.dataset_verdict_agreement * 100) | round(0) | int ~ "%" if report.summary.dataset_verdict_agreement is not none else "—" }}</div>
+    <div class="k">Mean verdict agreement</div>
+  </div>
+</div>
+
+{#- ====================== C. VERDICT DISTRIBUTION ======================= -#}
+<h2>Verdict distribution</h2>
+{% set order = ["Excellent", "Acceptable", "Needs work", "Fail", "Unresolved"] %}
+{% set total = report.summary.item_count %}
+<div class="bar">
+  {% for v in order %}
+    {% set c = report.summary.verdict_counts.get(v, 0) %}
+    {% if c > 0 %}
+      <span class="b-{{ verdict_slug(v) }}" style="flex: {{ c }} 0 0;">{{ c }}</span>
+    {% endif %}
+  {% endfor %}
+</div>
+<div class="legend">
+  {% for v in order %}
+    <span><i class="b-{{ verdict_slug(v) }}" style="background:{{ {'Excellent':'#2f8f5b','Acceptable':'#3f8f7f','Needs work':'#b98324','Fail':'#c14a41','Unresolved':'#7b6bb0'}[v] }}"></i>{{ v }}: {{ report.summary.verdict_counts.get(v, 0) }}</span>
+  {% endfor %}
+</div>
+
+{#- ================== D. INSTRUCTION-FOLLOWING RESULTS ================== -#}
+<h2>Instruction-following results</h2>
+<p class="sub">Across every gate check on every item (deterministic + judged). A single deterministic or judged FAIL fails that item's gate.</p>
+<div class="scroll"><table>
+  <tr><th>Gate outcome (per item)</th><th class="num">count</th><th>Instruction check</th><th class="num">count</th></tr>
+  {% set gs = report.summary.gate_status_counts %}
+  {% set ic = report.summary.instruction_check_counts %}
+  <tr><td class="pass">pass</td><td class="num">{{ gs.get("pass",0) }}</td><td class="pass">pass</td><td class="num">{{ ic.get("pass",0) }}</td></tr>
+  <tr><td class="miss">fail</td><td class="num">{{ gs.get("fail",0) }}</td><td class="miss">fail</td><td class="num">{{ ic.get("fail",0) }}</td></tr>
+  <tr><td class="pend">pending</td><td class="num">{{ gs.get("pending",0) }}</td><td class="pend">pending_judge</td><td class="num">{{ ic.get("pending_judge",0) }}</td></tr>
+  <tr><td class="miss">error</td><td class="num">{{ gs.get("error",0) }}</td><td class="miss">error</td><td class="num">{{ ic.get("error",0) }}</td></tr>
+</table></div>
+
+{#- ================= E. RELIABILITY / CONSISTENCY SUMMARY ============== -#}
+<h2>Reliability / consistency summary</h2>
+<p class="sub">
+  Labels below are <b>configurable operational heuristics</b>, not statistical boundaries. Every judged
+  dimension's raw statistics appear in the per-item detail and in the raw-statistics table.
+</p>
+<div class="cards">
+  {% for label, n in report.summary.reliability_counts.items() %}
+    <div class="card"><div class="n">{{ n }}</div><div class="k"><span class="badge rl-{{ label }}">{{ label.replace("_", " ") }}</span></div></div>
+  {% endfor %}
+</div>
+
+{#- ==================== F. VERDICT-STABILITY SUMMARY =================== -#}
+<h2>Verdict-stability summary</h2>
+<p class="sub">
+  Re-computing the verdict from each single judged run. Instruction judging runs once, so variation
+  here reflects only judged-dimension scores. A run with a judge error counts as "Unresolved".
+  {% if report.summary.dataset_verdict_agreement is not none %}
+  Mean per-item agreement: <b>{{ report.summary.dataset_verdict_agreement }}</b>.
+  {% endif %}
+</p>
+<div class="scroll"><table>
+  <tr><th>Item</th><th>Modal verdict</th><th class="num">Agreement</th><th>Distribution</th></tr>
+  {% for item in report.items %}
+    {% if item.verdict_stability is not none %}
+      <tr>
+        <td><a href="#item-{{ item.item_id }}" class="mono">{{ item.item_id }}</a></td>
+        <td><span class="badge v-{{ verdict_slug(item.verdict_stability.modal_verdict) }}">{{ item.verdict_stability.modal_verdict }}</span></td>
+        <td class="num">{{ item.verdict_stability.agreement_fraction }}</td>
+        <td class="mono">{{ item.verdict_stability.distribution }}</td>
+      </tr>
+    {% endif %}
+  {% endfor %}
+</table></div>
+
+{#- ===================== G. FAILURES-FIRST SECTION ==================== -#}
+<h2>Failures first</h2>
+{% set any_flagged = [] %}
+{% for item in report.items %}{% if failures[item.item_id] %}{% set _ = any_flagged.append(item) %}{% endif %}{% endfor %}
+{% if any_flagged %}
+  <div class="failbox">
+    <p><b>{{ any_flagged | length }} of {{ report.summary.item_count }} item(s)</b> have a failed verdict, gate failure/error, failed deterministic check, not-evaluated dimension, unverified judge evidence, judge error, or an unstable verdict:</p>
+    {% for item in any_flagged %}
+      <p style="margin-top:12px">
+        <a href="#item-{{ item.item_id }}" class="mono">{{ item.item_id }}</a>
+        <span class="badge v-{{ verdict_slug(item.verdict.verdict) }}">{{ item.verdict.verdict }}</span>
+        {% if item.scenario %}<span class="sub">— {{ item.scenario }}</span>{% endif %}
+      </p>
+      <ul>
+        {% for reason in failures[item.item_id] %}<li>{{ reason }}</li>{% endfor %}
+      </ul>
+    {% endfor %}
+  </div>
+{% else %}
+  <div class="okbox">No failed verdicts, gate failures/errors, failed deterministic checks, not-evaluated dimensions, unverified judge evidence, judge errors, or unstable verdicts.</div>
+{% endif %}
+
+{#- ==================== H. PER-ITEM EXPANDABLE DETAIL ================= -#}
+<h2>Per-item detail</h2>
+{% for item in report.items %}
+  {% set is_flagged = failures[item.item_id] | length > 0 %}
+  <details class="item {{ 'flagged' if is_flagged else '' }}" id="item-{{ item.item_id }}" {{ 'open' if is_flagged else '' }}>
+    <summary>
+      <span class="mono">{{ item.item_id }}</span>
+      <span class="badge v-{{ verdict_slug(item.verdict.verdict) }}">{{ item.verdict.verdict }}</span>
+      {% if item.indicative_score is not none %}<span class="sub">indicative {{ item.indicative_score }}</span>{% endif %}
+      {% if item.scenario %}<span class="sub">· {{ item.scenario }}</span>{% endif %}
+    </summary>
+
+    {% if item.author_note %}<p class="sub"><b>Author note:</b> {{ item.author_note }}</p>{% endif %}
+
+    <h3>Task</h3>
+    <pre class="resp">{{ item.task }}</pre>
+
+    <h3>Candidate response</h3>
+    <pre class="resp">{{ item.candidate_response }}</pre>
+
+    <h3>Verdict</h3>
+    <p><span class="badge v-{{ verdict_slug(item.verdict.verdict) }}">{{ item.verdict.verdict }}</span>
+      {% if item.verdict.judged_mean is not none %}<span class="sub">judged mean {{ item.verdict.judged_mean | fmt_num }}</span>{% endif %}
+    </p>
+    {% if item.verdict.capped_by %}<p class="kv"><b>Capped by:</b> {{ item.verdict.capped_by | join("; ") }}</p>{% endif %}
+    {% if item.verdict.not_evaluated_dimensions %}<p class="kv"><b>Not evaluated (excluded, not zeroed):</b> {{ item.verdict.not_evaluated_dimensions | join(", ") }}</p>{% endif %}
+    {% if item.verdict.unresolved_dimensions %}<p class="kv"><b>Unresolved:</b> {{ item.verdict.unresolved_dimensions | join(", ") }}</p>{% endif %}
+    {% if item.verdict.notes %}<ul class="notlist">{% for n in item.verdict.notes %}<li>{{ n }}</li>{% endfor %}</ul>{% endif %}
+
+    {% if item.verdict_stability is not none %}
+      <h3>Verdict stability</h3>
+      <p>
+        {% for v in item.verdict_stability.per_run_verdicts %}<span class="chip">{{ v }}</span>{% endfor %}
+      </p>
+      <p class="kv"><b>Modal:</b> {{ item.verdict_stability.modal_verdict }} ·
+        <b>Agreement:</b> {{ item.verdict_stability.agreement_fraction }} ·
+        <b>Distribution:</b> <span class="mono">{{ item.verdict_stability.distribution }}</span></p>
+      <p class="sub">{{ item.verdict_stability.note }}</p>
+    {% endif %}
+
+    {% if item.errors %}
+      <h3>Errors recorded for this item</h3>
+      <ul class="notlist">{% for e in item.errors %}<li class="miss">{{ e }}</li>{% endfor %}</ul>
+    {% endif %}
+
+    {#- --- dimensions --- -#}
+    {% for dim in item.dimensions %}
+      {% if dim.gate is not none %}
+        <div class="dim">
+          <h3>Instruction-following gate —
+            <span class="badge {{ 'v-fail' if dim.gate.status in ['fail','error'] else ('v-needs-work' if dim.gate.status == 'pending' else 'v-acceptable') }}">{{ dim.gate.status }}</span>
+          </h3>
+          <div class="scroll"><table>
+            <tr><th>Instruction</th><th>Method</th><th>Status</th><th>Detail</th><th>Evidence (from response)</th></tr>
+            {% for inst in dim.gate.instructions %}
+              <tr>
+                <td>{{ inst.text }}</td>
+                <td class="mono">{{ inst.method }}</td>
+                <td class="{{ 'pass' if inst.status == 'pass' else ('miss' if inst.status in ['fail','error'] else 'pend') }}">{{ inst.status }}</td>
+                <td class="sub">{{ inst.detail }}</td>
+                <td>
+                  {% if inst.evidence is not none %}
+                    <blockquote class="quote">{{ inst.evidence.quote }}</blockquote>
+                    {% if inst.evidence.verified %}<span class="ev-ok">✔ verified ({{ inst.evidence.method }})</span>
+                    {% else %}<span class="ev-bad">⚠ UNVERIFIED — {{ inst.evidence.note }}</span>{% endif %}
+                  {% else %}<span class="ev-none">—</span>{% endif %}
+                </td>
+              </tr>
+            {% endfor %}
+          </table></div>
+        </div>
+
+      {% elif dim.type == "deterministic" %}
+        <div class="dim">
+          <h3>Deterministic: <span class="mono">{{ dim.dimension_id }}</span>
+            <span class="badge {{ 'v-acceptable' if dim.deterministic_passed else 'v-fail' }}">{{ 'pass' if dim.deterministic_passed else 'fail' }}</span>
+          </h3>
+          <div class="scroll"><table>
+            <tr><th>Check</th><th>Kind</th><th>Expected</th><th>Observed</th><th>Outcome</th></tr>
+            {% for c in dim.checks %}
+              <tr>
+                <td>{{ c.name }}</td><td class="mono">{{ c.kind }}</td>
+                <td class="sub">{{ c.expected }}</td><td class="sub">{{ c.observed }}</td>
+                <td class="{{ 'pass' if c.outcome == 'pass' else 'miss' }}">{{ c.outcome }}</td>
+              </tr>
+            {% endfor %}
+          </table></div>
+        </div>
+
+      {% elif dim.type in ["reference_grounded", "spec_grounded", "judged"] %}
+        <div class="dim">
+          <h3>Judged: <span class="mono">{{ dim.dimension_id }}</span>
+            <span class="sub">({{ dim.type }})</span>
+            {% if dim.status == "evaluated" %}
+              {% if dim.reliability_label %}<span class="badge rl-{{ dim.reliability_label }}">{{ dim.reliability_label.replace("_"," ") }}</span>{% endif %}
+            {% elif dim.status == "not_evaluated" %}
+              <span class="badge v-unresolved">NOT EVALUATED</span>
+            {% else %}
+              <span class="badge v-needs-work">{{ dim.status }}</span>
+            {% endif %}
+          </h3>
+
+          {% if dim.status == "not_evaluated" %}
+            <p class="kv"><b>Not evaluated:</b> {{ dim.not_evaluated_reason }}
+              — <span class="sub">this dimension was excluded from the mean and the verdict. It was NOT scored zero.</span></p>
+            {% if dim.judge_error_count %}<p class="kv"><b>Judge errors:</b> {{ dim.judge_error_count }}</p>{% endif %}
+          {% else %}
+            <p class="kv">
+              <b>mean</b> {{ dim.mean | fmt_num }} ·
+              <b>stdev</b> {{ dim.stdev | fmt_num }} ·
+              <b>min–max</b> {{ dim.minimum | fmt_num }}–{{ dim.maximum | fmt_num }} ·
+              <b>pairwise disagreement</b> {{ dim.pairwise_disagreement_rate | fmt_num }} ·
+              <b>valid runs</b> {{ dim.scores | length }}/{{ dim.runs | length }}
+              {% if dim.judge_error_count %} · <b class="miss">judge errors {{ dim.judge_error_count }}</b>{% endif %}
+            </p>
+            {% if dim.evidence_any_unverified %}
+              <p class="ev-bad">⚠ At least one run returned an evidence quote that is NOT in the reference — treat those quotes as possible judge hallucinations. The scores are still shown as returned.</p>
+            {% endif %}
+            <div class="scroll"><table>
+              <tr><th class="num">run</th><th class="num">score</th><th>rationale</th><th>evidence quote</th><th>evidence check</th></tr>
+              {% for r in dim.runs %}
+                <tr>
+                  <td class="num">{{ r.run_index }}{% if r.attempts > 1 %}<span class="sub"> (retry)</span>{% endif %}</td>
+                  <td class="num">{{ r.score if r.score is not none else "—" }}</td>
+                  <td class="sub">{% if r.error %}<span class="miss">{{ r.error }}</span>{% else %}{{ r.rationale }}{% endif %}</td>
+                  <td>{% if r.evidence is not none and r.evidence.quote %}<blockquote class="quote">{{ r.evidence.quote }}</blockquote>{% else %}<span class="ev-none">—</span>{% endif %}</td>
+                  <td>
+                    {% if r.evidence is none %}<span class="ev-none">—</span>
+                    {% elif r.evidence.verified %}<span class="ev-ok">✔ verified ({{ r.evidence.method }})</span>
+                    {% elif r.evidence.method == "empty" %}<span class="ev-none">no quote returned</span>
+                    {% elif r.evidence.method == "no_reference" %}<span class="ev-none">no reference to check</span>
+                    {% else %}<span class="ev-bad">⚠ UNVERIFIED — quote not found in the reference (possible judge hallucination)</span>{% endif %}
+                  </td>
+                </tr>
+              {% endfor %}
+            </table></div>
+          {% endif %}
+        </div>
+      {% endif %}
+    {% endfor %}
+  </details>
+{% endfor %}
+
+{#- ================== I. CONSISTENCY / RAW STATISTICS ================= -#}
+<h2>Raw statistics</h2>
+<p class="sub">Every judged dimension's underlying numbers. This is the source of truth; the labels above are derived from it.</p>
+<div class="scroll"><table>
+  <tr><th>Item</th><th>Dimension</th><th class="num">N valid</th><th>Scores</th><th class="num">mean</th><th class="num">stdev</th><th class="num">min</th><th class="num">max</th><th class="num">disagree</th><th class="num">judge err</th><th>label</th></tr>
+  {% for item in report.items %}
+    {% for dim in item.dimensions %}
+      {% if dim.type in ["reference_grounded", "spec_grounded", "judged"] %}
+        <tr>
+          <td class="mono">{{ item.item_id }}</td>
+          <td class="mono">{{ dim.dimension_id }}</td>
+          {% if dim.status == "evaluated" %}
+            <td class="num">{{ dim.scores | length }}/{{ dim.runs | length }}</td>
+            <td class="mono">{{ dim.scores }}</td>
+            <td class="num">{{ dim.mean | fmt_num }}</td>
+            <td class="num">{{ dim.stdev | fmt_num }}</td>
+            <td class="num">{{ dim.minimum | fmt_num }}</td>
+            <td class="num">{{ dim.maximum | fmt_num }}</td>
+            <td class="num">{{ dim.pairwise_disagreement_rate | fmt_num }}</td>
+            <td class="num">{{ dim.judge_error_count }}</td>
+            <td><span class="badge rl-{{ dim.reliability_label or 'not_applicable' }}">{{ (dim.reliability_label or 'n/a').replace("_"," ") }}</span></td>
+          {% else %}
+            <td class="num">0/{{ dim.runs | length }}</td>
+            <td colspan="7" class="sub">{{ dim.not_evaluated_reason }}</td>
+            <td class="num">{{ dim.judge_error_count }}</td>
+            <td><span class="badge v-unresolved">not evaluated</span></td>
+          {% endif %}
+        </tr>
+      {% endif %}
+    {% endfor %}
+  {% endfor %}
+</table></div>
+
+{#- ================= J. METHODOLOGY AND LIMITATIONS ================== -#}
+<h2>Methodology &amp; limitations</h2>
+<ul class="notlist">
+  {% for point in methodology %}<li>{{ point }}</li>{% endfor %}
+</ul>
+
+{#- ================= K. EXACT REPRODUCTION COMMAND ================== -#}
+<h2>Reproduce this report</h2>
+{% if report.meta.command %}
+  <div class="repro"><code>{{ report.meta.command }}</code></div>
+{% else %}
+  <p class="sub">No command was recorded for this run.</p>
+{% endif %}
+
+<footer>
+  rubric-eval {{ report.meta.harness_version }} · generated {{ report.meta.generated_at }} ·
+  not a model benchmark · dataset is synthetic
+</footer>
+
+</div>
+</body>
+</html>

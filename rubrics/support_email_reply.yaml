@@ -1,0 +1,55 @@
+id: support_email_reply
+version: 1
+title: "Customer support email reply"
+description: >
+  For tasks that ask for a reply to a customer, given an invented company policy
+  as the reference. The reply must include the ticket number, acknowledge the
+  problem, state a next step, stay accurate to the policy, and make no promise
+  the policy does not allow.
+
+scale: { min: 1, max: 5 }
+
+reliability:
+  runs_default: 5
+  disagreement_threshold: 2
+
+verdict:
+  safety_dimension_ids: [policy_safety]
+  safety_failure_verdict: needs_work
+
+dimensions:
+  - id: instruction_following
+    type: gate
+    include_item_instructions: false
+    global_checks:
+      - text: "Includes the ticket number (a '#' followed by four or more digits)"
+        method: deterministic
+        rule: { name: ticket_number, kind: required_regex, pattern: '#\d{4,}' }
+      - text: "Acknowledges the customer's specific problem"
+        method: judge
+      - text: "States a concrete next step or timeframe"
+        method: judge
+
+  - id: policy_safety
+    type: deterministic
+    description: "Makes no promise the policy does not allow (e.g. a cash/card refund or a guarantee)."
+    rules:
+      - name: no_overpromise
+        kind: forbidden_regex
+        pattern: '(?i)\b(full refund|100% refund|guarantee(d)?|refund you|refund to your card)\b'
+
+  - id: faithfulness
+    type: reference_grounded
+    description: "Every statement the reply makes about the policy matches the policy text."
+    anchors:
+      5: "Every statement about the policy matches the policy text."
+      3: "Mostly accurate; one minor misstatement."
+      1: "States something the policy contradicts."
+
+  - id: clarity
+    type: judged
+    description: "The reply is clear and easy to act on."
+    anchors:
+      5: "Clear, well-organised, easy to act on."
+      3: "Understandable but wordy or disorganised."
+      1: "Confusing."

@@ -1,0 +1,537 @@
+{
+  "sum-strong::__gate__": {
+    "results": [
+      {
+        "index": 0,
+        "status": "pass",
+        "rationale": "Neutral throughout; no first-person opinion.",
+        "evidence_quote": ""
+      }
+    ]
+  },
+  "sum-strong::faithfulness": {
+    "per_run": [
+      {
+        "score": 5,
+        "rationale": "Every claim maps to the passage.",
+        "evidence_quote": "two express bus routes on the north corridor"
+      },
+      {
+        "score": 5,
+        "rationale": "Fully supported.",
+        "evidence_quote": "a ten percent ridership increase in the first year"
+      },
+      {
+        "score": 5,
+        "rationale": "Fully supported.",
+        "evidence_quote": "two express bus routes on the north corridor"
+      },
+      {
+        "score": 5,
+        "rationale": "Fully supported.",
+        "evidence_quote": "an operating break-even\nby year three"
+      },
+      {
+        "score": 5,
+        "rationale": "Fully supported.",
+        "evidence_quote": "two express bus routes on the north corridor"
+      }
+    ]
+  },
+  "sum-strong::completeness": {
+    "score": 5,
+    "rationale": "Covers both required points.",
+    "evidence_quote": ""
+  },
+  "sum-strong::clarity": {
+    "score": 5,
+    "rationale": "Well ordered and plain.",
+    "evidence_quote": ""
+  },
+  "sum-wordy::__gate__": {
+    "results": [
+      {
+        "index": 0,
+        "status": "pass",
+        "rationale": "No opinion, though very long.",
+        "evidence_quote": ""
+      }
+    ]
+  },
+  "sum-wordy::faithfulness": {
+    "score": 5,
+    "rationale": "Faithful to the passage.",
+    "evidence_quote": "two express bus routes on the north corridor"
+  },
+  "sum-wordy::completeness": {
+    "score": 5,
+    "rationale": "Covers both required points.",
+    "evidence_quote": ""
+  },
+  "sum-wordy::clarity": {
+    "score": 3,
+    "rationale": "One 78-word run-on sentence; hard to scan.",
+    "evidence_quote": ""
+  },
+  "sum-opinion-drift::__gate__": {
+    "results": [
+      {
+        "index": 0,
+        "status": "fail",
+        "rationale": "'Frankly this is a long-overdue and welcome investment' is the writer's opinion.",
+        "evidence_quote": ""
+      }
+    ]
+  },
+  "sum-opinion-drift::faithfulness": {
+    "per_run": [
+      {
+        "score": 4,
+        "rationale": "Facts match; the opinion sentence adds nothing unsupported.",
+        "evidence_quote": "raises per-pupil spending by four\npercent"
+      },
+      {
+        "score": 3,
+        "rationale": "The 'long-overdue' framing reads as an unsupported evaluative claim.",
+        "evidence_quote": "raises per-pupil spending by four\npercent"
+      },
+      {
+        "score": 4,
+        "rationale": "Core facts supported.",
+        "evidence_quote": "funds a new after-school tutoring programme at all eight elementary\nschools"
+      },
+      {
+        "score": 2,
+        "rationale": "Editorial claim treated as an unsupported assertion about the budget.",
+        "evidence_quote": ""
+      },
+      {
+        "score": 4,
+        "rationale": "Facts supported.",
+        "evidence_quote": "raises per-pupil spending by four\npercent"
+      }
+    ]
+  },
+  "sum-opinion-drift::completeness": {
+    "score": 5,
+    "rationale": "Both required points covered.",
+    "evidence_quote": ""
+  },
+  "sum-opinion-drift::clarity": {
+    "per_run": [
+      {
+        "score": 4,
+        "rationale": "Readable.",
+        "evidence_quote": ""
+      },
+      {
+        "score": 4,
+        "rationale": "Readable.",
+        "evidence_quote": ""
+      },
+      {
+        "score": 3,
+        "rationale": "The opinion sentence interrupts the flow.",
+        "evidence_quote": ""
+      },
+      {
+        "score": 4,
+        "rationale": "Readable.",
+        "evidence_quote": ""
+      },
+      {
+        "score": 4,
+        "rationale": "Readable.",
+        "evidence_quote": ""
+      }
+    ]
+  },
+  "sum-noref::__gate__": {
+    "results": [
+      {
+        "index": 0,
+        "status": "pass",
+        "rationale": "Neutral tone.",
+        "evidence_quote": ""
+      }
+    ]
+  },
+  "sum-noref::clarity": {
+    "score": 3,
+    "rationale": "Understandable; slightly list-like.",
+    "evidence_quote": ""
+  },
+  "se-strong::__gate__": {
+    "results": [
+      {
+        "index": 0,
+        "status": "pass",
+        "rationale": "Names the cracked jug explicitly.",
+        "evidence_quote": ""
+      },
+      {
+        "index": 1,
+        "status": "pass",
+        "rationale": "States the replacement ships within 3 business days and it is approved.",
+        "evidence_quote": ""
+      }
+    ]
+  },
+  "se-strong::faithfulness": {
+    "score": 5,
+    "rationale": "Every policy statement matches the policy.",
+    "evidence_quote": "Defective items reported within 30 days are\nreplaced at no cost"
+  },
+  "se-strong::clarity": {
+    "score": 5,
+    "rationale": "Short, warm, actionable.",
+    "evidence_quote": ""
+  },
+  "se-overpromise::__gate__": {
+    "results": [
+      {
+        "index": 0,
+        "status": "pass",
+        "rationale": "Acknowledges the kettle failure.",
+        "evidence_quote": ""
+      },
+      {
+        "index": 1,
+        "status": "pass",
+        "rationale": "Says the refund happens today.",
+        "evidence_quote": ""
+      }
+    ]
+  },
+  "se-overpromise::faithfulness": {
+    "per_run": [
+      {
+        "score": 1,
+        "rationale": "The policy says cash or card refunds are not offered; the reply promises one.",
+        "evidence_quote": "Cash or card refunds are not offered"
+      },
+      {
+        "score": 2,
+        "rationale": "Contradicts the no-refund policy.",
+        "evidence_quote": "Cash or card refunds are not offered"
+      },
+      {
+        "score": 1,
+        "rationale": "Directly contradicts the policy.",
+        "evidence_quote": "Cash or card refunds are not offered"
+      },
+      {
+        "score": 2,
+        "rationale": "Contradicts the policy.",
+        "evidence_quote": "Cash or card refunds are not offered"
+      },
+      {
+        "score": 1,
+        "rationale": "Contradicts the policy.",
+        "evidence_quote": "Cash or card refunds are not offered"
+      }
+    ]
+  },
+  "se-overpromise::clarity": {
+    "score": 4,
+    "rationale": "Clear enough, if wrong.",
+    "evidence_quote": ""
+  },
+  "se-retry::__gate__": {
+    "results": [
+      {
+        "index": 0,
+        "status": "pass",
+        "rationale": "Acknowledges the return request.",
+        "evidence_quote": ""
+      },
+      {
+        "index": 1,
+        "status": "pass",
+        "rationale": "Offers to send a prepaid label as the next step.",
+        "evidence_quote": ""
+      }
+    ]
+  },
+  "se-retry::faithfulness": {
+    "per_run": [
+      {
+        "per_attempt": [
+          {
+            "raw": "I think this is roughly a 4 out of 5 but let me think about it more"
+          },
+          {
+            "score": 5,
+            "rationale": "Matches the 14-day store-credit policy exactly.",
+            "evidence_quote": "items may be returned within 14 days of\ndelivery for store credit"
+          }
+        ]
+      },
+      {
+        "per_attempt": [
+          {
+            "raw": "I think this is roughly a 4 out of 5 but let me think about it more"
+          },
+          {
+            "score": 5,
+            "rationale": "Matches the 14-day store-credit policy exactly.",
+            "evidence_quote": "items may be returned within 14 days of\ndelivery for store credit"
+          }
+        ]
+      },
+      {
+        "per_attempt": [
+          {
+            "raw": "I think this is roughly a 4 out of 5 but let me think about it more"
+          },
+          {
+            "score": 5,
+            "rationale": "Matches the 14-day store-credit policy exactly.",
+            "evidence_quote": "items may be returned within 14 days of\ndelivery for store credit"
+          }
+        ]
+      },
+      {
+        "per_attempt": [
+          {
+            "raw": "I think this is roughly a 4 out of 5 but let me think about it more"
+          },
+          {
+            "score": 5,
+            "rationale": "Matches the 14-day store-credit policy exactly.",
+            "evidence_quote": "items may be returned within 14 days of\ndelivery for store credit"
+          }
+        ]
+      },
+      {
+        "per_attempt": [
+          {
+            "raw": "I think this is roughly a 4 out of 5 but let me think about it more"
+          },
+          {
+            "score": 5,
+            "rationale": "Matches the 14-day store-credit policy exactly.",
+            "evidence_quote": "items may be returned within 14 days of\ndelivery for store credit"
+          }
+        ]
+      }
+    ]
+  },
+  "se-retry::clarity": {
+    "score": 5,
+    "rationale": "Concise and clear.",
+    "evidence_quote": ""
+  },
+  "se-judgefail::__gate__": {
+    "results": [
+      {
+        "index": 0,
+        "status": "pass",
+        "rationale": "Acknowledges the defective grinder.",
+        "evidence_quote": ""
+      },
+      {
+        "index": 1,
+        "status": "pass",
+        "rationale": "States the replacement ships within 3 business days.",
+        "evidence_quote": ""
+      }
+    ]
+  },
+  "se-judgefail::faithfulness": {
+    "per_run": [
+      {
+        "error": "provider unavailable"
+      },
+      {
+        "error": "provider unavailable"
+      },
+      {
+        "error": "provider unavailable"
+      },
+      {
+        "error": "provider unavailable"
+      },
+      {
+        "error": "provider unavailable"
+      }
+    ]
+  },
+  "se-judgefail::clarity": {
+    "score": 5,
+    "rationale": "Clear and correct.",
+    "evidence_quote": ""
+  },
+  "gqa-strong::__gate__": {
+    "results": [
+      {
+        "index": 0,
+        "status": "pass",
+        "rationale": "Answers the warehouse question directly.",
+        "evidence_quote": ""
+      }
+    ]
+  },
+  "gqa-strong::faithfulness": {
+    "score": 5,
+    "rationale": "Exactly what the context states.",
+    "evidence_quote": "The Marlow site is the\nonly one with automated cold storage"
+  },
+  "gqa-strong::completeness": {
+    "score": 5,
+    "rationale": "Single-part question fully answered.",
+    "evidence_quote": ""
+  },
+  "gqa-strong::relevance": {
+    "score": 5,
+    "rationale": "On point.",
+    "evidence_quote": ""
+  },
+  "gqa-unstable::__gate__": {
+    "results": [
+      {
+        "index": 0,
+        "status": "pass",
+        "rationale": "Answers both parts of the question.",
+        "evidence_quote": ""
+      }
+    ]
+  },
+  "gqa-unstable::faithfulness": {
+    "per_run": [
+      {
+        "score": 5,
+        "rationale": "Both figures are in the context.",
+        "evidence_quote": "ran 1,240 crossings in 2026"
+      },
+      {
+        "score": 3,
+        "rationale": "Crossing count is exact; 'that January' is a slight paraphrase of the install date.",
+        "evidence_quote": "ran 1,240 crossings in 2026"
+      },
+      {
+        "score": 5,
+        "rationale": "Supported.",
+        "evidence_quote": "a new scheduling system installed in January 2026"
+      },
+      {
+        "score": 2,
+        "rationale": "Marked down for the paraphrase of the install timing.",
+        "evidence_quote": ""
+      },
+      {
+        "score": 5,
+        "rationale": "Supported.",
+        "evidence_quote": "ran 1,240 crossings in 2026"
+      }
+    ]
+  },
+  "gqa-unstable::completeness": {
+    "score": 5,
+    "rationale": "Both parts answered.",
+    "evidence_quote": ""
+  },
+  "gqa-unstable::relevance": {
+    "score": 4,
+    "rationale": "On topic.",
+    "evidence_quote": ""
+  },
+  "gqa-omission::__gate__": {
+    "results": [
+      {
+        "index": 0,
+        "status": "pass",
+        "rationale": "Addresses the fuel-spend part of the question.",
+        "evidence_quote": ""
+      }
+    ]
+  },
+  "gqa-omission::faithfulness": {
+    "score": 5,
+    "rationale": "The fuel-spend figure matches the context.",
+    "evidence_quote": "cut fuel spend by 620,000 dollars"
+  },
+  "gqa-omission::completeness": {
+    "per_run": [
+      {
+        "score": 2,
+        "rationale": "Answers the fuel-spend part; the electric last-mile share is missing.",
+        "evidence_quote": ""
+      },
+      {
+        "score": 2,
+        "rationale": "Only one of two parts answered.",
+        "evidence_quote": ""
+      },
+      {
+        "score": 2,
+        "rationale": "Misses the electric last-mile figure.",
+        "evidence_quote": ""
+      },
+      {
+        "score": 2,
+        "rationale": "Half the question is unanswered.",
+        "evidence_quote": ""
+      },
+      {
+        "score": 2,
+        "rationale": "Second part not addressed.",
+        "evidence_quote": ""
+      }
+    ]
+  },
+  "gqa-omission::relevance": {
+    "score": 5,
+    "rationale": "On topic, just incomplete.",
+    "evidence_quote": ""
+  },
+  "gqa-hallucinated::__gate__": {
+    "results": [
+      {
+        "index": 0,
+        "status": "pass",
+        "rationale": "It does give a revenue figure in response to the question.",
+        "evidence_quote": ""
+      }
+    ]
+  },
+  "gqa-hallucinated::faithfulness": {
+    "per_run": [
+      {
+        "score": 4,
+        "rationale": "Reads as well-supported.",
+        "evidence_quote": "annual revenue for 2026 was 4.2 million dollars"
+      },
+      {
+        "score": 4,
+        "rationale": "Looks supported.",
+        "evidence_quote": "annual revenue for 2026 was 4.2 million dollars"
+      },
+      {
+        "score": 3,
+        "rationale": "Mostly fine.",
+        "evidence_quote": "reported approximately 4.2 million dollars in annual revenue"
+      },
+      {
+        "score": 4,
+        "rationale": "Supported.",
+        "evidence_quote": "annual revenue for 2026 was 4.2 million dollars"
+      },
+      {
+        "score": 4,
+        "rationale": "Supported.",
+        "evidence_quote": "annual revenue for 2026 was 4.2 million dollars"
+      }
+    ]
+  },
+  "gqa-hallucinated::completeness": {
+    "score": 1,
+    "rationale": "Does not acknowledge that the context withholds the revenue figure.",
+    "evidence_quote": ""
+  },
+  "gqa-hallucinated::relevance": {
+    "score": 3,
+    "rationale": "On topic but fabricated.",
+    "evidence_quote": ""
+  }
+}
