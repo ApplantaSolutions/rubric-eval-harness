@@ -1,5 +1,7 @@
 # rubric-eval-harness
 
+[![ci](https://github.com/ApplantaSolutions/rubric-eval-harness/actions/workflows/ci.yml/badge.svg)](https://github.com/ApplantaSolutions/rubric-eval-harness/actions/workflows/ci.yml)
+
 A small, transparent harness for evaluating LLM responses against explicit
 rubrics — deterministic checks, LLM-as-judge scoring, instruction-following
 gates, evidence verification, an N-run consistency report, and a failures-first
